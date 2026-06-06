@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Segoe UI, Arial, sans-serif;
+  background: #f4f6f9;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f9;
+}
+
+.login-box {
+  width: 420px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  border-top: 5px solid #0056b3;
+}
+
+.empresa {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.empresa h1 {
+  color: #1f2937;
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.empresa p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #374151;
+  font-size: 22px;
+}
+
+.campo {
+  margin-bottom: 18px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.campo input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: #0056b3;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  background: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #004494;
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    width: 95%;
+    padding: 30px;
+  }
+}
