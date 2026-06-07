@@ -8,6 +8,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [showPassword , setShowPassword] = useState(false)
 
   const iniciarSesion = async (e) => {
     e.preventDefault();
@@ -58,11 +59,14 @@ function Login() {
           <div className="campo">
             <label>Contraseña</label>
             <input
-              type="password"
+              type={showPassword ? "text": "password"}
               placeholder="Ingrese su contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? "Ocultar" : "Mostrar"}
+          </button>
           </div>
 
           <button type="submit">
