@@ -8,10 +8,12 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [showPassword , setShowPassword] = useState(false)
+  const [cargando , setCargando] = useState("flase");
+  const [showPassword , setShowPassword] = useState(false);
 
   const iniciarSesion = async (e) => {
     e.preventDefault();
+    setCargando(true); //activamos el cargador de la pagina
 
     try {
       const respuesta = await axios.post(
@@ -31,6 +33,9 @@ function Login() {
       navigate("/Dashboard");
     } catch (error) {
       alert("Credenciales inválidas");
+    }finally{
+      //se ejecuta falle o no la sesion
+      setCargando(false); //desactiva el cargador de la pagina
     }
   };
 
