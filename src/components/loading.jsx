@@ -1,19 +1,8 @@
 const Loading = ({ mensaje = "Cargando..." }) => (
-  <div style={styles.overlay}>
+  <div className="loading-overlay">
     <div className="spinner"></div>
-    <p>{mensaje}</p>
+    <p className="loading-text">{mensaje}</p>
   </div>
-  ); 
-  
-  
-  const styles = {
-   overlay: {
-     display: 'flex',
-     flexDirection: 'column',
-     alignItems: 'center',
-     justifyContent: 'center',
-     padding: '20px'
-   }
- };
+);
 
- export default Loading;
+export default Loading;
