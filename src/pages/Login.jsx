@@ -3,10 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "/src/App.css";
 
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [showPassword , setShowPassword] = useState(false)
 
   const iniciarSesion = async (e) => {
     e.preventDefault();
@@ -54,15 +56,25 @@ function Login() {
             />
           </div>
 
-          <div className="campo">
-            <label>Contraseña</label>
-            <input
-              type="password"
-              placeholder="Ingrese su contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+<div className="campo">
+  <label>Contraseña</label>
+
+  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Ingrese su contraseña"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? "Ocultar" : "Ver"}
+    </button>
+  </div>
+</div>
 
           <button type="submit">
             Ingresar
