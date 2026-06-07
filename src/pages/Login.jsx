@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/loading";
 import "/src/App.css";
 
 
@@ -8,7 +9,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [cargando , setCargando] = useState("flase");
+  const [cargando , setCargando] = useState(false);
   const [showPassword , setShowPassword] = useState(false);
 
   const iniciarSesion = async (e) => {
@@ -39,6 +40,9 @@ function Login() {
     }
   };
 
+if (cargando){
+  return<Loading mensaje="Iniciando sesion..."/>
+}
   return (
     <div className="login-container">
       <div className="login-box">
@@ -74,7 +78,7 @@ function Login() {
           </button>
           </div>
 
-          <button type="submit">
+          <button type="submit" disabled={cargando}>
             Ingresar
           </button>
 
