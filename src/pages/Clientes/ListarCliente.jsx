@@ -13,7 +13,7 @@ function ListarCliente() {
   // Modal
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     razon_social: "",
     rut: "",
     giro_comercial: "",
@@ -22,8 +22,14 @@ function ListarCliente() {
     ciudad: "",
     region: "",
     nombre_contacto: "",
-  });
+    cargo_contacto: "",
+    correo_contacto: "",
+    telefono_contacto: "",
+    estado: "Activo", // Inicializado por defecto en Activo
+    observaciones: "",
+  };
 
+  const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -69,23 +75,19 @@ function ListarCliente() {
     try {
       await axios.post("http://localhost:3000/api/clientes", form);
       
-      // Alerta estilizada con CDN de SweetAlert2
       if (window.Swal) {
         window.Swal.fire({
           title: "¡Éxito!",
           text: "Cliente creado correctamente",
           icon: "success",
           confirmButtonColor: "#1f2937",
-          timer: 2000, // Se cierra en 2 segundos
-          showConfirmButton: false, // Oculta el botón O
+          timer: 2000,
+          showConfirmButton: false,
         });
       }
 
       setModalOpen(false);
-      setForm({
-        razon_social: "", rut: "", giro_comercial: "", direccion: "",
-        comuna: "", ciudad: "", region: "", nombre_contacto: ""
-      });
+      setForm(initialFormState);
       setErrors({});
       await obtenerClientes();
 
@@ -104,27 +106,23 @@ function ListarCliente() {
     }
   };
 
-
-  //Eliminar cliente
   const eliminarCliente = async (id) => {
-    //confirmacion antes de eliminar
+    if (!window.Swal) return;
 
     const result = await window.Swal.fire({
       title: "¿Estás seguro?",
       text: "Esta acción eliminará al cliente permanentemente",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#dc2626", // Rojo
+      confirmButtonColor: "#dc2626",
       cancelButtonColor: "#6b7280",
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
-
     });
 
-    if(result.isConfirmed) {
+    if (result.isConfirmed) {
       setCargando(true);
-      try{
-        //peticion al backend
+      try {
         await axios.delete(`http://localhost:3000/api/clientes/${id}`);
         window.Swal.fire({
           title: "¡Eliminado!",
@@ -133,13 +131,11 @@ function ListarCliente() {
           timer: 2000,
           showConfirmButton: false,
         });
-
-        //Refresca la lista automaticamente
         await obtenerClientes();
-      }catch(error){
+      } catch (error) {
         console.error(error);
-        window.Swal.fire("ERROR", "No se puede eliminar cliente");
-      }finally{
+        window.Swal.fire("ERROR", "No se puede eliminar cliente", "error");
+      } finally {
         setCargando(false);
       }
     }
@@ -156,6 +152,7 @@ function ListarCliente() {
   if (cargando) {
     return <Loading mensaje="Cargando información..." />;
   }
+
   return (
     <>
       <Sidebar />
@@ -206,7 +203,12 @@ function ListarCliente() {
                   <th style={styles.th}>ID</th>
                   <th style={styles.th}>Razón Social</th>
                   <th style={styles.th}>RUT</th>
+                  <th style={styles.th}>Nombre contacto</th>
+                  <th style={styles.th}>Cargo</th>
+                  <th style={styles.th}>Teléfono</th>
+                  <th style={styles.th}>Correo</th>
                   <th style={styles.th}>Ciudad</th>
+                  <th style={styles.th}>Obs.</th>
                   <th style={styles.th}>Estado</th>
                   <th style={styles.th}>Acciones</th>
                 </tr>
@@ -217,7 +219,13 @@ function ListarCliente() {
                     <td style={styles.td}>{cliente.id_cliente}</td>
                     <td style={{ ...styles.td, fontWeight: "600" }}>{cliente.razon_social}</td>
                     <td style={styles.td}>{cliente.rut}</td>
+                    <td style={styles.td}>{cliente.nombre_contacto}</td>
+                    <td style={styles.td}>{cliente.cargo_contacto}</td>
+                    <td style={styles.td}>{cliente.telefono_contacto}</td>
+                    <td style={styles.td}>{cliente.correo_contacto}</td>
                     <td style={styles.td}>{cliente.ciudad}</td>
+                    <td style={styles.td}>{cliente.observaciones}</td>
+                    {/* BUG CORREGIDO: Se removió la celda de texto plano duplicada */}
                     <td style={styles.td}>
                       <span style={cliente.estado === "Activo" ? styles.badgeActivo : styles.badgeInactivo}>
                         {cliente.estado || "Inactivo"}
@@ -225,8 +233,8 @@ function ListarCliente() {
                     </td>
                     <td style={styles.td}>
                       <div style={styles.actions}>
-                        <button style={styles.viewButton}>Ver</button>
-                        <button style={styles.editButton}>Editar</button>
+                        <button style={styles.viewButton} onClick={() => navigate(`/clientes/ver/${cliente.id_cliente}`)}>Ver</button>
+                        <button style={styles.editButton} onClick={() => navigate(`/clientes/editar/${cliente.id_cliente}`)}>Editar</button>
                         <button style={styles.deleteButton} onClick={() => eliminarCliente(cliente.id_cliente)}>Eliminar</button>
                       </div>
                     </td>
@@ -254,7 +262,7 @@ function ListarCliente() {
                 </div>
                 <div style={styles.fieldGroup}>
                   <label style={styles.label}>RUT *</label>
-                  <input name="rut" value={form.rut} onChange={handleChange} style={{...styles.input, ...(errors.rut ? styles.inputError : {})}} />
+                  <input name="rut" placeholder="12345678-9" value={form.rut} onChange={handleChange} style={{...styles.input, ...(errors.rut ? styles.inputError : {})}} />
                   {errors.rut && <span style={styles.errorText}>{errors.rut}</span>}
                 </div>
                 <div style={styles.fieldGroup}>
@@ -275,10 +283,34 @@ function ListarCliente() {
                   <label style={styles.label}>Comuna</label>
                   <input name="comuna" value={form.comuna} onChange={handleChange} style={styles.input} />
                 </div>
+                <div style={styles.fieldGroup}>
+                  <label style={styles.label}>Región</label>
+                  <input name="region" value={form.region} onChange={handleChange} style={styles.input} />
+                </div>
+                <div style={styles.fieldGroup}>
+                  <label style={styles.label}>Nombre Contacto</label>
+                  <input name="nombre_contacto" value={form.nombre_contacto} onChange={handleChange} style={styles.input} />
+                </div>
+                <div style={styles.fieldGroup}>
+                  <label style={styles.label}>Cargo</label>
+                  <input name="cargo_contacto" value={form.cargo_contacto} onChange={handleChange} style={styles.input} />
+                </div>
+                <div style={styles.fieldGroup}>
+                  <label style={styles.label}>Teléfono / Celular</label>
+                  <input name="telefono_contacto" value={form.telefono_contacto} onChange={handleChange} style={styles.input} />
+                </div>
+                <div style={styles.fieldGroup}>
+                  <label style={styles.label}>Observaciones</label>
+                  <input name="observaciones" value={form.observaciones} onChange={handleChange} style={styles.input} />
+                </div>
+                <div style={styles.fieldGroup}>
+                  <label style={styles.label}>Correo</label>
+                  <input type="email" name="correo_contacto" value={form.correo_contacto} onChange={handleChange} style={styles.input} />
+                </div>
               </div>
               <div style={styles.modalButtons}>
                 <button type="submit" style={styles.saveBtn}>Guardar Cliente</button>
-                <button type="button" style={styles.cancelBtn} onClick={() => { setModalOpen(false); setErrors({}); }}>Cancelar</button>
+                <button type="button" style={styles.cancelBtn} onClick={() => { setModalOpen(false); setForm(initialFormState); setErrors({}); }}>Cancelar</button>
               </div>
             </form>
           </div>
@@ -287,6 +319,7 @@ function ListarCliente() {
     </>
   );
 }
+
 
 const styles = {
   container: {
