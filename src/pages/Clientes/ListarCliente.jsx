@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../components/loading";
+import Loading from "../../components/Loading";
 
 function ListarCliente() {
   const [clientes, setClientes] = useState([]);
@@ -104,6 +104,47 @@ function ListarCliente() {
     }
   };
 
+
+  //Eliminar cliente
+  const eliminarCliente = async (id) => {
+    //confirmacion antes de eliminar
+
+    const result = await window.Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará al cliente permanentemente",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626", // Rojo
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+
+    });
+
+    if(result.isConfirmed) {
+      setCargando(true);
+      try{
+        //peticion al backend
+        await axios.delete(`http://localhost:3000/api/clientes/${id}`);
+        window.Swal.fire({
+          title: "¡Eliminado!",
+          text: "El cliente ha sido eliminado correctamente",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        //Refresca la lista automaticamente
+        await obtenerClientes();
+      }catch(error){
+        console.error(error);
+        window.Swal.fire("ERROR", "No se puede eliminar cliente");
+      }finally{
+        setCargando(false);
+      }
+    }
+  };
+
   const clientesFiltrados = clientes.filter(
     (cliente) =>
       cliente.razon_social?.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -186,13 +227,14 @@ function ListarCliente() {
                       <div style={styles.actions}>
                         <button style={styles.viewButton}>Ver</button>
                         <button style={styles.editButton}>Editar</button>
+                        <button style={styles.deleteButton} onClick={() => eliminarCliente(cliente.id_cliente)}>Eliminar</button>
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          )}
+          )}  
         </div>
       </div>
 
