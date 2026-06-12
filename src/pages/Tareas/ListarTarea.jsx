@@ -29,7 +29,7 @@ function ListarTarea() {
     const cargarDatosIniciales = async () => {
       try {
         setCargando(true);
-        // Carga en paralelo eficiente
+        // carga de datos en tiempo real de distintas api´s
         await Promise.all([cargarTareas(), cargarClientes(), cargarUsuarios()]);
       } catch (error) {
         console.error("Error cargando los datos iniciales:", error);

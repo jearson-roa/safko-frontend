@@ -47,8 +47,8 @@ function Sidebar() {
     },
     {
       icon: <ShoppingCart size={20} />,
-      text: "Compras",
-      path: "/compras",
+      text: "Usuarios",
+      path: "/listar-usuario",
     },
     {
       icon: <Package size={20} />,

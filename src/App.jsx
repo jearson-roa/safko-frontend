@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import ListarCliente from "./pages/Clientes/ListarCliente";
 import ListarTarea from "./pages/Tareas/ListarTarea";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ListarUsuarios from "./pages/Usuarios/ListarUsuario";
 
 function App() {
   return (
@@ -34,6 +35,15 @@ function App() {
         element={
           <ProtectedRoute>
             <ListarCliente />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/listar-usuario"
+        element={
+          <ProtectedRoute>
+            <ListarUsuarios />
           </ProtectedRoute>
         }
       />
