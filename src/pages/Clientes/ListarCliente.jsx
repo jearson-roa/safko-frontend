@@ -25,7 +25,7 @@ function ListarCliente() {
     cargo_contacto: "",
     correo_contacto: "",
     telefono_contacto: "",
-    estado: "Activo", // Inicializado por defecto en Activo
+    estado: "Activo",
     observaciones: "",
   };
 
@@ -80,7 +80,7 @@ function ListarCliente() {
           title: "¡Éxito!",
           text: "Cliente creado correctamente",
           icon: "success",
-          confirmButtonColor: "#1f2937",
+          confirmButtonColor: "#212529",
           timer: 2000,
           showConfirmButton: false,
         });
@@ -98,7 +98,7 @@ function ListarCliente() {
           title: "¡Error!",
           text: "Error al crear cliente",
           icon: "error",
-          confirmButtonColor: "#dc2626"
+          confirmButtonColor: "#dc3545"
         });
       }
     } finally {
@@ -114,8 +114,8 @@ function ListarCliente() {
       text: "Esta acción eliminará al cliente permanentemente",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6b7280",
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
     });
@@ -136,6 +136,7 @@ function ListarCliente() {
         console.error(error);
         window.Swal.fire("ERROR", "No se puede eliminar cliente", "error");
       } finally {
+        boxSizing: "border-box"
         setCargando(false);
       }
     }
@@ -154,397 +155,199 @@ function ListarCliente() {
   }
 
   return (
-    <>
+    <div className="flex">
       <Sidebar />
-      <div style={styles.container}>
-        <div style={styles.header}>
+      
+      {/* Contenedor Principal (Simula el marginLeft previo desplazando el contenido tras el Sidebar) */}
+      <div className="flex-grow-1 bg-light min-vh-100 p-4" style={{ marginLeft: "260px" }}>
+        
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
-            <h1 style={styles.title}>Gestión de Clientes</h1>
-            <p style={styles.subtitle}>Administración de clientes registrados</p>
+            <h1 className="h2 text-dark mb-1fw-bold">Gestión de Clientes</h1>
+            <p className="text-muted mb-0">Administración de clientes registrados</p>
           </div>
-          <button style={styles.newButton} onClick={() => setModalOpen(true)}>
+          <button className="btn btn-dark px-4 py-2" onClick={() => setModalOpen(true)}>
             + Nuevo Cliente
           </button>
         </div>
 
-        {/* Indicadores */}
-        <div style={styles.cardsContainer}>
-          <div style={styles.card}>
-            <span style={styles.cardLabel}>Total Clientes</span>
-            <h2 style={styles.cardNumber}>{clientes.length}</h2>
+        {/* Indicadores (Tarjetas) */}
+        <div className="row g-3 mb-4">
+          <div className="col-12 col-md-4">
+            <div className="card shadow-sm border-0 p-3">
+              <span className="text-muted small text-uppercase fw-bold">Total Clientes</span>
+              <h2 className="display-6 fw-bold text-dark mt-2 mb-0">{clientes.length}</h2>
+            </div>
           </div>
-          <div style={styles.card}>
-            <span style={styles.cardLabel}>Clientes Activos</span>
-            <h2 style={{ ...styles.cardNumber, color: "#16a34a" }}>{clientesActivos}</h2>
+          <div className="col-12 col-md-4">
+            <div className="card shadow-sm border-0 p-3">
+              <span className="text-muted small text-uppercase fw-bold">Clientes Activos</span>
+              <h2 className="display-6 fw-bold text-success mt-2 mb-0">{clientesActivos}</h2>
+            </div>
           </div>
-          <div style={styles.card}>
-            <span style={styles.cardLabel}>Clientes Inactivos</span>
-            <h2 style={{ ...styles.cardNumber, color: "#dc2626" }}>{clientes.length - clientesActivos}</h2>
+          <div className="col-12 col-md-4">
+            <div className="card shadow-sm border-0 p-3">
+              <span className="text-muted small text-uppercase fw-bold">Clientes Inactivos</span>
+              <h2 className="display-6 fw-bold text-danger mt-2 mb-0">{clientes.length - clientesActivos}</h2>
+            </div>
           </div>
         </div>
 
-        <div style={styles.searchContainer}>
+        {/* Barra de Búsqueda */}
+        <div className="mb-4">
           <input
             type="text"
+            className="form-control form-control-lg fs-6 shadow-sm"
             placeholder="Buscar por razón social o RUT..."
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
-            style={styles.searchInput}
           />
         </div>
 
-        <div style={styles.tableContainer}>
+        {/* Tabla */}
+        <div className="card shadow-sm border-0 overflow-hidden">
           {clientesFiltrados.length === 0 ? (
-            <div style={styles.loading}>No existen clientes registrados</div>
+            <div className="text-center p-5 text-muted">No existen clientes registrados</div>
           ) : (
-            <table style={styles.table}>
-              <thead>
-                <tr>
-                  <th style={styles.th}>ID</th>
-                  <th style={styles.th}>Razón Social</th>
-                  <th style={styles.th}>RUT</th>
-                  <th style={styles.th}>Nombre contacto</th>
-                  <th style={styles.th}>Cargo</th>
-                  <th style={styles.th}>Teléfono</th>
-                  <th style={styles.th}>Correo</th>
-                  <th style={styles.th}>Ciudad</th>
-                  <th style={styles.th}>Obs.</th>
-                  <th style={styles.th}>Estado</th>
-                  <th style={styles.th}>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clientesFiltrados.map((cliente) => (
-                  <tr key={cliente.id_cliente} style={styles.tr}>
-                    <td style={styles.td}>{cliente.id_cliente}</td>
-                    <td style={{ ...styles.td, fontWeight: "600" }}>{cliente.razon_social}</td>
-                    <td style={styles.td}>{cliente.rut}</td>
-                    <td style={styles.td}>{cliente.nombre_contacto}</td>
-                    <td style={styles.td}>{cliente.cargo_contacto}</td>
-                    <td style={styles.td}>{cliente.telefono_contacto}</td>
-                    <td style={styles.td}>{cliente.correo_contacto}</td>
-                    <td style={styles.td}>{cliente.ciudad}</td>
-                    <td style={styles.td}>{cliente.observaciones}</td>
-                    {/* BUG CORREGIDO: Se removió la celda de texto plano duplicada */}
-                    <td style={styles.td}>
-                      <span style={cliente.estado === "Activo" ? styles.badgeActivo : styles.badgeInactivo}>
-                        {cliente.estado || "Inactivo"}
-                      </span>
-                    </td>
-                    <td style={styles.td}>
-                      <div style={styles.actions}>
-                        <button style={styles.viewButton} onClick={() => navigate(`/clientes/ver/${cliente.id_cliente}`)}>Ver</button>
-                        <button style={styles.editButton} onClick={() => navigate(`/clientes/editar/${cliente.id_cliente}`)}>Editar</button>
-                        <button style={styles.deleteButton} onClick={() => eliminarCliente(cliente.id_cliente)}>Eliminar</button>
-                      </div>
-                    </td>
+            <div className="table-responsive">
+              <table className="table table-hover align-middle mb-0">
+                <thead className="table-light">
+                  <tr>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Razón Social</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">RUT</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Nombre contacto</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Cargo</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Teléfono</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Correo</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Ciudad</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Obs.</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase">Estado</th>
+                    <th className="px-3 py-3 text-secondary small text-uppercase text-end">Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {clientesFiltrados.map((cliente) => (
+                    <tr key={cliente.id_cliente}>
+                      <td className="px-3 py-3 fw-bold text-dark">{cliente.razon_social}</td>
+                      <td className="px-3 py-3">{cliente.rut}</td>
+                      <td className="px-3 py-3">{cliente.nombre_contacto}</td>
+                      <td className="px-3 py-3">{cliente.cargo_contacto}</td>
+                      <td className="px-3 py-3">{cliente.telefono_contacto}</td>
+                      <td className="px-3 py-3">{cliente.correo_contacto}</td>
+                      <td className="px-3 py-3">{cliente.ciudad}</td>
+                      <td className="px-3 py-3 text-truncate" style={{ maxWidth: "150px" }}>{cliente.observaciones}</td>
+                      <td className="px-3 py-3">
+                        <span className={`badge rounded-pill px-3 py-2 ${cliente.estado === "Activo" ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger"}`}>
+                          {cliente.estado || "Inactivo"}
+                        </span>
+                      </td>
+                      <td className="px-3 py-3 text-end">
+                        <div className="d-inline-flex gap-1">
+                          <button className="btn btn-sm btn-light border" onClick={() => navigate(`/clientes/ver/${cliente.id_cliente}`)}>Ver</button>
+                          <button className="btn btn-sm btn-primary" onClick={() => navigate(`/clientes/editar/${cliente.id_cliente}`)}>Editar</button>
+                          <button className="btn btn-sm btn-danger" onClick={() => eliminarCliente(cliente.id_cliente)}>Eliminar</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}  
         </div>
       </div>
 
+      {/* Modal Estilo Bootstrap manual (evitando dependencias pesadas de JS de Bootstrap) */}
       {modalOpen && (
-        <div style={styles.modalOverlay}>
-          <div style={styles.modal}>
-            <div style={styles.modalHeader}>
-              <h2 style={styles.modalTitle}>Nuevo Cliente</h2>
-              <button style={styles.closeBtn} onClick={() => { setModalOpen(false); setErrors({}); }}>✕</button>
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div className="modal-content border-0 shadow">
+              <div className="modal-header bg-light">
+                <h5 className="modal-title fw-bold text-dark">Nuevo Cliente</h5>
+                <button type="button" className="btn-close" onClick={() => { setModalOpen(false); setErrors({}); }}></button>
+              </div>
+              <form onSubmit={crearCliente}>
+                <div className="modal-body p-4">
+                  <div className="row g-3">
+                    
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Razón Social *</label>
+                      <input name="razon_social" value={form.razon_social} onChange={handleChange} className={`form-control ${errors.razon_social ? 'is-invalid' : ''}`} />
+                      {errors.razon_social && <div className="invalid-feedback">{errors.razon_social}</div>}
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">RUT *</label>
+                      <input name="rut" placeholder="12345678-9" value={form.rut} onChange={handleChange} className={`form-control ${errors.rut ? 'is-invalid' : ''}`} />
+                      {errors.rut && <div className="invalid-feedback">{errors.rut}</div>}
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Giro Comercial</label>
+                      <input name="giro_comercial" value={form.giro_comercial} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Dirección *</label>
+                      <input name="direccion" value={form.direccion} onChange={handleChange} className={`form-control ${errors.direccion ? 'is-invalid' : ''}`} />
+                      {errors.direccion && <div className="invalid-feedback">{errors.direccion}</div>}
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Ciudad *</label>
+                      <input name="ciudad" value={form.ciudad} onChange={handleChange} className={`form-control ${errors.ciudad ? 'is-invalid' : ''}`} />
+                      {errors.ciudad && <div className="invalid-feedback">{errors.ciudad}</div>}
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Comuna</label>
+                      <input name="comuna" value={form.comuna} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Región</label>
+                      <input name="region" value={form.region} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Nombre Contacto</label>
+                      <input name="nombre_contacto" value={form.nombre_contacto} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Cargo</label>
+                      <input name="cargo_contacto" value={form.cargo_contacto} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Teléfono / Celular</label>
+                      <input name="telefono_contacto" value={form.telefono_contacto} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Correo</label>
+                      <input type="email" name="correo_contacto" value={form.correo_contacto} onChange={handleChange} className="form-control" />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <label className="form-label small fw-bold text-secondary">Observaciones</label>
+                      <input name="observaciones" value={form.observaciones} onChange={handleChange} className="form-control" />
+                    </div>
+
+                  </div>
+                </div>
+                <div className="modal-footer bg-light border-top-0">
+                  <button type="button" className="btn btn-secondary" onClick={() => { setModalOpen(false); setForm(initialFormState); setErrors({}); }}>Cancelar</button>
+                  <button type="submit" className="btn btn-dark">Guardar Cliente</button>
+                </div>
+              </form>
             </div>
-            <form onSubmit={crearCliente}>
-              <div style={styles.modalGrid}>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Razón Social *</label>
-                  <input name="razon_social" value={form.razon_social} onChange={handleChange} style={{...styles.input, ...(errors.razon_social ? styles.inputError : {})}} />
-                  {errors.razon_social && <span style={styles.errorText}>{errors.razon_social}</span>}
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>RUT *</label>
-                  <input name="rut" placeholder="12345678-9" value={form.rut} onChange={handleChange} style={{...styles.input, ...(errors.rut ? styles.inputError : {})}} />
-                  {errors.rut && <span style={styles.errorText}>{errors.rut}</span>}
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Giro Comercial</label>
-                  <input name="giro_comercial" value={form.giro_comercial} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Dirección *</label>
-                  <input name="direccion" value={form.direccion} onChange={handleChange} style={{...styles.input, ...(errors.direccion ? styles.inputError : {})}} />
-                  {errors.direccion && <span style={styles.errorText}>{errors.direccion}</span>}
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Ciudad *</label>
-                  <input name="ciudad" value={form.ciudad} onChange={handleChange} style={{...styles.input, ...(errors.ciudad ? styles.inputError : {})}} />
-                  {errors.ciudad && <span style={styles.errorText}>{errors.ciudad}</span>}
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Comuna</label>
-                  <input name="comuna" value={form.comuna} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Región</label>
-                  <input name="region" value={form.region} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Nombre Contacto</label>
-                  <input name="nombre_contacto" value={form.nombre_contacto} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Cargo</label>
-                  <input name="cargo_contacto" value={form.cargo_contacto} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Teléfono / Celular</label>
-                  <input name="telefono_contacto" value={form.telefono_contacto} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Observaciones</label>
-                  <input name="observaciones" value={form.observaciones} onChange={handleChange} style={styles.input} />
-                </div>
-                <div style={styles.fieldGroup}>
-                  <label style={styles.label}>Correo</label>
-                  <input type="email" name="correo_contacto" value={form.correo_contacto} onChange={handleChange} style={styles.input} />
-                </div>
-              </div>
-              <div style={styles.modalButtons}>
-                <button type="submit" style={styles.saveBtn}>Guardar Cliente</button>
-                <button type="button" style={styles.cancelBtn} onClick={() => { setModalOpen(false); setForm(initialFormState); setErrors({}); }}>Cancelar</button>
-              </div>
-            </form>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
-
-
-const styles = {
-  container: {
-    marginLeft: "260px",
-    minHeight: "100vh",
-    backgroundColor: "#f4f6f8",
-    padding: "30px",
-    fontFamily: "Arial, sans-serif",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "25px",
-  },
-  title: {
-    fontSize: "32px",
-    color: "#1f2937",
-    marginBottom: "5px",
-  },
-  subtitle: {
-    color: "#6b7280",
-  },
-  newButton: {
-    backgroundColor: "#1f2937",
-    color: "#fff",
-    border: "none",
-    padding: "12px 18px",
-    borderRadius: "10px",
-    cursor: "pointer",
-  },
-  cardsContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "20px",
-    marginBottom: "25px",
-  },
-  card: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-  },
-  cardLabel: {
-    color: "#6b7280",
-    fontSize: "14px",
-  },
-  cardNumber: {
-    marginTop: "10px",
-    fontSize: "32px",
-    color: "#1f2937",
-  },
-  searchContainer: {
-    marginBottom: "25px",
-  },
-  searchInput: {
-    width: "100%",
-    padding: "14px",
-    borderRadius: "10px",
-    border: "1px solid #d1d5db",
-    fontSize: "14px",
-    outline: "none",
-  },
-  tableContainer: {
-    backgroundColor: "#fff",
-    borderRadius: "12px",
-    overflow: "hidden",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-    overflowX: "auto",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  th: {
-    backgroundColor: "#f9fafb",
-    textAlign: "left",
-    padding: "16px",
-    fontSize: "14px",
-    color: "#374151",
-    borderBottom: "1px solid #e5e7eb",
-  },
-  tr: {
-    borderBottom: "1px solid #e5e7eb",
-  },
-  td: {
-    padding: "16px",
-    fontSize: "14px",
-    color: "#374151",
-  },
-  badgeActivo: {
-    backgroundColor: "#dcfce7",
-    color: "#166534",
-    padding: "6px 12px",
-    borderRadius: "20px",
-    fontSize: "12px",
-    fontWeight: "bold",
-  },
-  badgeInactivo: {
-    backgroundColor: "#fee2e2",
-    color: "#991b1b",
-    padding: "6px 12px",
-    borderRadius: "20px",
-    fontSize: "12px",
-    fontWeight: "bold",
-  },
-  actions: {
-    display: "flex",
-    gap: "5px",
-  },
-  viewButton: {
-    backgroundColor: "#e5e7eb",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-  editButton: {
-    backgroundColor: "#2563eb",
-    color: "#fff",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-  loading: {
-    padding: "40px",
-    textAlign: "center",
-    color: "#6b7280",
-  },
-  modalOverlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
-  modal: {
-    backgroundColor: "#fff",
-    borderRadius: "12px",
-    padding: "30px",
-    width: "680px",
-    maxHeight: "90vh",
-    overflowY: "auto",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-  },
-  modalHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
-  },
-  modalTitle: {
-    fontSize: "20px",
-    fontWeight: "700",
-    color: "#1f2937",
-    margin: "0",
-  },
-  closeBtn: {
-    background: "none",
-    border: "none",
-    fontSize: "18px",
-    cursor: "pointer",
-    color: "#6b7280",
-  },
-  modalGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "16px",
-  },
-  fieldGroup: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "4px",
-  },
-  label: {
-    fontSize: "13px",
-    fontWeight: "600",
-    color: "#374151",
-  },
-  input: {
-    padding: "10px 12px",
-    borderRadius: "8px",
-    border: "1px solid #d1d5db",
-    fontSize: "14px",
-    outline: "none",
-    width: "100%",
-    boxSizing: "border-box",
-  },
-  inputError: {
-    borderColor: "#dc2626",
-  },
-  errorText: {
-    fontSize: "12px",
-    color: "#dc2626",
-  },
-  modalButtons: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: "10px",
-    marginTop: "24px",
-  },
-  saveBtn: {
-    backgroundColor: "#1f2937",
-    color: "#fff",
-    border: "none",
-    padding: "10px 20px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "14px",
-  },
-  cancelBtn: {
-    backgroundColor: "#e5e7eb",
-    color: "#374151",
-    border: "none",
-    padding: "10px 20px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "14px",
-  },
-};
 
 export default ListarCliente;

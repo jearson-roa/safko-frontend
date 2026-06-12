@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import CrearTarea from "./pages/Tareas/CrearTarea";
 import ListarCliente from "./pages/Clientes/ListarCliente";
+import ListarTarea from "./pages/Tareas/ListarTarea";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -21,10 +21,10 @@ function App() {
       />
 
       <Route
-        path="/crear-tarea"
+        path="/listar-tarea"
         element={
           <ProtectedRoute>
-            <CrearTarea />
+            <ListarTarea />
           </ProtectedRoute>
         }
       />
@@ -37,7 +37,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-
     </Routes>
   );
 }

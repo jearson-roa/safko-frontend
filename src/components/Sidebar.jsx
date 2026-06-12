@@ -37,8 +37,8 @@ function Sidebar() {
     },
     {
       icon: <FileText size={20} />,
-      text: "Crear Tarea",
-      path: "/crear-tarea",
+      text: "Tarea",
+      path: "/listar-tarea",
     },
     {
       icon: <Users size={20} />,
