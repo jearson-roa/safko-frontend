@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 function ListarTarea() {
   const [tareas, setTareas] = useState([]);
@@ -28,6 +29,7 @@ function ListarTarea() {
     const cargarDatosIniciales = async () => {
       try {
         setCargando(true);
+        // Carga en paralelo eficiente
         await Promise.all([cargarTareas(), cargarClientes(), cargarUsuarios()]);
       } catch (error) {
         console.error("Error cargando los datos iniciales:", error);
@@ -77,35 +79,82 @@ function ListarTarea() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3000/api/tareas", formData);
-      alert("Tarea creada correctamente");
+      
+      if (window.Swal) {
+        window.Swal.fire({
+          title: "¡Creado!",
+          text: "Tarea creada correctamente",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false
+        });
+      } else {
+        alert("Tarea creada correctamente");
+      }
+
       setModalOpen(false);
       setFormData(initialFormState);
       cargarTareas();
     } catch (error) {
       console.error(error);
-      alert("Error al guardar tarea");
+      if (window.Swal) {
+        window.Swal.fire("Error", "Error al guardar tarea", "error");
+      } else {
+        alert("Error al guardar tarea");
+      }
     }
   };
 
   const eliminarTarea = async (id) => {
-    if (window.confirm("¿Seguro que deseas eliminar esta tarea?")) {
+    if (!window.Swal) {
+      // Respaldo por si no ha cargado SweetAlert2 en el objeto window
+      if (window.confirm("¿Seguro que deseas eliminar esta tarea?")) {
+        try {
+          await axios.delete(`http://localhost:3000/api/tareas/${id}`);
+          alert("Tarea eliminada con éxito");
+          cargarTareas();
+        } catch (error) {
+          console.error(error);
+          alert("Error al eliminar la tarea");
+        }
+      }
+      return;
+    }
+
+    const result = await window.Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará la tarea permanentemente",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      setCargando(true);
       try {
         await axios.delete(`http://localhost:3000/api/tareas/${id}`);
-        alert("Tarea eliminada con éxito");
-        cargarTareas();
+        window.Swal.fire({
+          title: "¡Eliminado!",
+          text: "La tarea ha sido eliminada correctamente",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        await cargarTareas(); // CORREGIDO: Llama al refresco directo de la tabla
       } catch (error) {
-        console.error("Error al eliminar la tarea:", error);
-        alert("Error al eliminar la tarea");
+        console.error(error);
+        window.Swal.fire("Error", "No se puede eliminar la tarea", "error"); // CORREGIDO: Sintaxis de Swal
+      } finally {
+        setCargando(false);        
       }
     }
   };
 
   if (cargando) {
-    return (
-      <div style={styles.container}>
-        <h3>Cargando tareas...</h3>
-      </div>
-    );
+      return <Loading mensaje="Cargando tareas..." />
   }
 
   return (

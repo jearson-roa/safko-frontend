@@ -204,11 +204,12 @@ function ListarCliente() {
             onChange={(e) => setBusqueda(e.target.value)}
           />
         </div>
+        
 
         {/* Tabla */}
         <div className="card shadow-sm border-0 overflow-hidden">
           {clientesFiltrados.length === 0 ? (
-            <div className="text-center p-5 text-muted">No existen clientes registrados</div>
+            <div className="alert alert-info">No existen clientes registrados</div>
           ) : (
             <div className="table-responsive">
               <table className="table table-hover align-middle mb-0">
