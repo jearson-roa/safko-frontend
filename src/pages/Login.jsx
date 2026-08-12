@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
-import "/src/App.css";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ function Login() {
         {
           email,
           password,
-          plataforma: 'web', 
+          plataforma: "web",
         }
       );
 
@@ -42,72 +42,93 @@ function Login() {
   }
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div className="card shadow-sm border-0" style={{ maxWidth: '400px', width: '100%' }}>
-        <div className="card-body p-4 p-md-5">
-          
-          <div className="text-center mb-4">
-            <h1 className="h3 mb-1 fw-bold text-primary">Safko SpA</h1>
-            <p className="text-muted small">Sistema de Gestión</p>
+    <div className="safko-login">
+      {/* Panel izquierdo: identidad del sistema */}
+      <div className="safko-login__brand">
+        <div className="safko-login__grid" aria-hidden="true"></div>
+
+        <div className="safko-login__brand-content">
+          <div className="safko-login__mark">SAFKO</div>
+          <div className="safko-login__submark">SpA</div>
+
+          <p className="safko-login__tagline">Sistema de Gestión</p>
+
+          <div className="safko-login__status">
+            <span className="safko-login__dot" aria-hidden="true"></span>
+            TERMINAL DE ACCESO — EN LÍNEA
+          </div>
+        </div>
+
+        <div className="safko-login__footnote">SAFKO · CONSOLA V.2026.08</div>
+      </div>
+
+      {/* Panel derecho: formulario */}
+      <div className="safko-login__panel">
+        <form className="safko-login__form" onSubmit={iniciarSesion}>
+          <div className="safko-login__form-header">
+            <span className="safko-login__eyebrow">Acceso restringido</span>
+            <h2 className="safko-login__title">Ingresar al sistema</h2>
           </div>
 
-          <form onSubmit={iniciarSesion}>
-            <h2 className="h5 text-center mb-4 text-secondary">Acceso al Sistema</h2>
+          <div className="safko-field">
+            <label className="safko-field__label" htmlFor="safko-email">
+              Correo electrónico
+            </label>
+            <input
+              id="safko-email"
+              type="email"
+              className="safko-field__input"
+              placeholder="usuario@empresa.cl"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
+              required
+            />
+          </div>
 
-            {/* Campo: Correo Electrónico */}
-            <div className="mb-3">
-              <label className="form-label text-secondary small fw-semibold">Correo Electrónico</label>
+          <div className="safko-field">
+            <label className="safko-field__label" htmlFor="safko-password">
+              Contraseña
+            </label>
+            <div className="safko-field__row">
               <input
-                type="email"
-                className="form-control"
-                placeholder="usuario@empresa.cl"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="safko-password"
+                type={showPassword ? "text" : "password"}
+                className="safko-field__input"
+                placeholder="Ingrese su contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 required
               />
+              <button
+                type="button"
+                className="safko-field__toggle"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                {showPassword ? "Ocultar" : "Mostrar"}
+              </button>
             </div>
+          </div>
 
-            {/* Campo: Contraseña (CORREGIDO) */}
-            <div className="mb-4">
-              <label className="form-label text-secondary small fw-semibold">Contraseña</label>
-              <div className="input-group">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className="form-control"
-                  placeholder="Ingrese su contraseña"
-                  value={password} // <--- AQUÍ ESTABA EL ERROR, AHORA ES password
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <button 
-                  className="btn btn-outline-secondary" 
-                  type="button" 
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? "Ocultar" : "Mostrar"}
-                </button>
-              </div>
-            </div>
+          <button type="submit" className="safko-submit" disabled={cargando}>
+            {cargando ? (
+              <span className="safko-submit__spinner" role="status" aria-hidden="true"></span>
+            ) : null}
+            Ingresar
+          </button>
 
-            <button 
-              type="submit" 
-              className="btn btn-primary w-100 py-2 mb-4 fw-bold" 
-              disabled={cargando}
-            >
-              {cargando ? (
-                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              ) : null}
-              Ingresar
-            </button>
-
-            <div className="alert alert-info text-center p-2 mb-0" style={{ fontSize: '0.85rem' }}>
-              <p className="mb-1 fw-bold">Usuario de prueba</p>
-              <p className="mb-1"><strong>Email:</strong> admin@safko.cl</p>
-              <p className="mb-0"><strong>Contraseña:</strong> 123456</p>
-            </div>
-          </form>
-
-        </div>
+          <div className="safko-note">
+            <span className="safko-note__label">Credenciales de prueba</span>
+            <span className="safko-note__row">
+              <strong>Email</strong> admin@safko.cl
+            </span>
+            <span className="safko-note__row">
+              <strong>Contraseña</strong> 123456
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   );
