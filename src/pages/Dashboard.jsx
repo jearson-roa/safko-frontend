@@ -1,9 +1,7 @@
-import Sidebar from "../components/Sidebar";
 
 function Dashboard() {
   return (
     <>
-      <Sidebar />
 
       <div style={styles.container}>
         <h1 style={styles.title}>Safko Dashboard</h1>
@@ -49,7 +47,6 @@ function Dashboard() {
 
 const styles = {
   container: {
-    marginLeft: "260px", // mismo ancho del sidebar
     minHeight: "100vh",
     backgroundColor: "#f4f6f8",
     padding: "30px",
