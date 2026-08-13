@@ -145,7 +145,7 @@ function ListarCliente() {
 
     setCargando(true);
     try {
-      await axios.post("http://localhost:3000/api/clientes", form);
+      await axios.post({}, form);
 
       if (window.Swal) {
         window.Swal.fire({
