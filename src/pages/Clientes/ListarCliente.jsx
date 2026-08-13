@@ -145,7 +145,7 @@ function ListarCliente() {
 
     setCargando(true);
     try {
-      await axios.post({}, form);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/clientes`, form);
 
       if (window.Swal) {
         window.Swal.fire({
