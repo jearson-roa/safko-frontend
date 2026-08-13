@@ -1,8 +1,13 @@
-const Loading = ({ mensaje = "Cargando..." }) => (
-       <div className="loading-overlay">
-         <div className="spinner"></div>
-      <p className="loading-text">{mensaje}</p>
-    </div>
 
+import "./Loading.css";
+
+const Loading = ({ mensaje = "Cargando..." }) => {
+  return (
+    <div className="loading-overlay">
+      <div className="loading-spinner"></div>
+      <p>{mensaje}</p>
+    </div>
   );
-  export default Loading;
+};
+
+export default Loading;
