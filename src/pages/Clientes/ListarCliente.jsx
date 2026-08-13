@@ -126,7 +126,7 @@ function ListarCliente() {
 
   const obtenerClientes = async () => {
     try {
-      const respuesta = await axios.get("http://localhost:3000/api/clientes");
+      const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`)
       setClientes(respuesta.data);
     } catch (error) {
       console.error("Error al obtener clientes:", error);
