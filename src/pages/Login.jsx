@@ -49,7 +49,7 @@ function Login() {
 
         <div className="safko-login__brand-content">
           <div className="safko-login__mark">SAFKO</div>
-          <div className="safko-login__submark">SpA</div>
+          
 
           <p className="safko-login__tagline">Sistema de Gestión</p>
 
@@ -119,15 +119,7 @@ function Login() {
             Ingresar
           </button>
 
-          <div className="safko-note">
-            <span className="safko-note__label">Credenciales de prueba</span>
-            <span className="safko-note__row">
-              <strong>Email</strong> admin@safko.cl
-            </span>
-            <span className="safko-note__row">
-              <strong>Contraseña</strong> 123456
-            </span>
-          </div>
+          
         </form>
       </div>
     </div>

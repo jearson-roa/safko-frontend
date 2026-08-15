@@ -69,7 +69,7 @@ function Sidebar({ collapsed, setCollapsed}) {
           display: "flex",
           alignItems: "center",
           justifyContent: collapsed ? "center" : "space-between",
-          borderBottom: "1px solid #1F2937",
+          borderBottom: "1px solid #1F2",
           flexShrink: 0,
         }}
       >
