@@ -6,14 +6,26 @@
   --safko-color-blanco: #ffffff;
   --safko-color-negro: #000000;
 
-  
-  --safko-font-display: "Ubarnist",  sans-serif;
-  --safko-font-body: "Inter", "Segoe UI", system-ui, sans-serif;
-  --safko-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --safko-font-display: "Urbanist", sans-serif;
+  --safko-font-body: "Urbanist", sans-serif;
+  --safko-font-mono: "Urbanist", sans-serif;
+
+  /* =========================================================
+     AJUSTE DE IMAGEN
+     ========================================================= */
+
+  /* Tamaño horizontal de la imagen */
+  --safko-bg-width: auto;
+
+  /* Tamaño vertical */
+  --safko-bg-height: 100%;
+
+  /* Posición horizontal */
+  --safko-bg-x: center;
+
+  /* Posición vertical */
+  --safko-bg-y: bottom;
 }
-
-
-
 
 /* =========================================================
    LOGIN
@@ -21,12 +33,14 @@
 
 .safko-login {
   min-height: 100vh;
+
   display: grid;
+
   grid-template-columns: 1.05fr 1fr;
+
   font-family: var(--safko-font-body);
-  
 
-
+  color: var(--safko-color-blanco);
 }
 
 /* =========================================================
@@ -35,11 +49,15 @@
 
 .safko-login__brand {
   position: relative;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 
   padding: 3rem;
+
   overflow: hidden;
 
   background: var(--safko-color-primario);
@@ -53,6 +71,7 @@
 
 .safko-login__grid {
   position: absolute;
+
   inset: 0;
 
   background-image:
@@ -66,11 +85,18 @@
       transparent 1px
     );
 
-  background-size: 40px 40px;
+  background-size: px 20px;
 
   opacity: 0.35;
 
   mask-image:
+    radial-gradient(
+      circle at 20% 20%,
+      black,
+      transparent 75%
+    );
+
+  -webkit-mask-image:
     radial-gradient(
       circle at 20% 20%,
       black,
@@ -84,8 +110,11 @@
 
 .safko-login__brand-content {
   position: relative;
+
   margin-top: auto;
+
   margin-bottom: auto;
+
   z-index: 2;
 }
 
@@ -95,18 +124,29 @@
 
 .safko-login__mark {
   font-family: var(--safko-font-display);
+
   font-weight: 900;
+
   font-size: clamp(2.5rem, 5vw, 3.5rem);
+
   letter-spacing: 0.02em;
+
   line-height: 1;
+
   color: var(--safko-color-verde);
 }
 
 .safko-login__submark {
-  font-family: var(--safko-font-mono);
+  font-family: var(--safko-font-display);
+
+  font-weight: 500;
+
   font-size: 0.8rem;
+
   letter-spacing: 0.3em;
+
   color: var(--safko-color-verde);
+
   margin-top: 0.5rem;
 }
 
@@ -116,8 +156,11 @@
 
 .safko-login__tagline {
   font-family: var(--safko-font-display);
+
   font-weight: 500;
+
   color: var(--safko-color-secundario);
+
   margin: 1.5rem 0 2rem;
 }
 
@@ -127,14 +170,20 @@
 
 .safko-login__status {
   display: inline-flex;
+
   align-items: center;
+
   gap: 0.6rem;
 
-  font-family: var(--safko-font-mono);
+  font-family: var(--safko-font-display);
+
+  font-weight: 500;
+
   font-size: 0.72rem;
+
   letter-spacing: 0.14em;
 
-  color: #ffffff;
+  color: var(--safko-color-blanco);
 
   padding: 0.6rem 0.9rem;
 
@@ -147,7 +196,10 @@
 
 .safko-login__dot {
   width: 8px;
+
   height: 8px;
+
+  flex-shrink: 0;
 
   border-radius: 50%;
 
@@ -163,11 +215,13 @@
   0%,
   100% {
     opacity: 1;
+
     transform: scale(1);
   }
 
   50% {
     opacity: 0.45;
+
     transform: scale(0.85);
   }
 }
@@ -185,8 +239,12 @@
 .safko-login__footnote {
   position: relative;
 
-  font-family: var(--safko-font-mono);
+  font-family: var(--safko-font-display);
+
+  font-weight: 500;
+
   font-size: 0.68rem;
+
   letter-spacing: 0.14em;
 
   color: rgba(255, 255, 255, 0.45);
@@ -196,27 +254,43 @@
    PANEL FORMULARIO
 ========================================================= */
 
-
 .safko-login__panel {
+  position: relative;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+  padding: 0rem;
+
   background-color: var(--safko-color-primario);
 
+  background-image: url("../assets/img/login_fondo.jpeg");
 
-
-  background-image: url("../assets/img/login-fondo.jpeg") ;
   background-repeat: no-repeat;
-  background-size: 120%;
-  background-position: left;
 
+  background-size:
+    var(--safko-bg-width)
+    var(--safko-bg-height);
+
+  background-position:
+    var(--safko-bg-x)
+    var(--safko-bg-y);
 }
 
 /* =========================================================
    FORMULARIO
 ========================================================= */
+
 .safko-login__form {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
+
   max-width: 400px;
 
   padding: 2.5rem;
@@ -227,20 +301,21 @@
     transparent
   );
 
-  border: 1px  var(--safko-color-blanco);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
   border-radius: 24px;
 
   backdrop-filter: blur(10px) saturate(100%);
+
   -webkit-backdrop-filter: blur(10px) saturate(100%);
 
   box-shadow:
     0 25px 60px rgba(36, 27, 166, 0.35),
     inset 0 1px 1px rgba(255, 255, 255, 0.3),
     inset 0 -1px 1px rgba(36, 27, 166, 0.2);
+
+  font-family: var(--safko-font-display);
 }
-
-
 
 /* =========================================================
    HEADER
@@ -258,7 +333,9 @@
   display: block;
 
   font-family: var(--safko-font-display);
+
   font-weight: 500;
+
   font-size: medium;
 
   letter-spacing: 0.16em;
@@ -279,11 +356,9 @@
 
   font-weight: 900;
 
-
-
   margin: 0;
 
-  color: #ffffff;
+  color: var(--safko-color-blanco);
 }
 
 /* =========================================================
@@ -296,6 +371,8 @@
 
 .safko-field__label {
   display: block;
+
+  font-family: var(--safko-font-display);
 
   font-size: 0.78rem;
 
@@ -312,7 +389,9 @@
 
 .safko-field__row {
   display: flex;
+
   align-items: stretch;
+
   gap: 0;
 }
 
@@ -323,22 +402,33 @@
 .safko-field__input {
   width: 100%;
 
-  background: #ffffff;
+  min-width: 0;
 
+  background: var(--safko-color-blanco);
+
+  border: 1px solid rgba(36, 27, 166, 0.15);
 
   border-radius: 8px;
 
   padding: 0.8rem 0.9rem;
 
-  font-family: var(--safko-font-body);
+  font-family: var(--safko-font-display);
 
   font-size: 0.95rem;
 
+  color: var(--safko-color-negro);
 
+  box-sizing: border-box;
 }
 
+.safko-field__input:focus {
+  outline: none;
 
+  border-color: var(--safko-color-secundario);
 
+  box-shadow:
+    0 0 0 3px rgba(77, 104, 216, 0.2);
+}
 
 /* =========================================================
    INPUT + TOGGLE
@@ -346,7 +436,9 @@
 
 .safko-field__row .safko-field__input {
   border-top-right-radius: 0;
+
   border-bottom-right-radius: 0;
+
   border-right: none;
 }
 
@@ -357,7 +449,7 @@
 .safko-field__toggle {
   flex-shrink: 0;
 
-  font-family: var(--safko-font-mono);
+  font-family: var(--safko-font-display);
 
   font-size: 0.7rem;
 
@@ -365,7 +457,7 @@
 
   text-transform: uppercase;
 
-  color: #ffffff;
+  color: var(--safko-color-blanco);
 
   background: var(--safko-color-morado);
 
@@ -410,11 +502,12 @@
   display: inline-flex;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 0.55rem;
 
-  font-family: var(--safko-font-body);
+  font-family: var(--safko-font-display);
 
   font-weight: 700;
 
@@ -426,9 +519,9 @@
 
   color: var(--safko-color-verde);
 
-  background: none;
+  background-color: var(--safko-color-secundario);
 
-  border-color: var(--safko-color-verde);
+  border: 1px solid var(--safko-color-verde);
 
   border-radius: 8px;
 
@@ -438,12 +531,15 @@
 
   cursor: pointer;
 
-
-    
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.1s ease;
 }
 
 .safko-submit:hover {
   color: var(--safko-color-secundario);
+
   background-color: var(--safko-color-verde);
 }
 
@@ -453,7 +549,9 @@
 
 .safko-submit:disabled {
   opacity: 0.65;
+
   cursor: not-allowed;
+
   box-shadow: none;
 }
 
@@ -470,6 +568,7 @@
 
 .safko-submit__spinner {
   width: 14px;
+
   height: 14px;
 
   border: 2px solid rgba(36, 27, 166, 0.3);
@@ -510,7 +609,7 @@
 
   border-radius: 8px;
 
-  font-family: var(--safko-font-mono);
+  font-family: var(--safko-font-display);
 
   font-size: 0.78rem;
 
@@ -518,6 +617,10 @@
 }
 
 .safko-note__label {
+  font-family: var(--safko-font-display);
+
+  font-weight: 700;
+
   text-transform: uppercase;
 
   letter-spacing: 0.1em;
@@ -530,7 +633,7 @@
 }
 
 .safko-note__row strong {
-  color: #ffffff;
+  color: var(--safko-color-blanco);
 
   font-weight: 500;
 
@@ -538,22 +641,58 @@
 }
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE - TABLET
 ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .safko-login {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .safko-login__brand {
-    padding: 2rem;
+    padding: 2.5rem;
+  }
 
-    min-height: 320px;
+  .safko-login__panel {
+    padding: 1.5rem;
+  }
+
+  .safko-login__form {
+    max-width: 380px;
+
+    padding: 2rem;
+  }
+
+  .safko-login__mark {
+    font-size: clamp(2.2rem, 5vw, 3rem);
+  }
+
+  .safko-login__tagline {
+    font-size: 0.95rem;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET VERTICAL
+========================================================= */
+
+@media (max-width: 768px) {
+  .safko-login {
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+  }
+
+  .safko-login__brand {
+    min-height: auto;
+
+    padding: 2rem;
 
     border-right: none;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .safko-login__brand-content {
@@ -561,11 +700,27 @@
   }
 
   .safko-login__mark {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .safko-login__submark {
+    font-size: 0.7rem;
   }
 
   .safko-login__tagline {
-    margin: 0.75rem 0 1rem;
+    margin: 0.8rem 0 1rem;
+
+    font-size: 0.9rem;
+  }
+
+  .safko-login__status {
+    max-width: 100%;
+
+    font-size: 0.65rem;
+
+    padding: 0.5rem 0.7rem;
+
+    letter-spacing: 0.1em;
   }
 
   .safko-login__footnote {
@@ -573,31 +728,164 @@
   }
 
   .safko-login__panel {
-    padding: 1.5rem;
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 2rem 1.5rem;
+
+    background-size:
+      var(--safko-bg-width)
+      var(--safko-bg-height);
+
+    background-position:
+      var(--safko-bg-x)
+      var(--safko-bg-y);
   }
 
   .safko-login__form {
+    width: 100%;
+
     max-width: 100%;
+
     padding: 2rem 1.5rem;
+
+    border-radius: 20px;
   }
 }
 
+/* =========================================================
+   RESPONSIVE - MÓVIL
+========================================================= */
+
 @media (max-width: 480px) {
+  .safko-login {
+    min-height: 100svh;
+  }
+
   .safko-login__brand {
-    min-height: 280px;
+    min-height: 260px;
+
     padding: 1.5rem;
+  }
+
+  .safko-login__mark {
+    font-size: 2rem;
+  }
+
+  .safko-login__submark {
+    font-size: 0.65rem;
+
+    letter-spacing: 0.2em;
+  }
+
+  .safko-login__tagline {
+    font-size: 0.85rem;
+
+    margin: 0.7rem 0 1rem;
+  }
+
+  .safko-login__status {
+    width: fit-content;
+
+    font-size: 0.58rem;
+
+    padding: 0.45rem 0.6rem;
+
+    letter-spacing: 0.06em;
   }
 
   .safko-login__panel {
     padding: 1rem;
+
+    background-size:
+      var(--safko-bg-width)
+      var(--safko-bg-height);
+
+    background-position:
+      var(--safko-bg-x)
+      var(--safko-bg-y);
   }
 
   .safko-login__form {
-    padding: 1.5rem 1.25rem;
-    border-radius: 14px;
+    padding: 1.5rem 1.1rem;
+
+    border-radius: 18px;
+  }
+
+  .safko-login__form-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .safko-login__eyebrow {
+    font-size: 0.75rem;
+
+    letter-spacing: 0.1em;
   }
 
   .safko-login__title {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+  }
+
+  .safko-field {
+    margin-bottom: 1rem;
+  }
+
+  .safko-field__label {
+    font-size: 0.75rem;
+  }
+
+  .safko-field__input {
+    font-size: 0.9rem;
+
+    padding: 0.75rem 0.8rem;
+  }
+
+  .safko-field__toggle {
+    font-size: 0.62rem;
+
+    padding: 0 0.7rem;
+  }
+
+  .safko-submit {
+    font-size: 0.82rem;
+
+    padding: 0.8rem;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MÓVILES PEQUEÑOS
+========================================================= */
+
+@media (max-width: 360px) {
+  .safko-login__brand {
+    min-height: 230px;
+
+    padding: 1.25rem;
+  }
+
+  .safko-login__mark {
+    font-size: 1.75rem;
+  }
+
+  .safko-login__tagline {
+    font-size: 0.8rem;
+  }
+
+  .safko-login__status {
+    font-size: 0.52rem;
+  }
+
+  .safko-login__panel {
+    padding: 0.75rem;
+  }
+
+  .safko-login__form {
+    padding: 1.25rem 1rem;
+  }
+
+  .safko-login__title {
+    font-size: 1.2rem;
   }
 }

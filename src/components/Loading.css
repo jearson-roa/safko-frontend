@@ -1,32 +1,98 @@
+:root {
+  --safko-color-primario: #241ba6;
+  --safko-color-secundario: #4d68d8;
+  --safko-color-verde: #91f023;
+  --safko-color-morado: #fc5b20;
+  --safko-color-blanco: #ffffff;
+  --safko-color-negro: #000000;
+
+  --safko-font-display: "Urbanist", sans-serif;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
 .loading-overlay {
   position: fixed;
+
   inset: 0;
-  background: rgba(248, 250, 252, 0.95);
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
+
   z-index: 9999;
+
+  background: rgba(36, 27, 166, 0.96);
+
+  font-family: var(--safko-font-display);
 }
+
+/* =========================================================
+   SPINNER
+========================================================= */
 
 .loading-spinner {
-  width: 45px;
-  height: 45px;
-  border: 4px solid #e2e8f0;
-  border-top-color: #4f46e5;
+  width: 50px;
+
+  height: 50px;
+
+  border: 4px solid rgba(255, 255, 255, 0.2);
+
+  border-top-color: var(--safko-color-verde);
+
+  border-right-color: var(--safko-color-secundario);
+
   border-radius: 50%;
+
   animation: spin 0.8s linear infinite;
-  margin-bottom: 15px;
+
+  margin-bottom: 18px;
+
+  box-shadow:
+    0 0 0 4px rgba(145, 240, 35, 0.08),
+    0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* =========================================================
+   TEXTO
+========================================================= */
+
 .loading-overlay p {
-  color: #475569;
-  font-size: 15px;
+  margin: 0;
+
+  font-family: var(--safko-font-display);
+
+  color: var(--safko-color-blanco);
+
+  font-size: 16px;
+
   font-weight: 600;
+
+  letter-spacing: 0.04em;
 }
+
+/* =========================================================
+   ANIMACIÓN
+========================================================= */
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
   }
 }
