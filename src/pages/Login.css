@@ -245,7 +245,7 @@
     Fondo base visible incluso si backdrop-filter
     no es soportado o no se renderiza.
   */
-  background-color: rgba(31, 24, 125, 0.48);
+  background-color: var(--safko-color-secundario);
 
   /*
     Capa translúcida del glass.
