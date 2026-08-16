@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./Dashboard.css";
 
 function Dashboard() {
   const [datos, setDatos] = useState({
     tareasPendientes: 0,
     tareasEjecucion: 0,
-    tareasRealizadas: 0
+    tareasRealizadas: 0,
   });
 
   const [cargando, setCargando] = useState(true);
@@ -29,108 +30,153 @@ function Dashboard() {
   }, []);
 
   return (
-    <div style={styles.container}>
+    <main className="safko-dashboard">
 
-      <h1 style={styles.title}>
-        Safko Dashboard
-      </h1>
+      {/* HEADER */}
+      <header className="safko-dashboard__header">
+        <div>
+          <span className="safko-dashboard__eyebrow">
+            PANEL DE CONTROL
+          </span>
 
-      <p style={styles.subtitle}>
-        Bienvenido al sistema de gestión
-      </p>
+          <h1 className="safko-dashboard__title">
+            Dashboard
+          </h1>
 
-      <div style={styles.cardContainer}>
-
-        {/* TAREAS PENDIENTES */}
-        <div style={styles.card}>
-          <h2>Tareas pendientes</h2>
-
-          <p style={styles.number}>
-            {cargando ? "..." : datos.tareasPendientes}
+          <p className="safko-dashboard__subtitle">
+            Bienvenido al sistema de gestión SAFKO
           </p>
-
-          <p>Trabajos pendientes de realizar</p>
         </div>
 
-        {/* TAREAS EN EJECUCIÓN */}
-        <div style={styles.card}>
-          <h2>Tareas en ejecución</h2>
+        <div className="safko-dashboard__status">
+          <span className="safko-dashboard__status-dot"></span>
+          SISTEMA EN LÍNEA
+        </div>
+      </header>
 
-          <p style={styles.number}>
-            {cargando ? "..." : datos.tareasEjecucion}
-          </p>
-
-          <p>Trabajos actualmente en ejecución</p>
+      {/* RESUMEN */}
+      <section className="safko-dashboard__section">
+        <div className="safko-dashboard__section-header">
+          <div>
+            <h2>Resumen de tareas</h2>
+            <p>Estado actual de los trabajos registrados</p>
+          </div>
         </div>
 
-        {/* TAREAS REALIZADAS */}
-        <div style={styles.card}>
-          <h2>Tareas realizadas</h2>
+        <div className="safko-dashboard__stats">
 
-          <p style={styles.number}>
-            {cargando ? "..." : datos.tareasRealizadas}
-          </p>
+          {/* PENDIENTES */}
+          <article className="safko-dashboard__card safko-dashboard__card--pending">
+            <div className="safko-dashboard__card-top">
+              <div className="safko-dashboard__icon">
+                !
+              </div>
 
-          <p>Trabajos completados</p>
+              <span className="safko-dashboard__card-label">
+                PENDIENTES
+              </span>
+            </div>
+
+            <div className="safko-dashboard__number">
+              {cargando ? "..." : datos.tareasPendientes}
+            </div>
+
+            <p>
+              Trabajos pendientes de realizar
+            </p>
+          </article>
+
+          {/* EN EJECUCIÓN */}
+          <article className="safko-dashboard__card safko-dashboard__card--execution">
+            <div className="safko-dashboard__card-top">
+              <div className="safko-dashboard__icon">
+                ↻
+              </div>
+
+              <span className="safko-dashboard__card-label">
+                EN EJECUCIÓN
+              </span>
+            </div>
+
+            <div className="safko-dashboard__number">
+              {cargando ? "..." : datos.tareasEjecucion}
+            </div>
+
+            <p>
+              Trabajos actualmente en ejecución
+            </p>
+          </article>
+
+          {/* REALIZADAS */}
+          <article className="safko-dashboard__card safko-dashboard__card--completed">
+            <div className="safko-dashboard__card-top">
+              <div className="safko-dashboard__icon">
+                ✓
+              </div>
+
+              <span className="safko-dashboard__card-label">
+                REALIZADAS
+              </span>
+            </div>
+
+            <div className="safko-dashboard__number">
+              {cargando ? "..." : datos.tareasRealizadas}
+            </div>
+
+            <p>
+              Trabajos completados
+            </p>
+          </article>
+
+        </div>
+      </section>
+
+      {/* ACCESOS */}
+      <section className="safko-dashboard__section">
+        <div className="safko-dashboard__section-header">
+          <div>
+            <h2>Accesos rápidos</h2>
+            <p>Administración y consulta del sistema</p>
+          </div>
         </div>
 
-        {/* CLIENTES */}
-        <div style={styles.card}>
-          <h2>Clientes</h2>
-          <p>Administración de clientes</p>
+        <div className="safko-dashboard__actions">
+
+          <button className="safko-dashboard__action">
+            <span className="safko-dashboard__action-icon">
+              +
+            </span>
+
+            <span>
+              <strong>Clientes</strong>
+              <small>Administración de clientes</small>
+            </span>
+
+            <span className="safko-dashboard__arrow">
+              →
+            </span>
+          </button>
+
+          <button className="safko-dashboard__action">
+            <span className="safko-dashboard__action-icon">
+              ≡
+            </span>
+
+            <span>
+              <strong>Reportes</strong>
+              <small>Estadísticas y análisis</small>
+            </span>
+
+            <span className="safko-dashboard__arrow">
+              →
+            </span>
+          </button>
+
         </div>
+      </section>
 
-        {/* REPORTES */}
-        <div style={styles.card}>
-          <h2>Reportes</h2>
-          <p>Estadísticas y análisis</p>
-        </div>
-
-      </div>
-
-    </div>
+    </main>
   );
 }
-
-const styles = {
-  container: {
-    minHeight: "100vh",
-    backgroundColor: "#f4f6f8",
-    padding: "30px",
-    fontFamily: "Arial, sans-serif",
-  },
-
-  title: {
-    fontSize: "32px",
-    marginBottom: "10px",
-    color: "#1f2937",
-  },
-
-  subtitle: {
-    fontSize: "16px",
-    marginBottom: "30px",
-    color: "#6b7280",
-  },
-
-  cardContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "20px",
-  },
-
-  card: {
-    backgroundColor: "#ffffff",
-    padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-  },
-
-  number: {
-    fontSize: "36px",
-    fontWeight: "bold",
-    color: "#4f46e5",
-    margin: "10px 0",
-  },
-};
 
 export default Dashboard;

@@ -1,0 +1,1116 @@
+/* =========================================================
+   VARIABLES SAFKO
+========================================================= */
+
+:root {
+  --safko-color-primario: #241ba6;
+  --safko-color-secundario: #4d68d8;
+  --safko-color-verde: #91f023;
+  --safko-color-morado: #fc5b20;
+  --safko-color-blanco: #ffffff;
+  --safko-color-negro: #000000;
+
+  --safko-font-display: "Urbanist", sans-serif;
+}
+
+/* =========================================================
+   FUENTE GLOBAL
+========================================================= */
+
+.vt-page,
+.vt-page *,
+.vt-modal-overlay,
+.vt-modal-overlay * {
+  font-family: var(--safko-font-display);
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.vt-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 32px 24px;
+
+  background: #f6f7ff;
+
+  color: var(--safko-color-negro);
+}
+
+.vt-wrap {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.vt-header {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+
+  flex-wrap: wrap;
+}
+
+.vt-eyebrow,
+.vt-eyebrow-small {
+  color: var(--safko-color-secundario);
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  font-size: 11px;
+}
+
+.vt-eyebrow {
+  margin-bottom: 5px;
+}
+
+.vt-eyebrow-small {
+  margin-bottom: 4px;
+}
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.vt-title {
+  margin: 0;
+
+  color: var(--safko-color-primario);
+
+  font-size: 30px;
+
+  line-height: 1.1;
+
+  font-weight: 900;
+}
+
+/* =========================================================
+   BOTÓN PRINCIPAL
+========================================================= */
+
+.vt-btn-primary {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 42px;
+
+  padding: 11px 20px;
+
+  background: var(--safko-color-primario);
+
+  color: var(--safko-color-blanco);
+
+  border: 1px solid var(--safko-color-primario);
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.vt-btn-primary:hover {
+  background: var(--safko-color-secundario);
+
+  border-color: var(--safko-color-secundario);
+
+  box-shadow:
+    0 6px 18px rgba(36, 27, 166, 0.2);
+}
+
+.vt-btn-primary:active {
+  transform: translateY(1px);
+}
+
+.vt-btn-primary:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+/* =========================================================
+   BOTÓN GHOST
+========================================================= */
+
+.vt-btn-ghost {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 42px;
+
+  padding: 10px 18px;
+
+  background: var(--safko-color-blanco);
+
+  color: var(--safko-color-primario);
+
+  border: 1px solid rgba(36, 27, 166, 0.2);
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.vt-btn-ghost:hover {
+  background: rgba(77, 104, 216, 0.08);
+
+  border-color: var(--safko-color-secundario);
+
+  color: var(--safko-color-secundario);
+}
+
+.vt-btn-ghost:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   TABLA CARD
+========================================================= */
+
+.vt-table-card {
+  width: 100%;
+  max-width: 100%;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  background: var(--safko-color-blanco);
+
+  border: 1px solid rgba(36, 27, 166, 0.1);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 30px rgba(36, 27, 166, 0.07);
+}
+
+/* =========================================================
+   SCROLL TABLA
+========================================================= */
+
+.vt-table-scroll {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+}
+
+/* =========================================================
+   TABLA
+========================================================= */
+
+.vt-table {
+  width: 100%;
+
+  min-width: 1050px;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+
+  table-layout: auto;
+}
+
+/* =========================================================
+   HEADER TABLA
+========================================================= */
+
+.vt-table th {
+  padding: 16px 22px;
+
+  text-align: left;
+
+  background: rgba(36, 27, 166, 0.035);
+
+  color: var(--safko-color-secundario);
+
+  border-bottom: 1px solid rgba(36, 27, 166, 0.1);
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+.vt-th-actions {
+  text-align: right !important;
+}
+
+/* =========================================================
+   CELDAS
+========================================================= */
+
+.vt-table td {
+  padding: 17px 22px;
+
+  color: #1f2937;
+
+  border-bottom: 1px solid rgba(36, 27, 166, 0.06);
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+.vt-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================================
+   FILA
+========================================================= */
+
+.vt-row {
+  transition: background 0.15s ease;
+}
+
+.vt-row:hover {
+  background: rgba(77, 104, 216, 0.045);
+}
+
+/* =========================================================
+   TEXTOS
+========================================================= */
+
+.vt-td-strong {
+  color: var(--safko-color-primario) !important;
+
+  font-weight: 800;
+}
+
+.vt-td-muted {
+  color: #64748b !important;
+}
+
+.vt-id {
+  font-weight: 700;
+}
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
+.vt-status-active,
+.vt-status-inactive {
+  display: inline-flex;
+
+  align-items: center;
+
+  min-width: 72px;
+
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+.vt-status-active {
+  background: rgba(145, 240, 35, 0.16);
+
+  color: #507b0f;
+
+  border: 1px solid rgba(145, 240, 35, 0.35);
+}
+
+.vt-status-inactive {
+  background: rgba(100, 116, 139, 0.1);
+
+  color: #64748b;
+
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.vt-actions-cell {
+  text-align: right;
+}
+
+.vt-actions {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 7px;
+}
+
+/* =========================================================
+   BOTONES ICONOS
+========================================================= */
+
+.vt-icon-btn {
+  width: 34px;
+  height: 34px;
+
+  min-width: 34px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 7px;
+
+  border: 1px solid rgba(36, 27, 166, 0.12);
+
+  background: var(--safko-color-blanco);
+
+  color: var(--safko-color-primario);
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.vt-icon-btn:hover {
+  background: rgba(77, 104, 216, 0.1);
+
+  border-color: var(--safko-color-secundario);
+
+  color: var(--safko-color-secundario);
+
+  transform: translateY(-1px);
+}
+
+.vt-icon-btn-accent:hover {
+  background: rgba(145, 240, 35, 0.18);
+
+  border-color: var(--safko-color-verde);
+
+  color: #507b0f;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.vt-empty {
+  width: 100%;
+
+  padding: 70px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  background: var(--safko-color-blanco);
+
+  border: 1px solid rgba(36, 27, 166, 0.1);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 30px rgba(36, 27, 166, 0.06);
+}
+
+.vt-empty-icon {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 14px;
+
+  border-radius: 50%;
+
+  background: rgba(77, 104, 216, 0.1);
+
+  color: var(--safko-color-secundario);
+}
+
+.vt-empty h4 {
+  margin: 0 0 6px;
+
+  color: var(--safko-color-primario);
+
+  font-size: 18px;
+
+  font-weight: 800;
+}
+
+.vt-empty p {
+  margin: 0 0 20px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   MODAL OVERLAY
+========================================================= */
+
+.vt-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 20px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36, 27, 166, 0.45);
+
+  z-index: 9999;
+
+  overflow-y: auto;
+
+  backdrop-filter: blur(2px);
+}
+
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
+
+.vt-modal-content {
+  width: 100%;
+
+  max-width: 720px;
+
+  max-height: 90vh;
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: var(--safko-color-blanco);
+
+  border: none;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 25px 70px rgba(36, 27, 166, 0.25);
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.vt-modal-header {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 28px;
+
+  background: var(--safko-color-blanco);
+
+  border-bottom:
+    1px solid rgba(36, 27, 166, 0.1);
+}
+
+.vt-modal-title {
+  margin: 0;
+
+  color: var(--safko-color-primario);
+
+  font-size: 20px;
+
+  line-height: 1.2;
+
+  font-weight: 900;
+}
+
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
+
+.vt-modal-close {
+  width: 34px;
+  height: 34px;
+
+  min-width: 34px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border-radius: 8px;
+
+  border: 1px solid rgba(36, 27, 166, 0.12);
+
+  background: var(--safko-color-blanco);
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.vt-modal-close:hover {
+  background: rgba(77, 104, 216, 0.08);
+
+  border-color: var(--safko-color-secundario);
+
+  color: var(--safko-color-secundario);
+}
+
+.vt-modal-close:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.vt-modal-body {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 0;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #dfe2ef transparent;
+}
+
+.vt-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.vt-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.vt-modal-body::-webkit-scrollbar-thumb {
+  background: #dfe2ef;
+
+  border-radius: 10px;
+}
+
+.vt-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #c7cad8;
+}
+
+/* =========================================================
+   SECCIONES DEL FORMULARIO
+========================================================= */
+
+.vt-form-section {
+  padding: 22px 28px;
+
+  border-bottom: 1px solid rgba(36, 27, 166, 0.07);
+}
+
+.vt-form-section:last-child {
+  border-bottom: none;
+}
+
+.vt-form-section-title {
+  margin-bottom: 18px;
+
+  color: var(--safko-color-primario);
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================
+   FORMULARIO GRID
+========================================================= */
+
+.vt-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.vt-form-field {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.vt-form-label {
+  display: block;
+
+  margin: 0;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   INPUT / SELECT
+========================================================= */
+
+.vt-form-input {
+  width: 100%;
+
+  min-height: 42px;
+
+  padding: 10px 12px;
+
+  background: var(--safko-color-blanco);
+
+  color: #1f2937;
+
+  border: 1px solid #dce0ed;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.vt-form-input::placeholder {
+  color: #94a3b8;
+}
+
+.vt-form-input:hover:not(:disabled) {
+  border-color: #c8cde0;
+}
+
+.vt-form-input:focus {
+  border-color: var(--safko-color-secundario);
+
+  box-shadow:
+    0 0 0 3px rgba(77, 104, 216, 0.13);
+}
+
+.vt-form-input:disabled {
+  background: #f3f4f8;
+
+  color: #8a8d99;
+
+  cursor: not-allowed;
+
+  opacity: 0.85;
+}
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+select.vt-form-input {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+select.vt-form-input:disabled {
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.vt-password-wrapper {
+  position: relative;
+
+  width: 100%;
+}
+
+.vt-password-wrapper .vt-form-input {
+  padding-right: 44px;
+}
+
+.vt-password-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: 8px;
+
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.vt-password-toggle:hover {
+  background: rgba(77, 104, 216, 0.08);
+
+  color: var(--safko-color-secundario);
+}
+
+.vt-password-toggle:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   AYUDA FORMULARIO
+========================================================= */
+
+.vt-form-help {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.vt-modal-actions {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  padding: 16px 28px;
+
+  background: #fafaff;
+
+  border-top:
+    1px solid rgba(36, 27, 166, 0.1);
+}
+
+/* =========================================================
+   FOCUS ACCESIBILIDAD
+========================================================= */
+
+.vt-btn-primary:focus-visible,
+.vt-btn-ghost:focus-visible,
+.vt-icon-btn:focus-visible,
+.vt-modal-close:focus-visible,
+.vt-password-toggle:focus-visible {
+  outline: 3px solid rgba(77, 104, 216, 0.25);
+
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   RESPONSIVE TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .vt-page {
+    padding: 24px 20px;
+  }
+
+  .vt-title {
+    font-size: 25px;
+  }
+
+  .vt-header {
+    align-items: stretch;
+  }
+
+  .vt-header .vt-btn-primary {
+    width: 100%;
+  }
+
+  .vt-table-card {
+    border-radius: 12px;
+  }
+
+  .vt-table {
+    min-width: 1000px;
+  }
+
+  .vt-form-section {
+    padding: 20px;
+  }
+
+  .vt-modal-header {
+    padding: 18px 20px;
+  }
+
+  .vt-modal-actions {
+    padding: 14px 20px;
+  }
+}
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 576px) {
+
+  .vt-page {
+    padding: 20px 12px;
+  }
+
+  .vt-header {
+    margin-bottom: 18px;
+
+    gap: 14px;
+  }
+
+  .vt-eyebrow {
+    font-size: 10px;
+  }
+
+  .vt-title {
+    font-size: 22px;
+  }
+
+  .vt-btn-primary {
+    width: 100%;
+
+    padding: 11px 16px;
+  }
+
+  .vt-empty {
+    padding: 45px 18px;
+  }
+
+  .vt-empty h4 {
+    font-size: 16px;
+  }
+
+  .vt-empty p {
+    line-height: 1.5;
+  }
+
+  .vt-table {
+    min-width: 950px;
+  }
+
+  .vt-table th {
+    padding: 14px 18px;
+  }
+
+  .vt-table td {
+    padding: 15px 18px;
+  }
+
+  .vt-modal-overlay {
+    padding: 10px;
+  }
+
+  .vt-modal-content {
+    max-height: 95vh;
+
+    border-radius: 13px;
+  }
+
+  .vt-form-section {
+    padding: 20px;
+  }
+
+  .vt-form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .vt-modal-title {
+    font-size: 18px;
+  }
+
+  .vt-modal-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    padding: 14px 20px;
+  }
+
+  .vt-modal-actions button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   MÓVILES MUY PEQUEÑOS
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .vt-page {
+    padding: 16px 10px;
+  }
+
+  .vt-title {
+    font-size: 20px;
+  }
+
+  .vt-table {
+    min-width: 900px;
+  }
+
+  .vt-table th {
+    padding: 13px 16px;
+  }
+
+  .vt-table td {
+    padding: 14px 16px;
+  }
+
+  .vt-modal-overlay {
+    padding: 6px;
+  }
+
+  .vt-form-section {
+    padding: 18px 14px;
+  }
+
+  .vt-modal-header {
+    padding: 16px 14px;
+  }
+
+  .vt-modal-actions {
+    padding: 14px;
+  }
+}

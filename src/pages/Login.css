@@ -245,7 +245,7 @@
     Fondo base visible incluso si backdrop-filter
     no es soportado o no se renderiza.
   */
-  background-color: var(--safko-color-secundario);
+  background-color: var(--safko-color-secundario) 90% ;
 
   /*
     Capa translúcida del glass.
@@ -345,12 +345,12 @@
   display: block;
 
   font-family: var(--safko-font-display);
-  font-weight: 600;
-  font-size: 0.72rem;
+  font-weight: 500;
+  font-size: small;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 
-  color: var(--safko-color-verde);
+  color: var(--safko-color-secundario);
 
   margin-bottom: 0.6rem;
 }

@@ -1,0 +1,603 @@
+/* =========================================================
+   VARIABLES SAFKO
+========================================================= */
+
+:root {
+  --safko-color-primario: #241ba6;
+  --safko-color-secundario: #4d68d8;
+  --safko-color-verde: #91f023;
+  --safko-color-morado: #fc5b20;
+  --safko-color-blanco: #ffffff;
+  --safko-color-negro: #000000;
+
+  --safko-font-display: "Urbanist", sans-serif;
+}
+
+/* =========================================================
+   PÁGINA
+========================================================= */
+
+.vc-page {
+  min-height: 100vh;
+
+  background: #f8fafc;
+
+  padding: 40px 32px;
+
+  font-family: var(--safko-font-display);
+
+  color: var(--safko-color-negro);
+}
+
+.vc-wrap {
+  max-width: 1040px;
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   VOLVER
+========================================================= */
+
+.vc-back {
+  border: none;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  padding: 0;
+
+  margin-bottom: 20px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vc-back:hover {
+  color: #1e293b;
+  transform: translateX(-3px);
+}
+
+/* =========================================================
+   COLUMNAS
+========================================================= */
+
+.vc-columns {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 24px;
+}
+
+.vc-main-col {
+  flex: 1 1 0%;
+
+  min-width: 0;
+}
+
+.vc-side {
+  flex: 0 0 300px;
+
+  width: 300px;
+
+  position: sticky;
+
+  top: 40px;
+}
+
+/* =========================================================
+   TARJETA PRINCIPAL
+========================================================= */
+
+.vc-ticket {
+  background: var(--safko-color-blanco);
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  padding: 28px 32px 32px;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04);
+
+  margin-bottom: 24px;
+}
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.vc-eyebrow {
+  font-family:
+    "JetBrains Mono",
+    "SFMono-Regular",
+    Menlo,
+    monospace;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  color: var(--safko-color-primario);
+
+  margin-bottom: 6px;
+}
+
+.vc-title {
+  font-size: 26px;
+
+  font-weight: 800;
+
+  color: #1e293b;
+
+  margin: 0 0 20px;
+
+  line-height: 1.2;
+}
+
+/* =========================================================
+   INFORMACIÓN
+========================================================= */
+
+.vc-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px 28px;
+
+  margin-bottom: 8px;
+}
+
+.vc-field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  margin-bottom: 18px;
+}
+
+.vc-label {
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.vc-value {
+  font-size: 15px;
+
+  color: #1e293b;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   DIVISOR
+========================================================= */
+
+.vc-divider {
+  height: 1px;
+
+  background: #e2e8f0;
+
+  margin: 4px 0 20px;
+}
+
+/* =========================================================
+   PÁRRAFOS
+========================================================= */
+
+.vc-paragraph {
+  font-size: 15px;
+
+  color: #334155;
+
+  line-height: 1.6;
+
+  margin: 0;
+
+  font-weight: 500;
+
+  white-space: pre-wrap;
+}
+
+/* =========================================================
+   ASISTENTES
+========================================================= */
+
+.vc-forms-card {
+  background: var(--safko-color-blanco);
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  padding: 24px 32px 28px;
+}
+
+.vc-forms-title {
+  font-size: 18px;
+
+  font-weight: 800;
+
+  color: #1e293b;
+
+  margin: 0 0 16px;
+}
+
+.vc-list {
+  list-style: none;
+
+  margin: 0;
+
+  padding: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.vc-list-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  padding: 12px 14px;
+
+  border-radius: 8px;
+
+  border: 1px solid #e2e8f0;
+
+  background: #f8fafc;
+
+  font-size: 14px;
+
+  color: #1e293b;
+
+  font-weight: 500;
+}
+
+.vc-list-item strong {
+  font-weight: 800;
+
+  color: #1e293b;
+
+  margin-bottom: 2px;
+}
+
+.vc-list-item span {
+  color: #64748b;
+}
+
+/* =========================================================
+   TARJETA PDF
+========================================================= */
+
+.vc-action-card {
+  background: var(--safko-color-blanco);
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  padding: 28px 24px;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04);
+
+  text-align: center;
+}
+
+.vc-action-icon {
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 12px;
+
+  background: #eeeeff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 22px;
+
+  margin: 0 auto 14px;
+}
+
+.vc-action-title {
+  font-size: 17px;
+
+  font-weight: 800;
+
+  color: #1e293b;
+
+  margin: 0 0 8px;
+}
+
+.vc-action-text {
+  font-size: 13px;
+
+  color: #64748b;
+
+  line-height: 1.5;
+
+  margin: 0 0 18px;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   BOTÓN DESCARGAR
+========================================================= */
+
+.vc-btn-download {
+  width: 100%;
+
+  background: var(--safko-color-primario);
+
+  color: var(--safko-color-blanco);
+
+  border: none;
+
+  border-radius: 9px;
+
+  padding: 12px 16px;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.vc-btn-download:hover {
+  background: var(--safko-color-secundario);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 15px rgba(36, 27, 166, 0.18);
+}
+
+/* =========================================================
+   ESTADOS CENTRALES
+========================================================= */
+
+.vc-center-state {
+  min-height: 70vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 80px 20px;
+}
+
+.vc-center-icon {
+  width: 64px;
+
+  height: 64px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 16px;
+}
+
+.vc-center-icon span {
+  font-size: 26px;
+}
+
+.vc-error-icon {
+  background: #fee2e2;
+}
+
+.vc-empty-icon {
+  background: #e2e8f0;
+}
+
+.vc-center-title {
+  font-size: 19px;
+
+  font-weight: 800;
+
+  color: #1e293b;
+
+  margin: 0 0 8px;
+}
+
+.vc-center-text {
+  font-size: 14px;
+
+  color: #64748b;
+
+  max-width: 380px;
+
+  margin: 0 0 20px;
+
+  line-height: 1.5;
+
+  font-weight: 500;
+}
+
+.vc-center-actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.vc-btn-primary,
+.vc-btn-ghost {
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  border-radius: 9px;
+
+  padding: 10px 18px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vc-btn-primary {
+  background: var(--safko-color-primario);
+
+  color: var(--safko-color-blanco);
+
+  border: 1px solid var(--safko-color-primario);
+}
+
+.vc-btn-primary:hover {
+  background: var(--safko-color-secundario);
+
+  border-color: var(--safko-color-secundario);
+
+  transform: translateY(-1px);
+}
+
+.vc-btn-ghost {
+  background: var(--safko-color-blanco);
+
+  color: #1e293b;
+
+  border: 1px solid #e2e8f0;
+}
+
+.vc-btn-ghost:hover {
+  background: #f8fafc;
+
+  border-color: #cbd5e1;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 860px) {
+  .vc-columns {
+    flex-direction: column;
+  }
+
+  .vc-side {
+    position: static;
+
+    width: 100%;
+
+    flex: none;
+  }
+
+  .vc-action-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .vc-page {
+    padding: 24px 16px;
+  }
+
+  .vc-ticket {
+    padding: 22px 20px 24px;
+  }
+
+  .vc-forms-card {
+    padding: 22px 20px 24px;
+  }
+
+  .vc-title {
+    font-size: 23px;
+  }
+
+  .vc-grid {
+    grid-template-columns: 1fr;
+
+    gap: 4px;
+  }
+
+  .vc-center-actions {
+    flex-direction: column;
+
+    width: 100%;
+
+    max-width: 300px;
+  }
+
+  .vc-center-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .vc-action-card {
+    padding: 24px 20px;
+  }
+
+  .vc-list-item {
+    padding: 11px 12px;
+  }
+}

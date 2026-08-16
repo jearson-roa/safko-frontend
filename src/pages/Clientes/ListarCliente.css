@@ -1,0 +1,1044 @@
+/* =========================================================
+   VARIABLES SAFKO
+========================================================= */
+
+:root {
+  --safko-color-primario: #241ba6;
+  --safko-color-secundario: #4d68d8;
+  --safko-color-verde: #91f023;
+  --safko-color-morado: #fc5b20;
+  --safko-color-blanco: #ffffff;
+  --safko-color-negro: #000000;
+
+  --safko-font-display: "Urbanist", sans-serif;
+
+  --safko-text: #1f2937;
+  --safko-muted: #64748b;
+
+  --safko-border: rgba(36, 27, 166, 0.1);
+}
+
+/* =========================================================
+   FUENTE / BOX SIZING
+========================================================= */
+
+.vt-page,
+.vt-page *,
+.vt-modal,
+.vt-modal * {
+  box-sizing: border-box;
+  font-family: var(--safko-font-display);
+}
+
+/* =========================================================
+   PAGE
+   Se adapta automáticamente al espacio dejado por el sidebar.
+   No usar width fija ni max-width para evitar espacios blancos.
+========================================================= */
+
+.vt-page {
+  width: 100%;
+  min-width: 0;
+
+  color: var(--safko-color-negro);
+}
+
+.vt-wrap {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.vt-header {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+
+  flex-wrap: wrap;
+}
+
+.vt-eyebrow,
+.vt-eyebrow-small {
+  color: var(--safko-color-secundario);
+
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.vt-eyebrow {
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+
+.vt-eyebrow-small {
+  margin-bottom: 3px;
+  font-size: 10px;
+}
+
+.vt-title {
+  margin: 0;
+
+  color: var(--safko-color-primario);
+
+  font-size: 30px;
+  line-height: 1.1;
+
+  font-weight: 900;
+}
+
+.vt-subtitle {
+  margin: 5px 0 0;
+
+  color: var(--safko-muted);
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   BOTÓN PRINCIPAL
+========================================================= */
+
+.vt-btn-primary {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 10px 18px;
+
+  background: var(--safko-color-primario);
+  color: var(--safko-color-blanco);
+
+  border: 1px solid var(--safko-color-primario);
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.vt-btn-primary:hover {
+  background: var(--safko-color-secundario);
+
+  border-color: var(--safko-color-secundario);
+
+  box-shadow:
+    0 6px 18px rgba(36, 27, 166, 0.2);
+}
+
+.vt-btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   BOTÓN GHOST
+========================================================= */
+
+.vt-btn-ghost {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 9px 16px;
+
+  background: var(--safko-color-blanco);
+
+  color: var(--safko-color-primario);
+
+  border: 1px solid rgba(36, 27, 166, 0.2);
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.18s ease;
+}
+
+.vt-btn-ghost:hover {
+  background: rgba(77, 104, 216, 0.08);
+
+  border-color: var(--safko-color-secundario);
+}
+
+/* =========================================================
+   ESTADÍSTICAS
+========================================================= */
+
+.vt-stats {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.vt-stat-card {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 16px 18px;
+
+  background: var(--safko-color-blanco);
+
+  border: 1px solid rgba(36, 27, 166, 0.1);
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 18px rgba(36, 27, 166, 0.04);
+}
+
+.vt-stat-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+}
+
+.vt-stat-icon-primary {
+  background: rgba(77, 104, 216, 0.12);
+  color: var(--safko-color-secundario);
+}
+
+.vt-stat-icon-success {
+  background: rgba(145, 240, 35, 0.18);
+  color: #507b0f;
+}
+
+.vt-stat-icon-danger {
+  background: rgba(252, 91, 32, 0.1);
+  color: var(--safko-color-morado);
+}
+
+.vt-stat-label {
+  color: var(--safko-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+.vt-stat-value {
+  margin-top: 2px;
+
+  color: var(--safko-color-primario);
+
+  font-size: 24px;
+  font-weight: 900;
+
+  line-height: 1.1;
+}
+
+.vt-stat-value-success {
+  color: #507b0f;
+}
+
+.vt-stat-value-danger {
+  color: var(--safko-color-morado);
+}
+
+/* =========================================================
+   BUSCADOR
+========================================================= */
+
+.vt-search {
+  position: relative;
+
+  width: 100%;
+  max-width: 400px;
+
+  margin-bottom: 16px;
+}
+
+.vt-search-icon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #94a3b8;
+
+  pointer-events: none;
+}
+
+.vt-search-input {
+  width: 100%;
+
+  padding: 11px 14px 11px 42px;
+
+  background: var(--safko-color-blanco);
+
+  color: var(--safko-color-negro);
+
+  border: 1px solid rgba(36, 27, 166, 0.12);
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+
+  box-shadow:
+    0 2px 8px rgba(36, 27, 166, 0.04);
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.vt-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.vt-search-input:focus {
+  border-color: var(--safko-color-secundario);
+
+  box-shadow:
+    0 0 0 3px rgba(77, 104, 216, 0.13);
+}
+
+/* =========================================================
+   TABLA CARD
+========================================================= */
+
+.vt-table-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  background: var(--safko-color-blanco);
+
+  border: 1px solid rgba(36, 27, 166, 0.1);
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 30px rgba(36, 27, 166, 0.07);
+}
+
+/* =========================================================
+   SCROLL TABLA
+========================================================= */
+
+.vt-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+}
+
+/* =========================================================
+   TABLA
+
+   La tabla puede crecer horizontalmente si el sidebar deja
+   poco espacio. El contenedor será el encargado del scroll.
+========================================================= */
+
+.vt-table {
+  width: 100%;
+
+  min-width: 900px;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+
+  table-layout: auto;
+}
+
+/* =========================================================
+   HEADER TABLA
+========================================================= */
+
+.vt-table th {
+  padding: 14px 18px;
+
+  background: rgba(36, 27, 166, 0.035);
+
+  color: var(--safko-color-secundario);
+
+  border-bottom:
+    1px solid rgba(36, 27, 166, 0.1);
+
+  text-align: left;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+.vt-th-actions {
+  text-align: right !important;
+}
+
+/* =========================================================
+   CELDAS
+========================================================= */
+
+.vt-table td {
+  padding: 14px 18px;
+
+  color: var(--safko-text);
+
+  border-bottom:
+    1px solid rgba(36, 27, 166, 0.06);
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+
+  line-height: 1.35;
+}
+
+.vt-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================================
+   FILA
+========================================================= */
+
+.vt-row {
+  transition: background 0.15s ease;
+}
+
+.vt-row:hover {
+  background: rgba(77, 104, 216, 0.045);
+}
+
+/* =========================================================
+   TEXTOS
+========================================================= */
+
+.vt-td-strong {
+  color: var(--safko-color-primario) !important;
+
+  font-weight: 800;
+}
+
+.vt-td-muted {
+  color: var(--safko-muted) !important;
+}
+
+.vt-id {
+  font-weight: 700;
+}
+
+/* =========================================================
+   CELDAS APILADAS
+========================================================= */
+
+.vt-td-stack {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.vt-td-stack-primary {
+  color: var(--safko-text);
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.vt-td-stack-secondary {
+  color: var(--safko-muted);
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.vt-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.vt-badge-dot {
+  width: 6px;
+  height: 6px;
+
+  display: inline-block;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.vt-actions-cell {
+  text-align: right;
+}
+
+.vt-actions {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 6px;
+}
+
+.vt-icon-btn {
+  width: 32px;
+  height: 32px;
+
+  min-width: 32px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  border: 1px solid rgba(36, 27, 166, 0.12);
+
+  background: var(--safko-color-blanco);
+
+  color: var(--safko-color-primario);
+
+  cursor: pointer;
+
+  transition: all 0.18s ease;
+}
+
+.vt-icon-btn:hover {
+  background: rgba(77, 104, 216, 0.1);
+
+  border-color: var(--safko-color-secundario);
+
+  color: var(--safko-color-secundario);
+}
+
+.vt-icon-btn-accent:hover {
+  background: rgba(145, 240, 35, 0.18);
+
+  border-color: var(--safko-color-verde);
+
+  color: #507b0f;
+}
+
+.vt-icon-btn-danger:hover {
+  background: rgba(252, 91, 32, 0.1);
+
+  border-color: var(--safko-color-morado);
+
+  color: var(--safko-color-morado);
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.vt-empty {
+  width: 100%;
+
+  padding: 55px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  background: var(--safko-color-blanco);
+
+  border: 1px solid rgba(36, 27, 166, 0.1);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 30px rgba(36, 27, 166, 0.06);
+}
+
+.vt-empty-icon {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border-radius: 50%;
+
+  background: rgba(77, 104, 216, 0.1);
+
+  color: var(--safko-color-secundario);
+}
+
+.vt-empty h4 {
+  margin: 0 0 5px;
+
+  color: var(--safko-color-primario);
+
+  font-size: 17px;
+
+  font-weight: 800;
+}
+
+.vt-empty p {
+  margin: 0 0 18px;
+
+  color: var(--safko-muted);
+
+  font-size: 13px;
+
+  max-width: 360px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.vt-modal {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1055;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: transparent;
+}
+
+.vt-modal-content {
+  width: 100%;
+
+  overflow: hidden;
+
+  border: none !important;
+
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 25px 70px rgba(36, 27, 166, 0.25);
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.vt-modal-header {
+  padding: 18px 24px !important;
+
+  background: var(--safko-color-blanco);
+
+  border-bottom:
+    1px solid rgba(36, 27, 166, 0.1) !important;
+}
+
+.vt-modal-title {
+  margin: 0 !important;
+
+  color: var(--safko-color-primario) !important;
+
+  font-size: 20px !important;
+
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.vt-modal-body {
+  padding: 22px 24px !important;
+
+  background: var(--safko-color-blanco);
+}
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.vt-modal-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  padding: 14px 24px !important;
+
+  background: #fafaff;
+
+  border-top:
+    1px solid rgba(36, 27, 166, 0.1) !important;
+}
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.vt-form-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.vt-modal .form-control,
+.vt-modal .form-select {
+  min-height: 42px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #dce0ed !important;
+
+  border-radius: 8px !important;
+
+  color: var(--safko-text);
+
+  font-family:
+    var(--safko-font-display) !important;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.vt-modal textarea.form-control {
+  min-height: 90px;
+
+  resize: vertical;
+}
+
+.vt-modal .form-control:focus,
+.vt-modal .form-select:focus {
+  border-color:
+    var(--safko-color-secundario) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(77, 104, 216, 0.13) !important;
+}
+
+.vt-modal .form-control:disabled,
+.vt-modal .form-select:disabled {
+  background: #f1f5f9;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+.vt-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1050;
+
+  background-color:
+    rgba(36, 27, 166, 0.45);
+}
+
+/* =========================================================
+   SIDEBAR ESTRECHO
+   Cuando el sidebar reduce el ancho disponible,
+   los elementos se adaptan sin crear espacios blancos.
+========================================================= */
+
+@media (max-width: 1100px) {
+  .vt-title {
+    font-size: 27px;
+  }
+
+  .vt-stats {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .vt-stat-card {
+    padding: 14px;
+  }
+
+  .vt-table {
+    min-width: 860px;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .vt-header {
+    align-items: stretch;
+
+    margin-bottom: 18px;
+  }
+
+  .vt-header .vt-btn-primary {
+    width: 100%;
+  }
+
+  .vt-title {
+    font-size: 25px;
+  }
+
+  .vt-stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .vt-table-card {
+    border-radius: 12px;
+  }
+
+  .vt-table {
+    min-width: 820px;
+  }
+
+  .vt-table th {
+    padding: 13px 16px;
+  }
+
+  .vt-table td {
+    padding: 13px 16px;
+  }
+
+  .vt-modal-body {
+    padding: 20px !important;
+  }
+
+  .vt-modal-header {
+    padding: 18px 20px !important;
+  }
+
+  .vt-modal-footer {
+    padding: 14px 20px !important;
+  }
+}
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 576px) {
+  .vt-header {
+    margin-bottom: 16px;
+
+    gap: 12px;
+  }
+
+  .vt-eyebrow {
+    font-size: 10px;
+  }
+
+  .vt-title {
+    font-size: 22px;
+  }
+
+  .vt-subtitle {
+    font-size: 13px;
+  }
+
+  .vt-btn-primary {
+    width: 100%;
+
+    padding: 10px 16px;
+  }
+
+  .vt-stats {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+  }
+
+  .vt-stat-card {
+    padding: 14px 16px;
+  }
+
+  .vt-search {
+    max-width: none;
+
+    margin-bottom: 12px;
+  }
+
+  .vt-empty {
+    padding: 45px 18px;
+  }
+
+  .vt-empty h4 {
+    font-size: 16px;
+  }
+
+  .vt-table {
+    min-width: 740px;
+  }
+
+  .vt-table th {
+    padding: 12px 15px;
+  }
+
+  .vt-table td {
+    padding: 13px 15px;
+  }
+
+  .vt-modal .modal-dialog {
+    margin: 10px;
+  }
+
+  .vt-modal-content {
+    border-radius: 12px !important;
+  }
+
+  .vt-modal-title {
+    font-size: 18px !important;
+  }
+
+  .vt-modal-footer {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .vt-modal-footer button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   MÓVILES MUY PEQUEÑOS
+========================================================= */
+
+@media (max-width: 380px) {
+  .vt-title {
+    font-size: 20px;
+  }
+
+  .vt-table {
+    min-width: 680px;
+  }
+
+  .vt-table th {
+    padding: 11px 13px;
+  }
+
+  .vt-table td {
+    padding: 12px 13px;
+  }
+
+  .vt-modal-body {
+    padding: 18px 14px !important;
+  }
+
+  .vt-modal-header {
+    padding: 16px 14px !important;
+  }
+
+  .vt-modal-footer {
+    padding: 13px !important;
+  }
+}

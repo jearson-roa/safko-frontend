@@ -1,0 +1,637 @@
+/* =========================================================
+   MODAL TAREA
+========================================================= */
+
+.vt-modal {
+  z-index: 1055;
+}
+
+.vt-backdrop {
+  z-index: 1050;
+}
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+========================================================= */
+
+.vt-modal-content {
+  border: none !important;
+  border-radius: 18px !important;
+  overflow: hidden;
+
+  background: var(--safko-color-blanco);
+
+  box-shadow:
+    0 20px 60px rgba(36, 27, 166, 0.18);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.vt-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding: 24px 28px 20px;
+
+  border-bottom: 1px solid #e5e7f1 !important;
+
+  background: var(--safko-color-blanco);
+}
+
+.vt-eyebrow-small {
+  margin-bottom: 5px;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  color: var(--safko-color-primario);
+}
+
+.vt-modal-title {
+  margin: 0;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 22px;
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  color: var(--safko-color-negro);
+}
+
+/* =========================================================
+   BOTÓN CERRAR
+========================================================= */
+
+.vt-modal-header .btn-close {
+  margin: 2px 0 0;
+
+  opacity: 0.55;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vt-modal-header .btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.vt-modal-header .btn-close:focus {
+  box-shadow: none;
+}
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.vt-modal-body {
+  padding: 26px 28px 10px;
+
+  max-height: 65vh;
+
+  overflow-y: auto;
+
+  background: var(--safko-color-blanco);
+}
+
+/* =========================================================
+   SECCIONES DEL FORMULARIO
+========================================================= */
+
+.vt-form-section {
+  margin-bottom: 24px;
+}
+
+.vt-form-section:last-child {
+  margin-bottom: 0;
+}
+
+.vt-form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 0 0 16px;
+
+  padding-bottom: 9px;
+
+  border-bottom: 1px solid #e8e9f2;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: var(--safko-color-primario);
+}
+
+.vt-form-section-title::before {
+  content: "";
+
+  width: 4px;
+  height: 16px;
+
+  border-radius: 10px;
+
+  background: var(--safko-color-morado);
+}
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.vt-form-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  color: var(--safko-color-secundario);
+}
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.vt-modal-body .form-control,
+.vt-modal-body .form-select {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #dfe2ef;
+  border-radius: 9px;
+
+  background: var(--safko-color-blanco);
+
+  color: #222;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.vt-modal-body textarea.form-control {
+  min-height: auto;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.vt-modal-body .form-control:focus,
+.vt-modal-body .form-select:focus {
+  border-color: var(--safko-color-secundario);
+
+  box-shadow:
+    0 0 0 3px rgba(77, 104, 216, 0.12);
+
+  outline: none;
+}
+
+.vt-modal-body .form-control::placeholder {
+  color: #9a9dac;
+}
+
+/* =========================================================
+   CAMPOS DESHABILITADOS
+========================================================= */
+
+.vt-modal-body .form-control:disabled,
+.vt-modal-body .form-select:disabled {
+  background: #f4f5f8;
+
+  color: #8a8d9b;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   FECHA Y HORA
+========================================================= */
+
+.vt-datetime-group {
+  position: relative;
+}
+
+.vt-datetime-group .form-control {
+  min-height: 44px;
+}
+
+/* =========================================================
+   INFORMACIÓN DEL RESPONSABLE
+========================================================= */
+
+.vt-role-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 7px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #7a7e90;
+}
+
+.vt-role-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 3px 8px;
+
+  border-radius: 999px;
+
+  background: rgba(77, 104, 216, 0.10);
+
+  color: var(--safko-color-primario);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   TÉCNICOS DE TERRENO
+========================================================= */
+
+.vt-technicians-box {
+  padding: 18px;
+
+  border: 1px solid #e4e6f2;
+  border-radius: 12px;
+
+  background: #fafaff;
+}
+
+.vt-technicians-title {
+  margin-bottom: 12px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: var(--safko-color-primario);
+}
+
+.vt-technicians-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.vt-technician-item {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  min-height: 42px;
+
+  padding: 9px 11px;
+
+  border: 1px solid #e1e3ed;
+  border-radius: 9px;
+
+  background: var(--safko-color-blanco);
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vt-technician-item:hover {
+  border-color: var(--safko-color-secundario);
+
+  background: #f7f8ff;
+
+  transform: translateY(-1px);
+}
+
+.vt-technician-item input {
+  width: 16px;
+  height: 16px;
+
+  margin: 0;
+
+  accent-color: var(--safko-color-primario);
+
+  cursor: pointer;
+}
+
+.vt-technician-name {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #303030;
+}
+
+.vt-technician-cargo {
+  font-size: 10px;
+  font-weight: 600;
+
+  color: #85899a;
+}
+
+/* =========================================================
+   TÉCNICOS SELECCIONADOS
+========================================================= */
+
+.vt-selected-count {
+  margin-top: 10px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: #74788b;
+}
+
+/* =========================================================
+   FORMULARIOS HABILITADOS
+========================================================= */
+
+.vt-check-group {
+  margin-top: 4px;
+
+  padding: 20px;
+
+  border: 1px solid #e4e6f2;
+  border-radius: 12px;
+
+  background: #fafaff;
+}
+
+.vt-check-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px 20px;
+
+  margin-top: 12px;
+}
+
+.vt-check-item {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #303030;
+
+  cursor: pointer;
+}
+
+.vt-check-item input {
+  width: 17px;
+  height: 17px;
+
+  margin: 0;
+
+  accent-color: var(--safko-color-primario);
+
+  cursor: pointer;
+}
+
+.vt-check-item input:disabled {
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.vt-modal-footer {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 18px 28px 22px;
+
+  border-top: 1px solid #e5e7f1 !important;
+
+  background: #fafaff;
+}
+
+/* =========================================================
+   BOTÓN CANCELAR
+========================================================= */
+
+.vt-btn-ghost {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  background: var(--safko-color-blanco);
+
+  color: var(--safko-color-primario);
+
+  border: 1px solid #dfe2ef;
+
+  border-radius: 9px;
+
+  padding: 10px 18px;
+
+  font-family: var(--safko-font-display);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vt-btn-ghost:hover {
+  border-color: var(--safko-color-secundario);
+
+  background: #f4f5ff;
+}
+
+.vt-btn-ghost:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   BOTÓN GUARDAR
+========================================================= */
+
+.vt-modal-footer .vt-btn-primary {
+  min-width: 140px;
+  min-height: 40px;
+}
+
+/* =========================================================
+   ESTADO GUARDANDO
+========================================================= */
+
+.vt-modal-footer button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   SCROLL DEL MODAL
+========================================================= */
+
+.vt-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.vt-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.vt-modal-body::-webkit-scrollbar-thumb {
+  background: #dfe2ef;
+
+  border-radius: 10px;
+}
+
+.vt-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #c7cad8;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .vt-modal .modal-dialog {
+    margin: 10px;
+  }
+
+  .vt-modal-header {
+    padding: 20px;
+  }
+
+  .vt-modal-title {
+    font-size: 20px;
+  }
+
+  .vt-modal-body {
+    padding: 22px 20px 8px;
+
+    max-height: 72vh;
+  }
+
+  .vt-modal-footer {
+    padding: 16px 20px 20px;
+
+    flex-direction: column-reverse;
+  }
+
+  .vt-modal-footer button {
+    width: 100%;
+  }
+
+  .vt-check-group {
+    padding: 16px;
+  }
+
+  .vt-check-list {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .vt-technicians-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE PEQUEÑO
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .vt-modal .modal-dialog {
+    margin: 6px;
+  }
+
+  .vt-modal-header {
+    padding: 18px;
+  }
+
+  .vt-modal-body {
+    padding: 20px 16px 6px;
+  }
+
+  .vt-modal-footer {
+    padding: 14px 16px 18px;
+  }
+
+  .vt-form-section {
+    margin-bottom: 20px;
+  }
+}

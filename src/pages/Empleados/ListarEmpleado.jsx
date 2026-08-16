@@ -1,45 +1,124 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
-import { Eye, PenLine, Plus, UserRound, X } from "lucide-react";
+
+import {
+  Eye,
+  PenLine,
+  Plus,
+  UserRound,
+  X,
+  EyeOff,
+  Trash2,
+} from "lucide-react";
+
+import "./ListarEmpleado.css";
+
+// =====================================================
+// ESTADO INICIAL
+// =====================================================
+
+const initialFormState = {
+  rut: "",
+  nombres: "",
+  apellido_paterno: "",
+  apellido_materno: "",
+  telefono: "",
+  direccion: "",
+  cargo: "",
+
+  crear_usuario: false,
+  email: "",
+  password: "",
+  rol: "tecnico en terreno",
+};
+
+// =====================================================
+// COMPONENTE
+// =====================================================
 
 function ListarEmpleados() {
   const navigate = useNavigate();
 
+  // =====================================================
+  // ESTADOS
+  // =====================================================
+
   const [empleados, setEmpleados] = useState([]);
+
   const [cargando, setCargando] = useState(true);
+
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [formulario, setFormulario] = useState({
-    rut: "",
-    nombres: "",
-    apellido_paterno: "",
-    apellido_materno: "",
-    cargo: "",
-    email: "",
-  });
+  const [guardando, setGuardando] = useState(false);
+
+  const [eliminando, setEliminando] = useState(null);
+
+  const [mostrarPassword, setMostrarPassword] =
+    useState(false);
+
+  const [formulario, setFormulario] =
+    useState(initialFormState);
+
+  // =====================================================
+  // LISTAR EMPLEADOS
+  // =====================================================
 
   const listarEmpleado = async () => {
     try {
+      const token = localStorage.getItem("token");
+
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/empleado`
+        `${import.meta.env.VITE_API_URL}/api/empleado`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
-      setEmpleados(Array.isArray(response.data) ? response.data : []);
+      setEmpleados(
+        Array.isArray(response.data)
+          ? response.data
+          : []
+      );
     } catch (error) {
-      console.error("Error al cargar empleados:", error);
+      console.error(
+        "Error al cargar empleados:",
+        error
+      );
+
       setEmpleados([]);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text:
+          error.response?.data?.mensaje ||
+          "No se pudieron cargar los empleados.",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#241ba6",
+      });
     }
   };
+
+  // =====================================================
+  // CARGA INICIAL
+  // =====================================================
 
   useEffect(() => {
     const cargarDatosIniciales = async () => {
       try {
         setCargando(true);
+
         await listarEmpleado();
       } catch (error) {
-        console.error("Error cargando los datos iniciales:", error);
+        console.error(
+          "Error cargando empleados:",
+          error
+        );
       } finally {
         setCargando(false);
       }
@@ -48,400 +127,1214 @@ function ListarEmpleados() {
     cargarDatosIniciales();
   }, []);
 
+  // =====================================================
+  // ABRIR MODAL
+  // =====================================================
+
+  const abrirModal = () => {
+    setFormulario({
+      ...initialFormState,
+    });
+
+    setMostrarPassword(false);
+
+    setModalOpen(true);
+  };
+
+  // =====================================================
+  // CERRAR MODAL
+  // =====================================================
+
   const cerrarModal = () => {
+    if (guardando) return;
+
     setModalOpen(false);
 
+    setMostrarPassword(false);
+
     setFormulario({
-      rut: "",
-      nombres: "",
-      apellido_paterno: "",
-      apellido_materno: "",
-      cargo: "",
-      email: "",
+      ...initialFormState,
     });
   };
 
+  // =====================================================
+  // HANDLE CHANGE
+  // =====================================================
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {
+      name,
+      value,
+      type,
+      checked,
+    } = e.target;
 
     setFormulario((prev) => ({
       ...prev,
-      [name]: value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : value,
     }));
   };
+
+  // =====================================================
+  // GUARDAR EMPLEADO
+  // =====================================================
 
   const guardarEmpleado = async (e) => {
     e.preventDefault();
 
-    console.log("Datos del empleado:", formulario);
+    if (guardando) return;
 
-    // Luego conectaremos esto con:
-    // POST /api/empleado
+    // =================================================
+    // VALIDACIONES EMPLEADO
+    // =================================================
 
-    alert("Formulario listo para guardar");
+    if (!formulario.rut.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campo requerido",
+        text: "Ingresa el RUT del empleado.",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#241ba6",
+      });
 
-    cerrarModal();
+      return;
+    }
+
+    if (!formulario.nombres.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campo requerido",
+        text: "Ingresa los nombres del empleado.",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#241ba6",
+      });
+
+      return;
+    }
+
+    if (!formulario.apellido_paterno.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campo requerido",
+        text: "Ingresa el apellido paterno.",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#241ba6",
+      });
+
+      return;
+    }
+
+    if (!formulario.cargo.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campo requerido",
+        text: "Ingresa el cargo.",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#241ba6",
+      });
+
+      return;
+    }
+
+    // =================================================
+    // VALIDACIONES USUARIO
+    // =================================================
+
+    if (formulario.crear_usuario) {
+      if (!formulario.email.trim()) {
+        Swal.fire({
+          icon: "warning",
+          title: "Campo requerido",
+          text: "Ingresa el email del usuario.",
+          confirmButtonText: "Entendido",
+          confirmButtonColor: "#241ba6",
+        });
+
+        return;
+      }
+
+      if (!formulario.password.trim()) {
+        Swal.fire({
+          icon: "warning",
+          title: "Campo requerido",
+          text: "Ingresa una contraseña para el usuario.",
+          confirmButtonText: "Entendido",
+          confirmButtonColor: "#241ba6",
+        });
+
+        return;
+      }
+
+      if (formulario.password.length < 6) {
+        Swal.fire({
+          icon: "warning",
+          title: "Contraseña inválida",
+          text: "La contraseña debe tener al menos 6 caracteres.",
+          confirmButtonText: "Entendido",
+          confirmButtonColor: "#241ba6",
+        });
+
+        return;
+      }
+
+      if (!formulario.rol.trim()) {
+        Swal.fire({
+          icon: "warning",
+          title: "Campo requerido",
+          text: "Selecciona un rol para el usuario.",
+          confirmButtonText: "Entendido",
+          confirmButtonColor: "#241ba6",
+        });
+
+        return;
+      }
+    }
+
+    // =================================================
+    // GUARDAR
+    // =================================================
+
+    try {
+      setGuardando(true);
+
+      const token =
+        localStorage.getItem("token");
+
+      if (!token) {
+        Swal.fire({
+          icon: "warning",
+          title: "Sesión expirada",
+          text: "No hay una sesión activa. Inicia sesión nuevamente.",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#241ba6",
+        });
+
+        setGuardando(false);
+
+        return;
+      }
+
+      // =================================================
+      // PAYLOAD
+      // =================================================
+
+      const payload = {
+        rut: formulario.rut.trim(),
+
+        nombres:
+          formulario.nombres.trim(),
+
+        apellido_paterno:
+          formulario.apellido_paterno.trim(),
+
+        apellido_materno:
+          formulario.apellido_materno.trim() ||
+          null,
+
+        telefono:
+          formulario.telefono.trim() ||
+          null,
+
+        direccion:
+          formulario.direccion.trim() ||
+          null,
+
+        cargo:
+          formulario.cargo.trim(),
+
+        crear_usuario:
+          formulario.crear_usuario,
+
+        email:
+          formulario.crear_usuario
+            ? formulario.email.trim()
+            : null,
+
+        password:
+          formulario.crear_usuario
+            ? formulario.password
+            : null,
+
+        rol:
+          formulario.crear_usuario
+            ? formulario.rol
+            : null,
+      };
+
+      console.log(
+        "Datos enviados:",
+        payload
+      );
+
+      // =================================================
+      // POST
+      // =================================================
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/empleado`,
+        payload,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+
+            "Content-Type":
+              "application/json",
+          },
+        }
+      );
+
+      // Guardar antes de limpiar formulario
+      const usuarioCreado =
+        formulario.crear_usuario;
+
+      // =================================================
+      // CERRAR MODAL
+      // =================================================
+
+      setModalOpen(false);
+
+      setMostrarPassword(false);
+
+      setFormulario({
+        ...initialFormState,
+      });
+
+      // =================================================
+      // ACTUALIZAR LISTADO
+      // =================================================
+
+      await listarEmpleado();
+
+      // =================================================
+      // ALERT ÉXITO
+      // =================================================
+
+      await Swal.fire({
+        icon: "success",
+        title: "Empleado creado",
+        text: usuarioCreado
+          ? "El empleado y su usuario fueron creados correctamente."
+          : "El empleado fue creado correctamente.",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#241ba6",
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
+    } catch (error) {
+      console.error(
+        "Error al crear empleado:",
+        error
+      );
+
+      const mensaje =
+        error.response?.data?.mensaje ||
+        error.response?.data?.error ||
+        "No se pudo crear el empleado.";
+
+      Swal.fire({
+        icon: "error",
+        title: "No se pudo crear el empleado",
+        text: mensaje,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#241ba6",
+      });
+
+    } finally {
+      setGuardando(false);
+    }
   };
+
+  // =====================================================
+  // ELIMINAR EMPLEADO
+  // =====================================================
+
+  const eliminarEmpleado = async (empleado) => {
+    if (eliminando) return;
+
+    const nombreEmpleado =
+      `${empleado.nombres || ""} ${
+        empleado.apellido_paterno || ""
+      } ${empleado.apellido_materno || ""}`.trim();
+
+    // =================================================
+    // CONFIRMACIÓN
+    // =================================================
+
+    const resultado = await Swal.fire({
+      title: "¿Eliminar empleado?",
+      html: `
+        <div style="font-size: 15px; color: #64748b;">
+          Estás a punto de eliminar a
+          <strong style="color: #0f172a;">
+            ${nombreEmpleado}
+          </strong>
+          <br />
+          <span style="font-size: 13px;">
+            Esta acción no se puede deshacer.
+          </span>
+        </div>
+      `,
+      icon: "warning",
+
+      showCancelButton: true,
+
+      confirmButtonText: "Sí, eliminar",
+
+      cancelButtonText: "Cancelar",
+
+      reverseButtons: true,
+
+      focusCancel: true,
+
+      confirmButtonColor: "#dc2626",
+
+      cancelButtonColor: "#64748b",
+
+      buttonsStyling: true,
+    });
+
+    if (!resultado.isConfirmed) {
+      return;
+    }
+
+    // =================================================
+    // ELIMINANDO
+    // =================================================
+
+    try {
+      setEliminando(empleado.id);
+
+      const token =
+        localStorage.getItem("token");
+
+      if (!token) {
+        Swal.fire({
+          icon: "warning",
+          title: "Sesión expirada",
+          text: "No hay una sesión activa. Inicia sesión nuevamente.",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#241ba6",
+        });
+
+        return;
+      }
+
+      // =================================================
+      // DELETE
+      // =================================================
+
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/empleado/${empleado.id}`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+      // =================================================
+      // ACTUALIZAR LISTADO
+      // =================================================
+
+      setEmpleados((prev) =>
+        prev.filter(
+          (item) => item.id !== empleado.id
+        )
+      );
+
+      // =================================================
+      // ALERT ÉXITO
+      // =================================================
+
+      await Swal.fire({
+        icon: "success",
+        title: "Empleado eliminado",
+        text: `${nombreEmpleado} fue eliminado correctamente.`,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#241ba6",
+        timer: 2200,
+        timerProgressBar: true,
+      });
+
+    } catch (error) {
+      console.error(
+        "Error al eliminar empleado:",
+        error
+      );
+
+      const mensaje =
+        error.response?.data?.mensaje ||
+        error.response?.data?.error ||
+        "No se pudo eliminar el empleado.";
+
+      Swal.fire({
+        icon: "error",
+        title: "No se pudo eliminar",
+        text: mensaje,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#241ba6",
+      });
+
+    } finally {
+      setEliminando(null);
+    }
+  };
+
+  // =====================================================
+  // LOADING
+  // =====================================================
 
   if (cargando) {
     return (
-      <>
-        <style>{globalStyles}</style>
-
-        <div style={styles.page}>
-          <Loading mensaje="Cargando empleados..." />
-        </div>
-      </>
+      <div className="vt-page">
+        <Loading mensaje="Cargando empleados..." />
+      </div>
     );
   }
 
+  // =====================================================
+  // RENDER
+  // =====================================================
+
   return (
-    <>
-      <style>{globalStyles}</style>
+    <div className="vt-page">
 
-      <div style={styles.page}>
-        <div style={styles.wrap}>
+      <div className="vt-wrap">
 
-          {/* HEADER */}
-          <div style={styles.headerRow}>
-            <div>
-              <div style={styles.eyebrow}>
-                GESTIÓN DE PERSONAL
-              </div>
+        {/* =================================================
+            HEADER
+        ================================================= */}
 
-              <h1 style={styles.h1}>
-                Listado de empleados
-              </h1>
+        <div className="vt-header">
+
+          <div>
+
+            <div className="vt-eyebrow">
+              GESTIÓN DE PERSONAL
             </div>
+
+            <h1 className="vt-title">
+              Listado de empleados
+            </h1>
+
+          </div>
+
+          <button
+            type="button"
+            className="vt-btn-primary"
+            onClick={abrirModal}
+          >
+            <Plus
+              size={16}
+              strokeWidth={2.5}
+            />
+
+            Nuevo empleado
+          </button>
+
+        </div>
+
+        {/* =================================================
+            LISTADO VACÍO
+        ================================================= */}
+
+        {empleados.length === 0 ? (
+
+          <div className="vt-empty">
+
+            <div className="vt-empty-icon">
+              <UserRound size={26} />
+            </div>
+
+            <h4>
+              No hay empleados registrados
+            </h4>
+
+            <p>
+              Crea el primer empleado para verlo aquí.
+            </p>
 
             <button
               type="button"
               className="vt-btn-primary"
-              style={styles.btnPrimary}
-              onClick={() => setModalOpen(true)}
+              onClick={abrirModal}
             >
-              <Plus size={16} strokeWidth={2.5} />
+              <Plus
+                size={16}
+                strokeWidth={2.5}
+              />
+
               Nuevo empleado
             </button>
+
           </div>
 
-          {/* LISTADO */}
-          {empleados.length === 0 ? (
-            <div style={styles.emptyCard}>
+        ) : (
 
-              <div style={styles.emptyIcon}>
-                <UserRound
-                  size={26}
-                  color="#64748B"
-                />
-              </div>
+          /* =================================================
+             TABLA
+          ================================================= */
 
-              <h4 style={styles.centerTitle}>
-                No hay empleados registrados
-              </h4>
+          <div className="vt-table-card">
 
-              <p style={styles.centerText}>
-                Crea el primer empleado para verlo aquí.
-              </p>
+            <div className="vt-table-scroll">
 
-              <button
-                type="button"
-                className="vt-btn-primary"
-                style={styles.btnPrimary}
-                onClick={() => setModalOpen(true)}
-              >
-                <Plus size={16} strokeWidth={2.5} />
-                Nuevo empleado
-              </button>
-            </div>
-          ) : (
-            <div style={styles.tableCard}>
-              <div style={{ overflowX: "auto" }}>
+              <table className="vt-table">
 
-                <table style={styles.table}>
+                <thead>
 
-                  <thead>
-                    <tr>
-                      <th style={styles.th}>ID</th>
+                  <tr>
 
-                      <th style={styles.th}>
-                        Nombre empleado
-                      </th>
+                    <th>
+                      Nombre empleado
+                    </th>
 
-                      <th style={styles.th}>
-                        Cargo
-                      </th>
+                    <th>
+                      RUT
+                    </th>
 
-                      <th style={styles.th}>
-                        Email / Usuario
-                      </th>
+                    <th>
+                      Cargo
+                    </th>
 
-                      <th
-                        style={{
-                          ...styles.th,
-                          textAlign: "right",
-                        }}
-                      >
-                        Acciones
-                      </th>
-                    </tr>
-                  </thead>
+                    <th>
+                      Email / Usuario
+                    </th>
 
-                  <tbody>
 
-                    {empleados.map((empleado) => (
+                    <th>
+                      Estado
+                    </th>
+
+                    <th className="vt-th-actions">
+                      Acciones
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {empleados.map(
+                    (empleado) => (
+
                       <tr
                         key={empleado.id}
                         className="vt-row"
                       >
 
-                        <td
-                          style={{
-                            ...styles.tdMuted,
-                            fontWeight: 700,
-                          }}
-                        >
-                          #{empleado.id}
-                        </td>
 
-                        <td
-                          style={{
-                            ...styles.td,
-                            fontWeight: 600,
-                          }}
-                        >
+                        <td className="vt-td-strong">
+
                           {empleado.nombres}{" "}
-                          {empleado.apellido_paterno}
+
+                          {empleado.apellido_paterno}{" "}
+
+                          {empleado.apellido_materno ||
+                            ""}
+
                         </td>
 
-                        <td style={styles.td}>
-                          {empleado.cargo}
+                        <td className="vt-td-muted">
+                          {empleado.rut || "-"}
                         </td>
 
-                        <td style={styles.tdMuted}>
+                        <td>
+                          {empleado.cargo || "-"}
+                        </td>
+
+                        <td className="vt-td-muted">
                           {empleado.email || "-"}
                         </td>
 
-                        <td
-                          style={{
-                            ...styles.td,
-                            textAlign: "right",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "inline-flex",
-                              gap: 6,
-                            }}
+
+                        <td>
+
+                          <span
+                            className={
+                              empleado.activo
+                                ? "vt-status-active"
+                                : "vt-status-inactive"
+                            }
                           >
 
-                            {/* VER */}
+                            {empleado.activo
+                              ? "Activo"
+                              : "Inactivo"}
+
+                          </span>
+
+                        </td>
+
+                        <td className="vt-actions-cell">
+
+                          <div className="vt-actions">
+
+                            {/* =========================
+                                VER
+                            ========================= */}
+
                             <button
                               type="button"
                               className="vt-icon-btn"
-                              style={styles.iconBtn}
-                              title="Ver"
+                              title="Ver empleado"
                               onClick={() =>
                                 navigate(
                                   `/empleados/ver/${empleado.id}`
                                 )
                               }
+                              disabled={
+                                eliminando ===
+                                empleado.id
+                              }
                             >
-                              <Eye
-                                width={15}
-                                height={15}
-                                style={styles.iconSvg}
-                              />
+                              <Eye size={15} />
                             </button>
 
-                            {/* EDITAR */}
+                            {/* =========================
+                                EDITAR
+                            ========================= */}
+
                             <button
                               type="button"
                               className="vt-icon-btn vt-icon-btn-accent"
-                              style={styles.iconBtn}
-                              title="Editar"
+                              title="Editar empleado"
                               onClick={() =>
                                 navigate(
                                   `/empleados/editar/${empleado.id}`
                                 )
                               }
+                              disabled={
+                                eliminando ===
+                                empleado.id
+                              }
                             >
-                              <PenLine
-                                width={15}
-                                height={15}
-                                style={styles.iconSvg}
-                              />
+                              <PenLine size={15} />
+                            </button>
+
+                            {/* =========================
+                                ELIMINAR
+                            ========================= */}
+
+                            <button
+                              type="button"
+                              className="vt-icon-btn vt-icon-btn-danger"
+                              title="Eliminar empleado"
+                              onClick={() =>
+                                eliminarEmpleado(
+                                  empleado
+                                )
+                              }
+                              disabled={
+                                eliminando ===
+                                empleado.id
+                              }
+                            >
+
+                              {eliminando ===
+                              empleado.id ? (
+                                <span className="vt-delete-loading">
+                                  ...
+                                </span>
+                              ) : (
+                                <Trash2
+                                  size={15}
+                                />
+                              )}
+
                             </button>
 
                           </div>
+
                         </td>
 
                       </tr>
-                    ))}
 
-                  </tbody>
+                    )
+                  )}
 
-                </table>
+                </tbody>
 
-              </div>
+              </table>
+
             </div>
-          )}
 
-        </div>
+          </div>
+
+        )}
+
       </div>
 
-      {/* =========================
-          MODAL NUEVO EMPLEADO
-         ========================= */}
+      {/* =================================================
+          MODAL
+      ================================================= */}
 
       {modalOpen && (
+
         <div
-          style={styles.modalOverlay}
+          className="vt-modal-overlay"
           onClick={cerrarModal}
         >
 
           <div
-            style={styles.modal}
-            onClick={(e) => e.stopPropagation()}
+            className="vt-modal-content"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
           >
 
-            {/* HEADER MODAL */}
-            <div style={styles.modalHeader}>
+            {/* =================================================
+                HEADER
+            ================================================= */}
+
+            <div className="vt-modal-header">
 
               <div>
-                <div style={styles.modalEyebrow}>
+
+                <div className="vt-eyebrow-small">
                   GESTIÓN DE PERSONAL
                 </div>
 
-                <h2 style={styles.modalTitle}>
+                <h2 className="vt-modal-title">
                   Nuevo empleado
                 </h2>
+
               </div>
 
               <button
                 type="button"
                 onClick={cerrarModal}
-                style={styles.closeButton}
+                className="vt-modal-close"
+                disabled={guardando}
               >
                 <X size={20} />
               </button>
 
             </div>
 
-            {/* FORMULARIO */}
-            <form onSubmit={guardarEmpleado}>
+            {/* =================================================
+                FORMULARIO
+            ================================================= */}
 
-              <div style={styles.formGrid}>
+            <form
+              onSubmit={guardarEmpleado}
+            >
 
-                {/* RUT */}
-                <div style={styles.field}>
-                  <label style={styles.label}>
-                    RUT
-                  </label>
+              <div className="vt-modal-body">
 
-                  <input
-                    type="text"
-                    name="rut"
-                    value={formulario.rut}
-                    onChange={handleChange}
-                    placeholder="12.345.678-9"
-                    style={styles.input}
-                    required
-                  />
+                {/* =================================================
+                    INFORMACIÓN PERSONAL
+                ================================================= */}
+
+                <div className="vt-form-section">
+
+                  <div className="vt-form-section-title">
+                    Información personal
+                  </div>
+
+                  <div className="vt-form-grid">
+
+                    {/* RUT */}
+
+                    <div className="vt-form-field">
+
+                      <label className="vt-form-label">
+                        RUT *
+                      </label>
+
+                      <input
+                        type="text"
+                        name="rut"
+                        value={
+                          formulario.rut
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="12.345.678-9"
+                        className="vt-form-input"
+                        required
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                    {/* NOMBRES */}
+
+                    <div className="vt-form-field">
+
+                      <label className="vt-form-label">
+                        Nombres *
+                      </label>
+
+                      <input
+                        type="text"
+                        name="nombres"
+                        value={
+                          formulario.nombres
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="Juan Carlos"
+                        className="vt-form-input"
+                        required
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                    {/* APELLIDO PATERNO */}
+
+                    <div className="vt-form-field">
+
+                      <label className="vt-form-label">
+                        Apellido paterno *
+                      </label>
+
+                      <input
+                        type="text"
+                        name="apellido_paterno"
+                        value={
+                          formulario.apellido_paterno
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="Pérez"
+                        className="vt-form-input"
+                        required
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                    {/* APELLIDO MATERNO */}
+
+                    <div className="vt-form-field">
+
+                      <label className="vt-form-label">
+                        Apellido materno
+                      </label>
+
+                      <input
+                        type="text"
+                        name="apellido_materno"
+                        value={
+                          formulario.apellido_materno
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="González"
+                        className="vt-form-input"
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                    {/* TELÉFONO */}
+
+                    <div className="vt-form-field">
+
+                      <label className="vt-form-label">
+                        Teléfono
+                      </label>
+
+                      <input
+                        type="tel"
+                        name="telefono"
+                        value={
+                          formulario.telefono
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="+56 9 1234 5678"
+                        className="vt-form-input"
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                    {/* CARGO */}
+
+                    <div className="vt-form-field">
+
+                      <label className="vt-form-label">
+                        Cargo *
+                      </label>
+
+                      <input
+                        type="text"
+                        name="cargo"
+                        value={
+                          formulario.cargo
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="Supervisor"
+                        className="vt-form-input"
+                        required
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                    {/* DIRECCIÓN */}
+
+                    <div className="vt-form-field vt-form-field-full">
+
+                      <label className="vt-form-label">
+                        Dirección
+                      </label>
+
+                      <input
+                        type="text"
+                        name="direccion"
+                        value={
+                          formulario.direccion
+                        }
+                        onChange={
+                          handleChange
+                        }
+                        placeholder="Dirección del empleado"
+                        className="vt-form-input"
+                        disabled={
+                          guardando
+                        }
+                      />
+
+                    </div>
+
+                  </div>
+
                 </div>
 
-                {/* NOMBRES */}
-                <div style={styles.field}>
-                  <label style={styles.label}>
-                    Nombres
+                {/* =================================================
+                    ACCESO AL SISTEMA
+                ================================================= */}
+
+                <div className="vt-form-section">
+
+                  <div className="vt-form-section-title">
+                    Acceso al sistema
+                  </div>
+
+                  <label className="vt-user-toggle">
+
+                    <input
+                      type="checkbox"
+                      name="crear_usuario"
+                      checked={
+                        formulario.crear_usuario
+                      }
+                      onChange={
+                        handleChange
+                      }
+                      disabled={
+                        guardando
+                      }
+                    />
+
+                    <div>
+
+                      <strong>
+                        Crear usuario para este empleado
+                      </strong>
+
+                      <span>
+                        El acceso al sistema es opcional.
+                        Puedes crearlo ahora o posteriormente.
+                      </span>
+
+                    </div>
+
                   </label>
 
-                  <input
-                    type="text"
-                    name="nombres"
-                    value={formulario.nombres}
-                    onChange={handleChange}
-                    placeholder="Juan Carlos"
-                    style={styles.input}
-                    required
-                  />
-                </div>
+                  {/* CAMPOS USUARIO */}
 
-                {/* APELLIDO PATERNO */}
-                <div style={styles.field}>
-                  <label style={styles.label}>
-                    Apellido paterno
-                  </label>
+                  {formulario.crear_usuario && (
 
-                  <input
-                    type="text"
-                    name="apellido_paterno"
-                    value={formulario.apellido_paterno}
-                    onChange={handleChange}
-                    placeholder="Pérez"
-                    style={styles.input}
-                    required
-                  />
-                </div>
+                    <div className="vt-form-grid">
 
-                {/* APELLIDO MATERNO */}
-                <div style={styles.field}>
-                  <label style={styles.label}>
-                    Apellido materno
-                  </label>
+                      {/* EMAIL */}
 
-                  <input
-                    type="text"
-                    name="apellido_materno"
-                    value={formulario.apellido_materno}
-                    onChange={handleChange}
-                    placeholder="González"
-                    style={styles.input}
-                  />
-                </div>
+                      <div className="vt-form-field">
 
-                {/* CARGO */}
-                <div style={styles.field}>
-                  <label style={styles.label}>
-                    Cargo
-                  </label>
+                        <label className="vt-form-label">
+                          Email / Usuario *
+                        </label>
 
-                  <input
-                    type="text"
-                    name="cargo"
-                    value={formulario.cargo}
-                    onChange={handleChange}
-                    placeholder="Técnico en terreno"
-                    style={styles.input}
-                    required
-                  />
-                </div>
+                        <input
+                          type="email"
+                          name="email"
+                          value={
+                            formulario.email
+                          }
+                          onChange={
+                            handleChange
+                          }
+                          placeholder="usuario@empresa.cl"
+                          className="vt-form-input"
+                          required={
+                            formulario.crear_usuario
+                          }
+                          disabled={
+                            guardando
+                          }
+                        />
 
-                {/* EMAIL */}
-                <div style={styles.field}>
-                  <label style={styles.label}>
-                    Email / Usuario
-                  </label>
+                      </div>
 
-                  <input
-                    type="email"
-                    name="email"
-                    value={formulario.email}
-                    onChange={handleChange}
-                    placeholder="usuario@empresa.cl"
-                    style={styles.input}
-                  />
+                      {/* PASSWORD */}
+
+                      <div className="vt-form-field">
+
+                        <label className="vt-form-label">
+                          Contraseña *
+                        </label>
+
+                        <div className="vt-password-wrapper">
+
+                          <input
+                            type={
+                              mostrarPassword
+                                ? "text"
+                                : "password"
+                            }
+                            name="password"
+                            value={
+                              formulario.password
+                            }
+                            onChange={
+                              handleChange
+                            }
+                            placeholder="Contraseña inicial"
+                            className="vt-form-input"
+                            minLength={6}
+                            required={
+                              formulario.crear_usuario
+                            }
+                            disabled={
+                              guardando
+                            }
+                          />
+
+                          <button
+                            type="button"
+                            className="vt-password-toggle"
+                            onClick={() =>
+                              setMostrarPassword(
+                                (prev) =>
+                                  !prev
+                              )
+                            }
+                            disabled={
+                              guardando
+                            }
+                          >
+
+                            {mostrarPassword ? (
+                              <EyeOff size={17} />
+                            ) : (
+                              <Eye size={17} />
+                            )}
+
+                          </button>
+
+                        </div>
+
+                        <small className="vt-form-help">
+                          Mínimo 6 caracteres.
+                        </small>
+
+                      </div>
+
+                      {/* ROL */}
+
+                      <div className="vt-form-field">
+
+                        <label className="vt-form-label">
+                          Rol *
+                        </label>
+
+                        <select
+                          name="rol"
+                          value={
+                            formulario.rol
+                          }
+                          onChange={
+                            handleChange
+                          }
+                          className="vt-form-input"
+                          required={
+                            formulario.crear_usuario
+                          }
+                          disabled={
+                            guardando
+                          }
+                        >
+
+                          <option value="tecnico en terreno">
+                            Técnico en terreno
+                          </option>
+
+                          <option value="supervisor">
+                            Supervisor
+                          </option>
+
+                          <option value="acceso terreno">
+                            Acceso terreno
+                          </option>
+
+                          <option value="admin">
+                            Administrador
+                          </option>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+
+                  )}
+
                 </div>
 
               </div>
 
-              {/* BOTONES */}
-              <div style={styles.modalActions}>
+              {/* =================================================
+                  FOOTER
+              ================================================= */}
+
+              <div className="vt-modal-actions">
 
                 <button
                   type="button"
                   onClick={cerrarModal}
-                  style={styles.btnCancel}
+                  className="vt-btn-ghost"
+                  disabled={guardando}
                 >
                   Cancelar
                 </button>
@@ -449,10 +1342,15 @@ function ListarEmpleados() {
                 <button
                   type="submit"
                   className="vt-btn-primary"
-                  style={styles.btnPrimary}
+                  disabled={guardando}
                 >
+
                   <Plus size={16} />
-                  Guardar empleado
+
+                  {guardando
+                    ? "Guardando..."
+                    : "Guardar empleado"}
+
                 </button>
 
               </div>
@@ -462,315 +1360,11 @@ function ListarEmpleados() {
           </div>
 
         </div>
+
       )}
-    </>
+
+    </div>
   );
 }
-
-/* =========================
-   ESTILOS GLOBALES
-========================= */
-
-const globalStyles = `
-  .vt-row:hover {
-    background: #F8FAFC;
-  }
-
-  .vt-btn-primary:hover {
-    background: #4338CA !important;
-  }
-
-  .vt-icon-btn:hover {
-    background: #F1F5F9 !important;
-    border-color: #CBD5E1 !important;
-  }
-
-  .vt-icon-btn-accent:hover {
-    background: #EEF2FF !important;
-    border-color: #4F46E5 !important;
-    color: #4F46E5 !important;
-  }
-
-  .safko-modal-input:focus {
-    outline: none;
-    border-color: #4F46E5 !important;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-  }
-`;
-
-/* =========================
-   ESTILOS
-========================= */
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    background: "#F8FAFC",
-    padding: "40px 32px",
-    fontFamily:
-      "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  },
-
-  wrap: {
-    maxWidth: 1100,
-    margin: "0 auto",
-  },
-
-  headerRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    marginBottom: 24,
-    flexWrap: "wrap",
-    gap: 16,
-  },
-
-  eyebrow: {
-    fontFamily:
-      "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace",
-    fontSize: 12,
-    fontWeight: 600,
-    letterSpacing: "0.08em",
-    color: "#4F46E5",
-    marginBottom: 4,
-  },
-
-  h1: {
-    fontSize: 26,
-    fontWeight: 700,
-    color: "#1E293B",
-    margin: 0,
-  },
-
-  btnPrimary: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    background: "#4F46E5",
-    color: "#fff",
-    border: "none",
-    borderRadius: 8,
-    padding: "10px 18px",
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: "pointer",
-    transition: "background 0.15s ease",
-  },
-
-  tableCard: {
-    background: "#fff",
-    border: "1px solid #E2E8F0",
-    borderRadius: 16,
-    boxShadow:
-      "0 1px 2px rgba(15, 23, 42, 0.04)",
-    overflow: "hidden",
-  },
-
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-    fontSize: 14,
-  },
-
-  th: {
-    textAlign: "left",
-    padding: "14px 20px",
-    fontSize: 11,
-    fontWeight: 700,
-    letterSpacing: "0.05em",
-    textTransform: "uppercase",
-    color: "#94A3B8",
-    background: "#F8FAFC",
-    borderBottom: "1px solid #E2E8F0",
-  },
-
-  td: {
-    padding: "14px 20px",
-    color: "#1E293B",
-    borderBottom: "1px solid #F1F5F9",
-  },
-
-  tdMuted: {
-    padding: "14px 20px",
-    color: "#64748B",
-    borderBottom: "1px solid #F1F5F9",
-  },
-
-  iconBtn: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 30,
-    height: 30,
-    minWidth: 30,
-    minHeight: 30,
-    borderRadius: 7,
-    border: "1px solid #E2E8F0",
-    background: "#fff",
-    color: "#475569",
-    cursor: "pointer",
-    transition: "all 0.15s ease",
-  },
-
-  iconSvg: {
-    flexShrink: 0,
-    width: 15,
-    height: 15,
-    minWidth: 15,
-    minHeight: 15,
-    display: "block",
-  },
-
-  emptyCard: {
-    background: "#fff",
-    border: "1px solid #E2E8F0",
-    borderRadius: 16,
-    padding: "64px 20px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    textAlign: "center",
-  },
-
-  emptyIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: "50%",
-    background: "#F1F5F9",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 14,
-  },
-
-  centerTitle: {
-    fontSize: 16,
-    fontWeight: 700,
-    color: "#1E293B",
-    margin: "0 0 6px",
-  },
-
-  centerText: {
-    fontSize: 14,
-    color: "#64748B",
-    margin: "0 0 20px",
-  },
-
-  /* MODAL */
-
-  modalOverlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(15, 23, 42, 0.55)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    zIndex: 9999,
-  },
-
-  modal: {
-    width: "100%",
-    maxWidth: 650,
-    maxHeight: "90vh",
-    overflowY: "auto",
-    background: "#fff",
-    borderRadius: 16,
-    boxShadow:
-      "0 25px 60px rgba(15, 23, 42, 0.25)",
-    padding: 28,
-  },
-
-  modalHeader: {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    marginBottom: 26,
-  },
-
-  modalEyebrow: {
-    fontFamily:
-      "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace",
-    fontSize: 11,
-    fontWeight: 700,
-    letterSpacing: "0.08em",
-    color: "#4F46E5",
-    marginBottom: 5,
-  },
-
-  modalTitle: {
-    margin: 0,
-    fontSize: 22,
-    fontWeight: 700,
-    color: "#1E293B",
-  },
-
-  closeButton: {
-    width: 34,
-    height: 34,
-    borderRadius: 8,
-    border: "1px solid #E2E8F0",
-    background: "#fff",
-    color: "#64748B",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-  },
-
-  formGrid: {
-    display: "grid",
-    gridTemplateColumns:
-      "repeat(2, minmax(0, 1fr))",
-    gap: 18,
-  },
-
-  field: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 7,
-  },
-
-  label: {
-    fontSize: 13,
-    fontWeight: 600,
-    color: "#334155",
-  },
-
-  input: {
-    width: "100%",
-    boxSizing: "border-box",
-    padding: "11px 12px",
-    border: "1px solid #CBD5E1",
-    borderRadius: 8,
-    fontSize: 14,
-    color: "#1E293B",
-    background: "#fff",
-  },
-
-  modalActions: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: 10,
-    marginTop: 28,
-    paddingTop: 20,
-    borderTop: "1px solid #E2E8F0",
-  },
-
-  btnCancel: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "10px 18px",
-    borderRadius: 8,
-    border: "1px solid #CBD5E1",
-    background: "#fff",
-    color: "#475569",
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: "pointer",
-  },
-};
 
 export default ListarEmpleados;

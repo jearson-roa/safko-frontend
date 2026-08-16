@@ -1,3 +1,7 @@
+/* =========================================================
+   VARIABLES SAFKO
+========================================================= */
+
 :root {
   --safko-color-primario: #241ba6;
   --safko-color-secundario: #4d68d8;
@@ -8,8 +12,27 @@
 
   --safko-font-display: "Urbanist", sans-serif;
 
+  /* ANCHOS DEL SIDEBAR */
+
   --safko-sidebar-width: 240px;
   --safko-sidebar-collapsed: 78px;
+
+  /* TRANSICIÓN */
+
+  --safko-sidebar-transition: 0.25s ease;
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.safko-sidebar,
+.safko-sidebar *,
+.safko-sidebar *::before,
+.safko-sidebar *::after {
+  box-sizing: border-box;
+
+  font-family: var(--safko-font-display);
 }
 
 /* =========================================================
@@ -34,17 +57,23 @@
 
   color: var(--safko-color-blanco);
 
-  font-family: var(--safko-font-display);
-
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid
+    rgba(255, 255, 255, 0.12);
 
   box-shadow:
-    8px 0 30px rgba(36, 27, 166, 0.18);
+    8px 0 30px
+    rgba(36, 27, 166, 0.18);
+
+  overflow: visible;
 
   transition:
-    width 0.25s ease,
-    box-shadow 0.25s ease;
+    width var(--safko-sidebar-transition),
+    box-shadow var(--safko-sidebar-transition);
 }
+
+/* =========================================================
+   SIDEBAR COLAPSADO
+========================================================= */
 
 .safko-sidebar.collapsed {
   width: var(--safko-sidebar-collapsed);
@@ -55,21 +84,25 @@
 ========================================================= */
 
 .safko-sidebar__header {
+  position: relative;
+
+  width: 100%;
   min-height: 72px;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 0 16px;
+  padding: 0 14px;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid
+    rgba(255, 255, 255, 0.12);
 
   flex-shrink: 0;
-}
 
-.safko-sidebar.collapsed .safko-sidebar__header {
-  justify-content: center;
+  overflow: visible;
+
+  transition:
+    padding var(--safko-sidebar-transition);
 }
 
 /* =========================================================
@@ -83,6 +116,13 @@
   align-items: center;
 
   gap: 11px;
+
+  flex: 1;
+
+  overflow: hidden;
+
+  transition:
+    opacity 0.18s ease;
 }
 
 /* =========================================================
@@ -90,10 +130,10 @@
 ========================================================= */
 
 .safko-sidebar__logo {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
 
-  flex-shrink: 0;
+  min-width: 38px;
 
   display: flex;
   align-items: center;
@@ -105,12 +145,20 @@
 
   border-radius: 9px;
 
-  font-size: 16px;
+  font-size: 17px;
 
   font-weight: 900;
 
   box-shadow:
-    0 6px 18px rgba(145, 240, 35, 0.2);
+    0 6px 18px
+    rgba(145, 240, 35, 0.2);
+
+  transition:
+    transform 0.2s ease;
+}
+
+.safko-sidebar__logo:hover {
+  transform: scale(1.04);
 }
 
 /* =========================================================
@@ -119,10 +167,19 @@
 
 .safko-sidebar__brand-info {
   min-width: 0;
+
+  overflow: hidden;
+
+  opacity: 1;
+
+  transition:
+    opacity 0.15s ease;
 }
 
 .safko-sidebar__brand-info h2 {
   margin: 0;
+
+  color: var(--safko-color-blanco);
 
   font-size: 17px;
 
@@ -130,9 +187,13 @@
 
   font-weight: 900;
 
-  color: var(--safko-color-blanco);
-
   letter-spacing: 0.02em;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 .safko-sidebar__brand-info span {
@@ -140,13 +201,17 @@
 
   margin-top: 4px;
 
+  color: rgba(255, 255, 255, 0.55);
+
   font-size: 10px;
 
   font-weight: 500;
 
-  color: rgba(255, 255, 255, 0.58);
-
   white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 /* =========================================================
@@ -154,10 +219,12 @@
 ========================================================= */
 
 .safko-sidebar__toggle {
+  position: relative;
+
   width: 34px;
   height: 34px;
 
-  flex-shrink: 0;
+  min-width: 34px;
 
   display: flex;
   align-items: center;
@@ -165,36 +232,124 @@
 
   padding: 0;
 
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid
+    rgba(255, 255, 255, 0.15);
 
   border-radius: 8px;
 
   background: transparent;
 
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.7);
 
   cursor: pointer;
+
+  flex-shrink: 0;
 
   transition:
     background 0.15s ease,
     color 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    transform 0.25s ease;
 }
 
 .safko-sidebar__toggle:hover {
   background: var(--safko-color-secundario);
 
-  border-color: var(--safko-color-secundario);
+  border-color:
+    var(--safko-color-secundario);
 
   color: var(--safko-color-blanco);
 }
 
+.safko-sidebar__toggle:active {
+  transform: scale(0.94);
+}
+
 /* =========================================================
-   NAV
+   TOGGLE CUANDO ESTÁ COLAPSADO
+=========================================================
+
+   IMPORTANTE:
+
+   El botón NO desaparece.
+
+   Se convierte en un botón flotante en el borde derecho
+   del sidebar para poder volver a abrirlo.
+*/
+
+.safko-sidebar.collapsed
+  .safko-sidebar__toggle {
+  position: absolute;
+
+  top: 21px;
+  right: -15px;
+
+  width: 30px;
+  height: 30px;
+
+  min-width: 30px;
+
+  border-radius: 50%;
+
+  background:
+    var(--safko-color-secundario);
+
+  border: 2px solid
+    var(--safko-color-primario);
+
+  color: var(--safko-color-blanco);
+
+  box-shadow:
+    0 4px 12px
+    rgba(36, 27, 166, 0.25);
+
+  z-index: 1100;
+}
+
+.safko-sidebar.collapsed
+  .safko-sidebar__toggle:hover {
+  background:
+    var(--safko-color-verde);
+
+  color: var(--safko-color-primario);
+
+  border-color:
+    var(--safko-color-verde);
+
+  transform: scale(1.08);
+}
+
+/* =========================================================
+   CUANDO ESTÁ COLAPSADO
+========================================================= */
+
+.safko-sidebar.collapsed
+  .safko-sidebar__header {
+  justify-content: center;
+
+  padding: 0 10px;
+}
+
+.safko-sidebar.collapsed
+  .safko-sidebar__brand {
+  justify-content: center;
+
+  flex: 1;
+}
+
+.safko-sidebar.collapsed
+  .safko-sidebar__brand-info {
+  display: none;
+}
+
+/* =========================================================
+   NAVEGACIÓN
 ========================================================= */
 
 .safko-sidebar__nav {
   flex: 1;
+
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -203,17 +358,38 @@
 
   padding: 16px 10px;
 
+  overflow-x: hidden;
   overflow-y: auto;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(255, 255, 255, 0.18)
+    transparent;
 }
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
 
 .safko-sidebar__nav::-webkit-scrollbar {
   width: 5px;
 }
 
+.safko-sidebar__nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .safko-sidebar__nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background:
+    rgba(255, 255, 255, 0.16);
 
   border-radius: 20px;
+}
+
+.safko-sidebar__nav::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(255, 255, 255, 0.28);
 }
 
 /* =========================================================
@@ -224,13 +400,12 @@
   position: relative;
 
   width: 100%;
+  min-height: 44px;
 
   display: flex;
   align-items: center;
 
   gap: 13px;
-
-  min-height: 44px;
 
   padding: 10px 13px;
 
@@ -240,9 +415,11 @@
 
   background: transparent;
 
-  color: rgba(255, 255, 255, 0.62);
+  color:
+    rgba(255, 255, 255, 0.62);
 
-  font-family: var(--safko-font-display);
+  font-family:
+    var(--safko-font-display);
 
   font-size: 14px;
 
@@ -252,35 +429,68 @@
 
   cursor: pointer;
 
+  white-space: nowrap;
+
   transition:
     background 0.15s ease,
     color 0.15s ease,
     transform 0.15s ease;
 }
 
-.safko-sidebar__item:hover {
-  background: rgba(77, 104, 216, 0.28);
+/* =========================================================
+   HOVER
+========================================================= */
 
-  color: var(--safko-color-blanco);
+.safko-sidebar__item:hover {
+  background:
+    rgba(77, 104, 216, 0.28);
+
+  color:
+    var(--safko-color-blanco);
 }
 
 .safko-sidebar__item:hover svg {
-  color: var(--safko-color-verde);
+  color:
+    var(--safko-color-verde);
 }
 
-.safko-sidebar__item.active {
-  background: var(--safko-color-secundario);
+/* =========================================================
+   ACTIVE
+========================================================= */
 
-  color: var(--safko-color-blanco);
+.safko-sidebar__item.active {
+  background:
+    var(--safko-color-secundario);
+
+  color:
+    var(--safko-color-blanco);
 
   font-weight: 700;
 
   box-shadow:
-    0 6px 18px rgba(77, 104, 216, 0.2);
+    0 6px 18px
+    rgba(77, 104, 216, 0.2);
 }
 
 .safko-sidebar__item.active svg {
-  color: var(--safko-color-verde);
+  color:
+    var(--safko-color-verde);
+}
+
+/* =========================================================
+   ICONOS
+========================================================= */
+
+.safko-sidebar__item svg {
+  flex-shrink: 0;
+
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.safko-sidebar__item:hover svg {
+  transform: scale(1.05);
 }
 
 /* =========================================================
@@ -297,18 +507,22 @@
   width: 4px;
   height: 22px;
 
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 
-  border-radius: 0 4px 4px 0;
+  border-radius:
+    0 4px 4px 0;
 
-  background: var(--safko-color-verde);
+  background:
+    var(--safko-color-verde);
 
   box-shadow:
-    0 0 10px rgba(145, 240, 35, 0.35);
+    0 0 10px
+    rgba(145, 240, 35, 0.35);
 }
 
 /* =========================================================
-   ITEM TEXT
+   TEXTO
 ========================================================= */
 
 .safko-sidebar__item-text {
@@ -319,18 +533,27 @@
   text-overflow: ellipsis;
 
   white-space: nowrap;
+
+  transition:
+    opacity 0.15s ease;
 }
 
 /* =========================================================
-   COLLAPSED ITEMS
+   ITEMS COLAPSADOS
 ========================================================= */
 
 .safko-sidebar.collapsed
   .safko-sidebar__item {
   justify-content: center;
 
+  gap: 0;
+
   padding: 10px;
 }
+
+/* =========================================================
+   TEXTO OCULTO
+========================================================= */
 
 .safko-sidebar.collapsed
   .safko-sidebar__item-text {
@@ -338,27 +561,50 @@
 }
 
 /* =========================================================
+   ACTIVE BAR COLAPSADO
+========================================================= */
+
+.safko-sidebar.collapsed
+  .safko-sidebar__active-bar {
+  left: -10px;
+
+  width: 4px;
+
+  height: 22px;
+}
+
+/* =========================================================
    LOGOUT
 ========================================================= */
 
 .safko-sidebar__logout-wrapper {
+  width: 100%;
+
   padding: 10px;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  flex-shrink: 0;
 }
 
 .safko-sidebar__logout {
-  color: rgba(255, 255, 255, 0.62);
+  color:
+    rgba(255, 255, 255, 0.62);
 }
 
 .safko-sidebar__logout:hover {
-  background: rgba(252, 91, 32, 0.14);
+  background:
+    rgba(252, 91, 32, 0.14);
 
-  color: var(--safko-color-morado);
+  color:
+    var(--safko-color-morado);
 }
 
 .safko-sidebar__logout:hover svg {
-  color: var(--safko-color-morado);
+  color:
+    var(--safko-color-morado);
 }
 
 /* =========================================================
@@ -366,23 +612,33 @@
 ========================================================= */
 
 .safko-sidebar__user {
+  width: 100%;
+
   display: flex;
   align-items: center;
 
   gap: 11px;
 
-  padding: 15px 16px;
+  padding: 14px 16px;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.12);
 
   flex-shrink: 0;
+
+  overflow: hidden;
 }
+
+/* =========================================================
+   USUARIO COLAPSADO
+========================================================= */
 
 .safko-sidebar.collapsed
   .safko-sidebar__user {
   justify-content: center;
 
-  padding: 15px 0;
+  padding: 14px 0;
 }
 
 /* =========================================================
@@ -393,7 +649,7 @@
   width: 38px;
   height: 38px;
 
-  flex-shrink: 0;
+  min-width: 38px;
 
   display: flex;
   align-items: center;
@@ -401,18 +657,23 @@
 
   border-radius: 50%;
 
-  background: var(--safko-color-morado);
+  background:
+    var(--safko-color-morado);
 
-  color: var(--safko-color-blanco);
+  color:
+    var(--safko-color-blanco);
 
   font-size: 14px;
 
   font-weight: 800;
 
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border:
+    2px solid
+    rgba(255, 255, 255, 0.15);
 
   box-shadow:
-    0 6px 18px rgba(252, 91, 32, 0.18);
+    0 6px 18px
+    rgba(252, 91, 32, 0.18);
 }
 
 /* =========================================================
@@ -423,6 +684,8 @@
   min-width: 0;
 
   flex: 1;
+
+  overflow: hidden;
 }
 
 .safko-sidebar__user-name {
@@ -432,11 +695,12 @@
 
   white-space: nowrap;
 
+  color:
+    var(--safko-color-blanco);
+
   font-size: 14px;
 
   font-weight: 700;
-
-  color: var(--safko-color-blanco);
 }
 
 .safko-sidebar__user-email {
@@ -448,11 +712,63 @@
 
   white-space: nowrap;
 
+  color:
+    rgba(255, 255, 255, 0.5);
+
   font-size: 11px;
 
   font-weight: 500;
+}
 
-  color: rgba(255, 255, 255, 0.5);
+/* =========================================================
+   USER INFO COLAPSADO
+========================================================= */
+
+.safko-sidebar.collapsed
+  .safko-sidebar__user-info {
+  display: none;
+}
+
+/* =========================================================
+   TOOLTIP NATIVO PARA MENÚ COLAPSADO
+========================================================= */
+
+.safko-sidebar.collapsed
+  .safko-sidebar__item:hover::after {
+  content: attr(title);
+
+  position: absolute;
+
+  left: calc(100% + 12px);
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  z-index: 2000;
+
+  padding: 7px 10px;
+
+  border-radius: 7px;
+
+  background:
+    #1e1b6f;
+
+  color:
+    var(--safko-color-blanco);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  box-shadow:
+    0 6px 18px
+    rgba(0, 0, 0, 0.18);
 }
 
 /* =========================================================
@@ -460,27 +776,30 @@
 ========================================================= */
 
 @media (max-width: 768px) {
-  .safko-sidebar {
-    width: var(--safko-sidebar-collapsed);
-  }
 
-  .safko-sidebar__brand {
-    display: none;
+  .safko-sidebar {
+    width:
+      var(--safko-sidebar-collapsed);
   }
 
   .safko-sidebar__header {
     justify-content: center;
 
-    padding: 0;
+    padding: 0 10px;
   }
 
-  .safko-sidebar__toggle {
-    width: 38px;
-    height: 38px;
+  .safko-sidebar__brand {
+    justify-content: center;
+  }
+
+  .safko-sidebar__brand-info {
+    display: none;
   }
 
   .safko-sidebar__item {
     justify-content: center;
+
+    gap: 0;
 
     padding: 11px 10px;
   }
@@ -496,10 +815,62 @@
   .safko-sidebar__user {
     justify-content: center;
 
-    padding: 15px 0;
+    padding: 14px 0;
   }
 
   .safko-sidebar__user-info {
     display: none;
   }
+
+  /*
+     En móvil también dejamos visible el botón.
+     Así puedes volver a abrir el sidebar.
+  */
+
+  .safko-sidebar__toggle {
+    position: absolute;
+
+    top: 21px;
+
+    right: -15px;
+
+    width: 30px;
+    height: 30px;
+
+    min-width: 30px;
+
+    border-radius: 50%;
+
+    background:
+      var(--safko-color-secundario);
+
+    border: 2px solid
+      var(--safko-color-primario);
+
+    color:
+      var(--safko-color-blanco);
+
+    z-index: 1100;
+  }
+}
+
+/* =========================================================
+   PANTALLAS MUY PEQUEÑAS
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .safko-sidebar {
+    width:
+      var(--safko-sidebar-collapsed);
+  }
+
+  .safko-sidebar__nav {
+    padding: 14px 8px;
+  }
+
+  .safko-sidebar__logout-wrapper {
+    padding: 8px;
+  }
+
 }

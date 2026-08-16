@@ -1,0 +1,93 @@
+:root {
+  --safko-sidebar-width: 240px;
+  --safko-sidebar-collapsed: 78px;
+
+  /* padding del área de contenido, por breakpoint */
+  --safko-main-padding: 32px;
+  --safko-main-padding-tablet: 28px 24px;
+  --safko-main-padding-mobile: 24px 20px;
+  --safko-main-padding-mobile-sm: 20px 14px;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.safko-layout {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* =========================================================
+   MAIN
+   Esta es la única regla que define ancho, margen y padding
+   del área de contenido. Cualquier componente que viva adentro
+   (como .vt-page) NO debe volver a poner padding ni background
+   propios — si lo hace, se duplica el espaciado y el contenido
+   pierde ancho útil (fue justo el bug de la captura anterior).
+========================================================= */
+
+.safko-layout__main {
+  width: calc(100% - var(--safko-sidebar-width));
+  min-height: 100vh;
+
+  margin-left: var(--safko-sidebar-width);
+
+  padding: var(--safko-main-padding);
+
+  background: #f6f7ff;
+
+  box-sizing: border-box;
+
+  transition:
+    margin-left 0.25s ease,
+    width 0.25s ease;
+}
+
+/* =========================================================
+   SIDEBAR COLLAPSED
+========================================================= */
+
+.safko-layout__main--collapsed {
+  width: calc(100% - var(--safko-sidebar-collapsed));
+
+  margin-left: var(--safko-sidebar-collapsed);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+  .safko-layout__main {
+    padding: var(--safko-main-padding-tablet);
+  }
+}
+
+/* =========================================================
+   MOBILE
+   El sidebar se colapsa automáticamente en mobile (según tu
+   CSS del sidebar, a los 768px ya se ve fijo en 78px), así
+   que el main debe seguir el mismo ancho colapsado aquí,
+   tenga o no la clase --collapsed aplicada por JS.
+========================================================= */
+
+@media (max-width: 768px) {
+  .safko-layout__main {
+    width: calc(100% - var(--safko-sidebar-collapsed));
+
+    margin-left: var(--safko-sidebar-collapsed);
+
+    padding: var(--safko-main-padding-mobile);
+  }
+}
+
+/* =========================================================
+   MOBILE PEQUEÑO
+========================================================= */
+
+@media (max-width: 576px) {
+  .safko-layout__main {
+    padding: var(--safko-main-padding-mobile-sm);
+  }
+}

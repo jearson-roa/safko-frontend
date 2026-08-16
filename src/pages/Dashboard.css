@@ -1,0 +1,885 @@
+/* =========================================================
+   VARIABLES SAFKO
+========================================================= */
+
+:root {
+  --safko-color-primario: #241ba6;
+  --safko-color-secundario: #4d68d8;
+  --safko-color-verde: #91f023;
+  --safko-color-morado: #fc5b20;
+  --safko-color-blanco: #ffffff;
+  --safko-color-negro: #000000;
+
+  --safko-font-display: "Urbanist", sans-serif;
+
+  --safko-text: #1f2937;
+  --safko-muted: #64748b;
+  --safko-border: rgba(36, 27, 166, 0.1);
+}
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+.safko-dashboard,
+.safko-dashboard * {
+  box-sizing: border-box;
+  font-family: var(--safko-font-display);
+}
+
+
+/* =========================================================
+   DASHBOARD
+   IMPORTANTE:
+   No usamos margin-left aquí.
+
+   El layout principal debe ser quien controle el espacio
+   disponible cuando el sidebar cambia entre 240px y 78px.
+========================================================= */
+
+.safko-dashboard {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 100%;
+
+  padding: 24px 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f6f8ff 0%,
+      #eef2ff 50%,
+      #f8f9fc 100%
+    );
+
+  color: var(--safko-text);
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+.safko-dashboard__container {
+  width: 100%;
+  max-width: 1500px;
+  min-width: 0;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.safko-dashboard__header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+
+  border-bottom:
+    1px solid rgba(36, 27, 166, 0.1);
+}
+
+.safko-dashboard__header-content {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.safko-dashboard__eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--safko-color-secundario);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TITULO
+========================================================= */
+
+.safko-dashboard__title {
+  margin: 0;
+
+  color: var(--safko-color-primario);
+
+  font-size: clamp(25px, 2.6vw, 34px);
+
+  line-height: 1.05;
+
+  font-weight: 900;
+
+  letter-spacing: -0.035em;
+}
+
+
+/* =========================================================
+   SUBTITULO
+========================================================= */
+
+.safko-dashboard__subtitle {
+  margin: 7px 0 0;
+
+  color: var(--safko-muted);
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.safko-dashboard__status {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  background:
+    rgba(36, 27, 166, 0.05);
+
+  border:
+    1px solid rgba(36, 27, 166, 0.1);
+
+  color: var(--safko-color-primario);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS DOT
+========================================================= */
+
+.safko-dashboard__status-dot {
+  width: 7px;
+  height: 7px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--safko-color-verde);
+
+  box-shadow:
+    0 0 0 3px rgba(145, 240, 35, 0.14),
+    0 0 10px rgba(145, 240, 35, 0.4);
+
+  animation:
+    safko-dashboard-pulse 2.4s ease-in-out infinite;
+}
+
+
+@keyframes safko-dashboard-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
+
+/* =========================================================
+   SECCIONES
+========================================================= */
+
+.safko-dashboard__section {
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: 22px;
+}
+
+
+.safko-dashboard__section-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 12px;
+}
+
+
+.safko-dashboard__section-header h2 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+
+.safko-dashboard__section-header p {
+  margin: 3px 0 0;
+
+  color: #7b8494;
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   ESTADÍSTICAS
+========================================================= */
+
+.safko-dashboard__stats {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.safko-dashboard__card {
+  position: relative;
+
+  min-width: 0;
+  min-height: 155px;
+
+  overflow: hidden;
+
+  padding: 18px;
+
+  background:
+    var(--safko-color-blanco);
+
+  border:
+    1px solid rgba(36, 27, 166, 0.08);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 20px rgba(36, 27, 166, 0.055);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.safko-dashboard__card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(77, 104, 216, 0.16);
+
+  box-shadow:
+    0 10px 28px rgba(36, 27, 166, 0.09);
+}
+
+
+/* =========================================================
+   DECORACIÓN CARD
+========================================================= */
+
+.safko-dashboard__card::after {
+  content: "";
+
+  position: absolute;
+
+  right: -35px;
+  bottom: -45px;
+
+  width: 125px;
+  height: 125px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(77, 104, 216, 0.055);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.safko-dashboard__card-top {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   ICONO DE CARD
+========================================================= */
+
+.safko-dashboard__icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  color: var(--safko-color-blanco);
+
+  background:
+    var(--safko-color-secundario);
+
+  box-shadow:
+    0 5px 14px rgba(77, 104, 216, 0.22);
+}
+
+
+/* =========================================================
+   ICONOS LUCIDE
+========================================================= */
+
+.safko-dashboard__icon svg {
+  width: 19px;
+  height: 19px;
+
+  stroke-width: 2.3;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.safko-dashboard__card-label {
+  color: #8a92a3;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CARD PENDIENTE
+========================================================= */
+
+.safko-dashboard__card--pending
+  .safko-dashboard__icon {
+  background:
+    var(--safko-color-morado);
+
+  box-shadow:
+    0 5px 14px rgba(252, 91, 32, 0.22);
+}
+
+
+/* =========================================================
+   CARD EN EJECUCIÓN
+========================================================= */
+
+.safko-dashboard__card--execution
+  .safko-dashboard__icon {
+  background:
+    var(--safko-color-secundario);
+}
+
+
+/* =========================================================
+   CARD COMPLETADO
+========================================================= */
+
+.safko-dashboard__card--completed
+  .safko-dashboard__icon {
+  color:
+    var(--safko-color-primario);
+
+  background:
+    var(--safko-color-verde);
+
+  box-shadow:
+    0 5px 14px rgba(145, 240, 35, 0.22);
+}
+
+
+/* =========================================================
+   NUMERO
+========================================================= */
+
+.safko-dashboard__number {
+  position: relative;
+  z-index: 1;
+
+  margin-top: 18px;
+
+  color:
+    var(--safko-color-primario);
+
+  font-size: 34px;
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -0.05em;
+}
+
+
+/* =========================================================
+   DESCRIPCIÓN CARD
+========================================================= */
+
+.safko-dashboard__card p {
+  position: relative;
+  z-index: 1;
+
+  margin: 7px 0 0;
+
+  color: #7b8494;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   ACCESOS RÁPIDOS
+========================================================= */
+
+.safko-dashboard__actions {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.safko-dashboard__action {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 13px 15px;
+
+  text-align: left;
+
+  font-family:
+    var(--safko-font-display);
+
+  background:
+    var(--safko-color-blanco);
+
+  border:
+    1px solid rgba(36, 27, 166, 0.08);
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 18px rgba(36, 27, 166, 0.045);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.safko-dashboard__action:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(77, 104, 216, 0.28);
+
+  box-shadow:
+    0 10px 25px rgba(36, 27, 166, 0.08);
+}
+
+
+/* =========================================================
+   ACTION ICON
+========================================================= */
+
+.safko-dashboard__action-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  color:
+    var(--safko-color-blanco);
+
+  background:
+    var(--safko-color-primario);
+}
+
+
+/* =========================================================
+   ICONOS LUCIDE EN ACCIONES
+========================================================= */
+
+.safko-dashboard__action-icon svg {
+  width: 19px;
+  height: 19px;
+
+  stroke-width: 2.2;
+}
+
+
+/* =========================================================
+   SEGUNDO ACCESO
+========================================================= */
+
+.safko-dashboard__action:nth-child(2)
+  .safko-dashboard__action-icon {
+  color:
+    var(--safko-color-primario);
+
+  background:
+    var(--safko-color-verde);
+}
+
+
+/* =========================================================
+   CONTENIDO ACTION
+========================================================= */
+
+.safko-dashboard__action span:nth-child(2) {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+  flex: 1;
+}
+
+
+.safko-dashboard__action strong {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #1f2937;
+
+  font-size: 13px;
+
+  font-weight: 800;
+}
+
+
+.safko-dashboard__action small {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #8a92a3;
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   FLECHA
+========================================================= */
+
+.safko-dashboard__arrow {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color:
+    var(--safko-color-secundario);
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.safko-dashboard__arrow svg {
+  width: 18px;
+  height: 18px;
+
+  stroke-width: 2.5;
+}
+
+
+.safko-dashboard__action:hover
+  .safko-dashboard__arrow {
+  transform:
+    translateX(4px);
+
+  color:
+    var(--safko-color-primario);
+}
+
+
+/* =========================================================
+   TABLET / SIDEBAR COLAPSADO
+========================================================= */
+
+@media (max-width: 1100px) {
+  .safko-dashboard {
+    padding: 20px;
+  }
+
+  .safko-dashboard__stats {
+    gap: 12px;
+  }
+
+  .safko-dashboard__card {
+    padding: 16px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .safko-dashboard {
+    padding: 18px;
+  }
+
+  .safko-dashboard__header {
+    margin-bottom: 18px;
+
+    padding-bottom: 15px;
+  }
+
+  .safko-dashboard__stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .safko-dashboard__card {
+    min-height: 145px;
+  }
+
+  .safko-dashboard__actions {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 700px) {
+  .safko-dashboard {
+    padding: 16px;
+  }
+
+  .safko-dashboard__header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .safko-dashboard__status {
+    align-self: flex-start;
+  }
+
+  .safko-dashboard__title {
+    font-size: 25px;
+  }
+
+  .safko-dashboard__subtitle {
+    font-size: 12px;
+  }
+
+  .safko-dashboard__stats {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .safko-dashboard__card {
+    min-height: 135px;
+  }
+
+  .safko-dashboard__actions {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .safko-dashboard__section {
+    margin-bottom: 18px;
+  }
+}
+
+
+/* =========================================================
+   MÓVIL PEQUEÑO
+========================================================= */
+
+@media (max-width: 450px) {
+  .safko-dashboard {
+    padding: 12px;
+  }
+
+  .safko-dashboard__title {
+    font-size: 22px;
+  }
+
+  .safko-dashboard__subtitle {
+    font-size: 11px;
+  }
+
+  .safko-dashboard__card {
+    padding: 15px;
+  }
+
+  .safko-dashboard__number {
+    margin-top: 15px;
+
+    font-size: 30px;
+  }
+
+  .safko-dashboard__action {
+    padding: 12px;
+  }
+
+  .safko-dashboard__action-icon {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+
+/* =========================================================
+   MÓVIL MUY PEQUEÑO
+========================================================= */
+
+@media (max-width: 360px) {
+  .safko-dashboard {
+    padding: 10px;
+  }
+
+  .safko-dashboard__title {
+    font-size: 20px;
+  }
+
+  .safko-dashboard__card {
+    padding: 14px;
+  }
+
+  .safko-dashboard__number {
+    font-size: 28px;
+  }
+}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import {
@@ -20,7 +19,13 @@ function Sidebar({ collapsed, setCollapsed }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  const usuario = JSON.parse(
+    localStorage.getItem("usuario") || "{}"
+  );
+
+  /* =========================================================
+     CERRAR SESIÓN
+  ========================================================= */
 
   const cerrarSesion = () => {
     localStorage.removeItem("token");
@@ -28,6 +33,10 @@ function Sidebar({ collapsed, setCollapsed }) {
 
     navigate("/");
   };
+
+  /* =========================================================
+     MENÚ
+  ========================================================= */
 
   const menuItems = [
     {
@@ -67,41 +76,78 @@ function Sidebar({ collapsed, setCollapsed }) {
     },
   ];
 
-  return (
-    <aside className={`safko-sidebar ${collapsed ? "collapsed" : ""}`}>
-      {/* HEADER */}
-      <div className="safko-sidebar__header">
-        {!collapsed && (
-          <div className="safko-sidebar__brand">
-            <div className="safko-sidebar__logo">
-              S
-            </div>
+  /* =========================================================
+     TOGGLE
+  ========================================================= */
 
-            <div className="safko-sidebar__brand-info">
-              <h2>SAFKO</h2>
-              <span>Sistema de Gestión</span>
-            </div>
+  const toggleSidebar = () => {
+    setCollapsed((prev) => !prev);
+  };
+
+  return (
+    <aside
+      className={`safko-sidebar ${
+        collapsed ? "collapsed" : ""
+      }`}
+    >
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
+
+      <div className="safko-sidebar__header">
+
+        {/* LOGO + INFORMACIÓN */}
+
+        <div className="safko-sidebar__brand">
+          <div className="safko-sidebar__logo">
+            S
           </div>
-        )}
+
+          <div className="safko-sidebar__brand-info">
+            <h2>SAFKO</h2>
+
+            <span>
+              Sistema de Gestión
+            </span>
+          </div>
+        </div>
+
+        {/* =================================================
+            BOTÓN TOGGLE
+        ================================================= */}
 
         <button
           type="button"
           className="safko-sidebar__toggle"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={toggleSidebar}
           aria-label={
-            collapsed ? "Expandir menú" : "Colapsar menú"
+            collapsed
+              ? "Expandir menú"
+              : "Colapsar menú"
+          }
+          title={
+            collapsed
+              ? "Expandir menú"
+              : "Colapsar menú"
           }
         >
           {collapsed ? (
-            <Menu size={20} />
+            <Menu size={20} strokeWidth={2.3} />
           ) : (
-            <ChevronLeft size={20} />
+            <ChevronLeft
+              size={20}
+              strokeWidth={2.3}
+            />
           )}
         </button>
       </div>
 
-      {/* MENÚ */}
+      {/* =====================================================
+          MENÚ
+      ===================================================== */}
+
       <nav className="safko-sidebar__nav">
+
         {menuItems.map((item) => {
           const Icon = item.icon;
 
@@ -115,65 +161,96 @@ function Sidebar({ collapsed, setCollapsed }) {
               className={`safko-sidebar__item ${
                 active ? "active" : ""
               }`}
-              title={collapsed ? item.text : undefined}
+              title={
+                collapsed
+                  ? item.text
+                  : undefined
+              }
               onClick={() => navigate(item.path)}
             >
-              {active && !collapsed && (
+
+              {/* BARRA ACTIVA */}
+
+              {active && (
                 <span className="safko-sidebar__active-bar" />
               )}
 
+              {/* ICONO */}
+
               <Icon
                 size={19}
-                strokeWidth={active ? 2.3 : 2}
+                strokeWidth={
+                  active ? 2.4 : 2
+                }
               />
 
-              {!collapsed && (
-                <span className="safko-sidebar__item-text">
-                  {item.text}
-                </span>
-              )}
+              {/* TEXTO */}
+
+              <span className="safko-sidebar__item-text">
+                {item.text}
+              </span>
             </button>
           );
         })}
       </nav>
 
-      {/* CERRAR SESIÓN */}
+      {/* =====================================================
+          CERRAR SESIÓN
+      ===================================================== */}
+
       <div className="safko-sidebar__logout-wrapper">
+
         <button
           type="button"
           className="safko-sidebar__item safko-sidebar__logout"
-          title={collapsed ? "Cerrar sesión" : undefined}
+          title={
+            collapsed
+              ? "Cerrar sesión"
+              : undefined
+          }
           onClick={cerrarSesion}
         >
-          <LogOut size={19} />
 
-          {!collapsed && (
-            <span className="safko-sidebar__item-text">
-              Cerrar sesión
-            </span>
-          )}
+          <LogOut
+            size={19}
+            strokeWidth={2}
+          />
+
+          <span className="safko-sidebar__item-text">
+            Cerrar sesión
+          </span>
+
         </button>
+
       </div>
 
-      {/* USUARIO */}
+      {/* =====================================================
+          USUARIO
+      ===================================================== */}
+
       <div className="safko-sidebar__user">
+
         <div className="safko-sidebar__avatar">
           {usuario?.nombres
-            ? usuario.nombres.charAt(0).toUpperCase()
+            ? usuario.nombres
+                .charAt(0)
+                .toUpperCase()
             : "A"}
         </div>
 
-        {!collapsed && (
-          <div className="safko-sidebar__user-info">
-            <div className="safko-sidebar__user-name">
-              {usuario?.nombres || "Administrador"}
-            </div>
+        <div className="safko-sidebar__user-info">
 
-            <div className="safko-sidebar__user-email">
-              {usuario?.email || ""}
-            </div>
+          <div className="safko-sidebar__user-name">
+            {usuario?.nombres ||
+              "Administrador"}
           </div>
-        )}
+
+          <div className="safko-sidebar__user-email">
+            {usuario?.email || ""}
+          </div>
+
+        </div>
+
       </div>
     </aside>
   );
