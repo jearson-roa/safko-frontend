@@ -26,9 +26,13 @@
 
 .safko-login {
   min-height: 100vh;
+
   display: grid;
+
   grid-template-columns: 1.05fr 1fr;
+
   font-family: var(--safko-font-body);
+
   color: var(--safko-color-blanco);
 }
 
@@ -38,24 +42,18 @@
 
 .safko-login__brand {
   position: relative;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
+
   padding: 3rem;
+
   overflow: hidden;
 
-  background:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(77, 104, 216, 0.35),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
-      rgba(252, 91, 32, 0.15),
-      transparent 35%
-    ),
-    var(--safko-color-primario);
+  background: var(--safko-color-primario);
 
   border-right: 1px solid rgba(255, 255, 255, 0.14);
 }
@@ -66,7 +64,9 @@
 
 .safko-login__grid {
   position: absolute;
+
   inset: 0;
+
   pointer-events: none;
 
   background-image:
@@ -107,9 +107,11 @@
 
 .safko-login__brand-content {
   position: relative;
+
   z-index: 2;
 
   margin-top: auto;
+
   margin-bottom: auto;
 }
 
@@ -119,19 +121,29 @@
 
 .safko-login__mark {
   font-family: var(--safko-font-display);
+
   font-weight: 900;
+
   font-size: clamp(2.5rem, 5vw, 3.5rem);
+
   letter-spacing: 0.02em;
+
   line-height: 1;
+
   color: var(--safko-color-verde);
 }
 
 .safko-login__submark {
   font-family: var(--safko-font-display);
+
   font-weight: 500;
+
   font-size: 0.8rem;
+
   letter-spacing: 0.3em;
+
   color: var(--safko-color-verde);
+
   margin-top: 0.5rem;
 }
 
@@ -141,42 +153,50 @@
 
 .safko-login__tagline {
   font-family: var(--safko-font-display);
+
   font-weight: 500;
+
   color: rgba(255, 255, 255, 0.72);
+
   margin: 1.5rem 0 2rem;
 }
 
 /* =========================================================
    STATUS
+
 ========================================================= */
 
 .safko-login__status {
   display: inline-flex;
+
   align-items: center;
+
   gap: 0.6rem;
 
   font-family: var(--safko-font-display);
+
   font-weight: 500;
+
   font-size: 0.72rem;
+
   letter-spacing: 0.14em;
 
   color: var(--safko-color-blanco);
 
   padding: 0.6rem 0.9rem;
 
-  background: rgba(252, 91, 32, 0.18);
+background-color: var(--safko-color-morado);
 
   border: 1px solid rgba(255, 255, 255, 0.16);
 
   border-radius: 8px;
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .safko-login__dot {
   width: 8px;
+
   height: 8px;
+
   flex-shrink: 0;
 
   border-radius: 50%;
@@ -194,11 +214,13 @@
   0%,
   100% {
     opacity: 1;
+
     transform: scale(1);
   }
 
   50% {
     opacity: 0.45;
+
     transform: scale(0.85);
   }
 }
@@ -217,8 +239,11 @@
   position: relative;
 
   font-family: var(--safko-font-display);
+
   font-weight: 500;
+
   font-size: 0.68rem;
+
   letter-spacing: 0.14em;
 
   color: rgba(255, 255, 255, 0.45);
@@ -232,7 +257,9 @@
   position: relative;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   padding: 2rem;
@@ -241,13 +268,7 @@
 
   background-color: var(--safko-color-primario);
 
-  background-image:
-    linear-gradient(
-      135deg,
-      rgba(36, 27, 166, 0.35),
-      rgba(36, 27, 166, 0.15)
-    ),
-    url("../assets/img/login_fondo.jpeg");
+  background-image: url("../assets/img/login_fondo.jpeg");
 
   background-repeat: no-repeat;
 
@@ -261,77 +282,53 @@
 }
 
 /* =========================================================
-   CAPA OSCURA SOBRE IMAGEN
-========================================================= */
-
-.safko-login__panel::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(77, 104, 216, 0.08),
-      transparent 55%
-    ),
-    rgba(20, 15, 90, 0.18);
-
-  pointer-events: none;
-}
-
-/* =========================================================
-   GLASS FORM
+   FORMULARIO GLASS
 ========================================================= */
 
 .safko-login__form {
   position: relative;
+
   z-index: 2;
 
   width: 100%;
+
   max-width: 400px;
 
   padding: 2.5rem;
 
   /*
-    GLASS PRINCIPAL
+    GLASS REAL
 
-    No usamos un blanco demasiado alto porque eso
-    elimina la imagen del fondo.
+    Fondo blanco muy transparente para que
+    la imagen siga siendo visible.
   */
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.16),
-      rgba(255, 255, 255, 0.06)
-    );
+  background: rgba(255, 255, 255, 0.08);
 
   /*
-    Borde exterior sutil.
+    Borde limpio y sutil.
   */
   border: 1px solid rgba(255, 255, 255, 0.28);
 
   border-radius: 24px;
 
   /*
-    Blur real del fondo.
+    Desenfoque solamente en el formulario.
   */
-  backdrop-filter: blur(22px) saturate(145%);
-  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(120%);
+
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
 
   /*
-    Sombra exterior + iluminación interior.
+    Sombra exterior.
   */
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.32),
-    0 10px 35px rgba(36, 27, 166, 0.22),
-    inset 0 1px 1px rgba(255, 255, 255, 0.32),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.08);
+    0 25px 60px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08);
 
   /*
-    Evita que elementos internos
-    rompan visualmente el cristal.
+    Importante para que los reflejos
+    permanezcan dentro del formulario.
   */
   overflow: hidden;
 
@@ -339,7 +336,7 @@
 }
 
 /* =========================================================
-   REFLEJO DEL CRISTAL
+   REFLEJO SUPERIOR DEL GLASS
 ========================================================= */
 
 .safko-login__form::before {
@@ -348,25 +345,20 @@
   position: absolute;
 
   top: 0;
+
   left: 0;
+
   right: 0;
 
-  height: 45%;
+  height: 1px;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.13),
-      rgba(255, 255, 255, 0)
-    );
+  background: rgba(255, 255, 255, 0.5);
 
   pointer-events: none;
-
-  border-radius: inherit;
 }
 
 /* =========================================================
-   BORDE DE LUZ
+   BORDE INTERIOR DEL GLASS
 ========================================================= */
 
 .safko-login__form::after {
@@ -378,11 +370,9 @@
 
   border-radius: inherit;
 
-  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 
-  box-shadow:
-    inset 1px 0 rgba(255, 255, 255, 0.12),
-    inset -1px 0 rgba(255, 255, 255, 0.06);
+  pointer-events: none;
 }
 
 /* =========================================================
@@ -391,6 +381,7 @@
 
 .safko-login__form-header {
   position: relative;
+
   z-index: 1;
 
   margin-bottom: 2.25rem;
@@ -404,8 +395,11 @@
   display: block;
 
   font-family: var(--safko-font-display);
+
   font-weight: 600;
+
   font-size: 0.72rem;
+
   letter-spacing: 0.16em;
 
   text-transform: uppercase;
@@ -421,17 +415,16 @@
 
 .safko-login__title {
   position: relative;
+
   z-index: 1;
 
   font-family: var(--safko-font-display);
+
   font-weight: 900;
 
   margin: 0;
 
   color: var(--safko-color-blanco);
-
-  text-shadow:
-    0 2px 15px rgba(0, 0, 0, 0.18);
 }
 
 /* =========================================================
@@ -440,6 +433,7 @@
 
 .safko-field {
   position: relative;
+
   z-index: 1;
 
   margin-bottom: 1.25rem;
@@ -451,6 +445,7 @@
   font-family: var(--safko-font-display);
 
   font-size: 0.78rem;
+
   font-weight: 600;
 
   color: rgba(255, 255, 255, 0.82);
@@ -464,7 +459,9 @@
 
 .safko-field__row {
   display: flex;
+
   align-items: stretch;
+
   gap: 0;
 }
 
@@ -474,6 +471,7 @@
 
 .safko-field__input {
   width: 100%;
+
   min-width: 0;
 
   background: rgba(255, 255, 255, 0.93);
@@ -485,6 +483,7 @@
   padding: 0.8rem 0.9rem;
 
   font-family: var(--safko-font-display);
+
   font-size: 0.95rem;
 
   color: var(--safko-color-negro);
@@ -494,7 +493,7 @@
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
-    background 0.2s ease;
+    background-color 0.2s ease;
 }
 
 .safko-field__input::placeholder {
@@ -523,6 +522,7 @@
 
 .safko-field__row .safko-field__input {
   border-top-right-radius: 0;
+
   border-bottom-right-radius: 0;
 
   border-right: none;
@@ -538,6 +538,7 @@
   font-family: var(--safko-font-display);
 
   font-size: 0.7rem;
+
   letter-spacing: 0.06em;
 
   text-transform: uppercase;
@@ -549,6 +550,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 
   border-top-right-radius: 10px;
+
   border-bottom-right-radius: 10px;
 
   padding: 0 0.9rem;
@@ -557,7 +559,7 @@
 
   transition:
     color 0.2s ease,
-    background 0.2s ease,
+    background-color 0.2s ease,
     border-color 0.2s ease;
 }
 
@@ -584,6 +586,7 @@
 
 .safko-submit {
   position: relative;
+
   z-index: 1;
 
   width: 100%;
@@ -591,6 +594,7 @@
   display: inline-flex;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 0.55rem;
@@ -598,6 +602,7 @@
   font-family: var(--safko-font-display);
 
   font-weight: 700;
+
   font-size: 0.9rem;
 
   letter-spacing: 0.04em;
@@ -606,12 +611,7 @@
 
   color: var(--safko-color-primario);
 
-  background:
-    linear-gradient(
-      135deg,
-      #a8ff43,
-      var(--safko-color-verde)
-    );
+  background-color: var(--safko-color-verde);
 
   border: 1px solid rgba(255, 255, 255, 0.45);
 
@@ -629,7 +629,7 @@
 
   transition:
     color 0.2s ease,
-    background 0.2s ease,
+    background-color 0.2s ease,
     transform 0.15s ease,
     box-shadow 0.2s ease;
 }
@@ -637,12 +637,7 @@
 .safko-submit:hover {
   color: var(--safko-color-primario);
 
-  background:
-    linear-gradient(
-      135deg,
-      #b5ff5b,
-      #9bf333
-    );
+  background-color: #a5f94b;
 
   transform: translateY(-1px);
 
@@ -657,7 +652,9 @@
 
 .safko-submit:disabled {
   opacity: 0.65;
+
   cursor: not-allowed;
+
   box-shadow: none;
 }
 
@@ -675,6 +672,7 @@
 
 .safko-submit__spinner {
   width: 14px;
+
   height: 14px;
 
   border: 2px solid rgba(36, 27, 166, 0.25);
@@ -698,9 +696,11 @@
 
 .safko-note {
   position: relative;
+
   z-index: 1;
 
   display: flex;
+
   flex-direction: column;
 
   gap: 0.3rem;
@@ -716,9 +716,6 @@
   border-left: 3px solid var(--safko-color-verde);
 
   border-radius: 10px;
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 
   font-family: var(--safko-font-display);
 
@@ -770,6 +767,7 @@
 
   .safko-login__form {
     max-width: 380px;
+
     padding: 2rem;
   }
 
@@ -791,6 +789,7 @@
     min-height: 100vh;
 
     display: flex;
+
     flex-direction: column;
   }
 
@@ -818,6 +817,7 @@
 
   .safko-login__tagline {
     margin: 0.8rem 0 1rem;
+
     font-size: 0.9rem;
   }
 
@@ -860,8 +860,9 @@
 
     border-radius: 20px;
 
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(120%);
+
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
   }
 }
 
@@ -886,11 +887,13 @@
 
   .safko-login__submark {
     font-size: 0.65rem;
+
     letter-spacing: 0.2em;
   }
 
   .safko-login__tagline {
     font-size: 0.85rem;
+
     margin: 0.7rem 0 1rem;
   }
 
@@ -921,8 +924,9 @@
 
     border-radius: 18px;
 
-    backdrop-filter: blur(16px) saturate(135%);
-    -webkit-backdrop-filter: blur(16px) saturate(135%);
+    backdrop-filter: blur(16px) saturate(120%);
+
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
   }
 
   .safko-login__form-header {
@@ -931,6 +935,7 @@
 
   .safko-login__eyebrow {
     font-size: 0.75rem;
+
     letter-spacing: 0.1em;
   }
 
@@ -948,16 +953,19 @@
 
   .safko-field__input {
     font-size: 0.9rem;
+
     padding: 0.75rem 0.8rem;
   }
 
   .safko-field__toggle {
     font-size: 0.62rem;
+
     padding: 0 0.7rem;
   }
 
   .safko-submit {
     font-size: 0.82rem;
+
     padding: 0.8rem;
   }
 }
@@ -969,6 +977,7 @@
 @media (max-width: 360px) {
   .safko-login__brand {
     min-height: 230px;
+
     padding: 1.25rem;
   }
 
