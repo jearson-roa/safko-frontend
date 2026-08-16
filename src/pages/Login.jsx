@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import "./Login.css";
+import {FaEye, FaEyeSlash} from "react-icons/fa"
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -101,14 +102,14 @@ function Login() {
                 autoComplete="current-password"
                 required
               />
-              <button
-                type="button"
-                className="safko-field__toggle"
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-              >
-                {showPassword ? "Ocultar" : "Mostrar"}
-              </button>
+<button
+  type="button"
+  className="safko-field__toggle"
+  onClick={() => setShowPassword(!showPassword)}
+  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+>
+  {showPassword ? <FaEyeSlash /> : <FaEye />}
+</button>
             </div>
           </div>
 

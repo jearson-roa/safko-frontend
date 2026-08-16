@@ -10,10 +10,6 @@
   --safko-font-body: "Urbanist", sans-serif;
   --safko-font-mono: "Urbanist", sans-serif;
 
-  /* =========================================================
-     FONDO
-  ========================================================= */
-
   --safko-bg-width: auto;
   --safko-bg-height: 100%;
   --safko-bg-x: center;
@@ -26,13 +22,9 @@
 
 .safko-login {
   min-height: 100vh;
-
   display: grid;
-
   grid-template-columns: 1.05fr 1fr;
-
   font-family: var(--safko-font-body);
-
   color: var(--safko-color-blanco);
 }
 
@@ -42,19 +34,12 @@
 
 .safko-login__brand {
   position: relative;
-
   display: flex;
-
   flex-direction: column;
-
   justify-content: space-between;
-
   padding: 3rem;
-
   overflow: hidden;
-
   background: var(--safko-color-primario);
-
   border-right: 1px solid rgba(255, 255, 255, 0.14);
 }
 
@@ -64,9 +49,7 @@
 
 .safko-login__grid {
   position: absolute;
-
   inset: 0;
-
   pointer-events: none;
 
   background-image:
@@ -81,7 +64,6 @@
     );
 
   background-size: 20px 20px;
-
   opacity: 0.45;
 
   mask-image:
@@ -107,11 +89,8 @@
 
 .safko-login__brand-content {
   position: relative;
-
   z-index: 2;
-
   margin-top: auto;
-
   margin-bottom: auto;
 }
 
@@ -121,29 +100,19 @@
 
 .safko-login__mark {
   font-family: var(--safko-font-display);
-
   font-weight: 900;
-
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-
   letter-spacing: 0.02em;
-
   line-height: 1;
-
   color: var(--safko-color-verde);
 }
 
 .safko-login__submark {
   font-family: var(--safko-font-display);
-
   font-weight: 500;
-
   font-size: 0.8rem;
-
   letter-spacing: 0.3em;
-
   color: var(--safko-color-verde);
-
   margin-top: 0.5rem;
 }
 
@@ -153,52 +122,38 @@
 
 .safko-login__tagline {
   font-family: var(--safko-font-display);
-
   font-weight: 500;
-
   color: rgba(255, 255, 255, 0.72);
-
   margin: 1.5rem 0 2rem;
 }
 
 /* =========================================================
    STATUS
-
 ========================================================= */
 
 .safko-login__status {
   display: inline-flex;
-
   align-items: center;
-
   gap: 0.6rem;
 
   font-family: var(--safko-font-display);
-
   font-weight: 500;
-
   font-size: 0.72rem;
-
   letter-spacing: 0.14em;
-
   color: var(--safko-color-blanco);
 
   padding: 0.6rem 0.9rem;
 
-background-color: var(--safko-color-morado);
+  background-color: var(--safko-color-morado);
 
   border: 1px solid rgba(255, 255, 255, 0.16);
-
   border-radius: 8px;
 }
 
 .safko-login__dot {
   width: 8px;
-
   height: 8px;
-
   flex-shrink: 0;
-
   border-radius: 50%;
 
   background: var(--safko-color-verde);
@@ -214,13 +169,11 @@ background-color: var(--safko-color-morado);
   0%,
   100% {
     opacity: 1;
-
     transform: scale(1);
   }
 
   50% {
     opacity: 0.45;
-
     transform: scale(0.85);
   }
 }
@@ -239,13 +192,9 @@ background-color: var(--safko-color-morado);
   position: relative;
 
   font-family: var(--safko-font-display);
-
   font-weight: 500;
-
   font-size: 0.68rem;
-
   letter-spacing: 0.14em;
-
   color: rgba(255, 255, 255, 0.45);
 }
 
@@ -257,13 +206,10 @@ background-color: var(--safko-color-morado);
   position: relative;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   padding: 2rem;
-
   overflow: hidden;
 
   background-color: var(--safko-color-primario);
@@ -287,49 +233,27 @@ background-color: var(--safko-color-morado);
 
 .safko-login__form {
   position: relative;
-
   z-index: 2;
 
   width: 100%;
-
   max-width: 400px;
 
   padding: 2.5rem;
 
-  /*
-    GLASS REAL
-
-    Fondo blanco muy transparente para que
-    la imagen siga siendo visible.
-  */
   background: rgba(255, 255, 255, 0.08);
 
-  /*
-    Borde limpio y sutil.
-  */
   border: 1px solid rgba(255, 255, 255, 0.28);
 
   border-radius: 24px;
 
-  /*
-    Desenfoque solamente en el formulario.
-  */
   backdrop-filter: blur(18px) saturate(120%);
-
   -webkit-backdrop-filter: blur(18px) saturate(120%);
 
-  /*
-    Sombra exterior.
-  */
   box-shadow:
     0 25px 60px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
     inset 0 -1px 0 rgba(0, 0, 0, 0.08);
 
-  /*
-    Importante para que los reflejos
-    permanezcan dentro del formulario.
-  */
   overflow: hidden;
 
   font-family: var(--safko-font-display);
@@ -345,9 +269,7 @@ background-color: var(--safko-color-morado);
   position: absolute;
 
   top: 0;
-
   left: 0;
-
   right: 0;
 
   height: 1px;
@@ -381,7 +303,6 @@ background-color: var(--safko-color-morado);
 
 .safko-login__form-header {
   position: relative;
-
   z-index: 1;
 
   margin-bottom: 2.25rem;
@@ -395,13 +316,9 @@ background-color: var(--safko-color-morado);
   display: block;
 
   font-family: var(--safko-font-display);
-
   font-weight: 600;
-
   font-size: 0.72rem;
-
   letter-spacing: 0.16em;
-
   text-transform: uppercase;
 
   color: var(--safko-color-verde);
@@ -415,11 +332,9 @@ background-color: var(--safko-color-morado);
 
 .safko-login__title {
   position: relative;
-
   z-index: 1;
 
   font-family: var(--safko-font-display);
-
   font-weight: 900;
 
   margin: 0;
@@ -433,7 +348,6 @@ background-color: var(--safko-color-morado);
 
 .safko-field {
   position: relative;
-
   z-index: 1;
 
   margin-bottom: 1.25rem;
@@ -443,9 +357,7 @@ background-color: var(--safko-color-morado);
   display: block;
 
   font-family: var(--safko-font-display);
-
   font-size: 0.78rem;
-
   font-weight: 600;
 
   color: rgba(255, 255, 255, 0.82);
@@ -459,9 +371,7 @@ background-color: var(--safko-color-morado);
 
 .safko-field__row {
   display: flex;
-
   align-items: stretch;
-
   gap: 0;
 }
 
@@ -471,7 +381,6 @@ background-color: var(--safko-color-morado);
 
 .safko-field__input {
   width: 100%;
-
   min-width: 0;
 
   background: rgba(255, 255, 255, 0.93);
@@ -483,7 +392,6 @@ background-color: var(--safko-color-morado);
   padding: 0.8rem 0.9rem;
 
   font-family: var(--safko-font-display);
-
   font-size: 0.95rem;
 
   color: var(--safko-color-negro);
@@ -522,45 +430,54 @@ background-color: var(--safko-color-morado);
 
 .safko-field__row .safko-field__input {
   border-top-right-radius: 0;
-
   border-bottom-right-radius: 0;
-
   border-right: none;
 }
 
 /* =========================================================
-   TOGGLE
+   TOGGLE - ICONO EYE
 ========================================================= */
 
 .safko-field__toggle {
   flex-shrink: 0;
 
-  font-family: var(--safko-font-display);
+  width: 48px;
 
-  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  letter-spacing: 0.06em;
+  padding: 0;
 
-  text-transform: uppercase;
-
-  color: var(--safko-color-blanco);
+  color: rgba(255, 255, 255, 0.9);
 
   background: rgba(36, 27, 166, 0.72);
 
   border: 1px solid rgba(255, 255, 255, 0.2);
 
   border-top-right-radius: 10px;
-
   border-bottom-right-radius: 10px;
-
-  padding: 0 0.9rem;
 
   cursor: pointer;
 
   transition:
     color 0.2s ease,
     background-color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.safko-field__toggle svg {
+  width: 18px;
+  height: 18px;
+
+  display: block;
+
+  pointer-events: none;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .safko-field__toggle:hover {
@@ -569,6 +486,14 @@ background-color: var(--safko-color-morado);
   background: rgba(36, 27, 166, 0.9);
 
   border-color: rgba(145, 240, 35, 0.55);
+}
+
+.safko-field__toggle:hover svg {
+  transform: scale(1.08);
+}
+
+.safko-field__toggle:active svg {
+  transform: scale(0.92);
 }
 
 .safko-field__toggle:focus-visible {
@@ -586,27 +511,20 @@ background-color: var(--safko-color-morado);
 
 .safko-submit {
   position: relative;
-
   z-index: 1;
 
   width: 100%;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
   gap: 0.55rem;
 
   font-family: var(--safko-font-display);
-
   font-weight: 700;
-
   font-size: 0.9rem;
-
   letter-spacing: 0.04em;
-
   text-transform: uppercase;
 
   color: var(--safko-color-primario);
@@ -652,9 +570,7 @@ background-color: var(--safko-color-morado);
 
 .safko-submit:disabled {
   opacity: 0.65;
-
   cursor: not-allowed;
-
   box-shadow: none;
 }
 
@@ -672,7 +588,6 @@ background-color: var(--safko-color-morado);
 
 .safko-submit__spinner {
   width: 14px;
-
   height: 14px;
 
   border: 2px solid rgba(36, 27, 166, 0.25);
@@ -696,13 +611,10 @@ background-color: var(--safko-color-morado);
 
 .safko-note {
   position: relative;
-
   z-index: 1;
 
   display: flex;
-
   flex-direction: column;
-
   gap: 0.3rem;
 
   margin-top: 1.75rem;
@@ -718,7 +630,6 @@ background-color: var(--safko-color-morado);
   border-radius: 10px;
 
   font-family: var(--safko-font-display);
-
   font-size: 0.78rem;
 
   color: rgba(255, 255, 255, 0.76);
@@ -767,7 +678,6 @@ background-color: var(--safko-color-morado);
 
   .safko-login__form {
     max-width: 380px;
-
     padding: 2rem;
   }
 
@@ -789,7 +699,6 @@ background-color: var(--safko-color-morado);
     min-height: 100vh;
 
     display: flex;
-
     flex-direction: column;
   }
 
@@ -957,10 +866,14 @@ background-color: var(--safko-color-morado);
     padding: 0.75rem 0.8rem;
   }
 
+  /* Solo ajuste del icono Eye en móvil */
   .safko-field__toggle {
-    font-size: 0.62rem;
+    width: 44px;
+  }
 
-    padding: 0 0.7rem;
+  .safko-field__toggle svg {
+    width: 17px;
+    height: 17px;
   }
 
   .safko-submit {
@@ -1003,5 +916,15 @@ background-color: var(--safko-color-morado);
 
   .safko-login__title {
     font-size: 1.2rem;
+  }
+
+  /* Solo ajuste del icono Eye en móviles pequeños */
+  .safko-field__toggle {
+    width: 42px;
+  }
+
+  .safko-field__toggle svg {
+    width: 16px;
+    height: 16px;
   }
 }
