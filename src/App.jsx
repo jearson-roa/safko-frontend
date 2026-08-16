@@ -11,11 +11,13 @@ import Editar from "./pages/Clientes/editar";
 
 import ListarTarea from "./pages/Tareas/ListarTarea";
 import VerTarea from "./pages/Tareas/ver_tarea";
+import EditarTarea from "./pages/Tareas/EditarTarea";
 
 import ListarEmpleado from "./pages/Empleados/ListarEmpleado";
 import EditarEmpleado from "./pages/Empleados/editarEmpleado";
 
 import Charla5Min from "./pages/Formularios/charla_5min";
+
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
           {/* Tareas */}
           <Route path="/listar-tarea" element={<ListarTarea />} />
           <Route path="/tareas/ver_tarea/:id" element={<VerTarea />} />
+          <Route path="/tareas/EditarTarea/:id" element={<EditarTarea/>}/>
 
           {/* Clientes */}
           <Route path="/listar-cliente" element={<ListarCliente />} />
