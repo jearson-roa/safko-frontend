@@ -824,9 +824,6 @@ function ListarTarea() {
                         Cliente
                       </th>
 
-                      <th>
-                        Supervisor
-                      </th>
 
                       <th>
                         Técnico resp.
@@ -836,9 +833,6 @@ function ListarTarea() {
                         Asignación
                       </th>
 
-                      <th>
-                        Término
-                      </th>
 
                       <th>
                         Estado
@@ -924,16 +918,6 @@ function ListarTarea() {
 
                             </td>
 
-                            {/* SUPERVISOR */}
-
-                            <td className="vt-td">
-
-                              {getNombreEmpleado(
-                                supervisor
-                              )}
-
-                            </td>
-
                             {/* TÉCNICO */}
 
                             <td className="vt-td">
@@ -964,25 +948,6 @@ function ListarTarea() {
 
                             </td>
 
-                            {/* TÉRMINO */}
-
-                            <td
-                              className="
-                                vt-td
-                                vt-td-muted
-                              "
-                              title={
-                                formatearFechaHora(
-                                  tarea.fecha_termino
-                                )
-                              }
-                            >
-
-                              {formatearFecha(
-                                tarea.fecha_termino
-                              )}
-
-                            </td>
 
                             {/* ESTADO */}
 
