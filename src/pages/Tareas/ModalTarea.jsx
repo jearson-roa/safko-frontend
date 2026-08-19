@@ -44,21 +44,15 @@ function ModalTarea({
   empleados = [],
   onSuccess,
 }) {
-  const [formData, setFormData] =
-    useState(initialFormState);
+  const [formData, setFormData] = useState(initialFormState);
 
-  const [guardando, setGuardando] =
-    useState(false);
+  const [guardando, setGuardando] = useState(false);
 
   // =======================================================
   // MOSTRAR ALERTA
   // =======================================================
 
-  const mostrarAlerta = async ({
-    title,
-    text,
-    icon,
-  }) => {
+  const mostrarAlerta = async ({ title, text, icon }) => {
     if (window.Swal) {
       await window.Swal.fire({
         title,
@@ -75,10 +69,7 @@ function ModalTarea({
   // =======================================================
 
   const handleChange = (e) => {
-    const {
-      name,
-      value,
-    } = e.target;
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
@@ -91,8 +82,7 @@ function ModalTarea({
   // =======================================================
 
   const handleActividadRutinaChange = (e) => {
-    const value =
-      e.target.value === "true";
+    const value = e.target.value === "true";
 
     setFormData((prev) => ({
       ...prev,
@@ -232,11 +222,8 @@ function ModalTarea({
     // VALIDAR FECHAS
     // =====================================================
 
-    const inicio =
-      new Date(formData.fecha_inicio);
-
-    const termino =
-      new Date(formData.fecha_termino);
+    const inicio = new Date(formData.fecha_inicio);
+    const termino = new Date(formData.fecha_termino);
 
     if (
       Number.isNaN(inicio.getTime()) ||
@@ -282,8 +269,7 @@ function ModalTarea({
     // TOKEN
     // =====================================================
 
-    const token =
-      localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
       await mostrarAlerta({
@@ -300,8 +286,7 @@ function ModalTarea({
     // URL API
     // =====================================================
 
-    const API_URL =
-      import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
 
     if (!API_URL) {
       await mostrarAlerta({
@@ -320,53 +305,46 @@ function ModalTarea({
     //
     // IMPORTANTE:
     //
-    // Tu tabla tareas tiene:
+    // El backend acepta:
     //
-    // fecha_asignacion
-    // fecha_termino
-    // act_rutina
+    // fecha_inicio -> fecha_asignacion
     //
-    // NO tiene:
+    // y:
     //
-    // fecha_inicio
-    // tipo_actividad_rutina
+    // tipo_actividad_rutina -> act_rutina
     //
-    // Por eso se transforman aquí.
+    // Por eso enviamos los nombres que espera
+    // directamente el controller.
     //
     // =====================================================
 
     const datosTarea = {
-      cliente_id:
-        Number(formData.cliente_id),
+      // Cliente
+      cliente_id: Number(formData.cliente_id),
 
-      supervisor_id:
-        Number(formData.supervisor_id),
+      // Personal
+      supervisor_id: Number(formData.supervisor_id),
+      tecnico_id: Number(formData.tecnico_id),
 
-      tecnico_id:
-        Number(formData.tecnico_id),
+      // Programación
+      fecha_inicio: inicio.toISOString(),
+      fecha_termino: termino.toISOString(),
 
-      fecha_asignacion:
-        inicio.toISOString(),
+      // Información OT
+      titulo: formData.titulo.trim(),
 
-      fecha_termino:
-        termino.toISOString(),
+      tipo_actividad_rutina: Boolean(
+        formData.tipo_actividad_rutina
+      ),
 
-      titulo:
-        formData.titulo.trim(),
-
-      act_rutina:
-        Boolean(
-          formData.tipo_actividad_rutina
-        ),
-
+      // Contacto
       nombre_contacto:
-        formData.nombre_contacto.trim() ||
-        null,
+        formData.nombre_contacto.trim() || null,
 
       telefono_contacto:
-        formData.telefono_contacto.trim() ||
-        null,
+        formData.telefono_contacto.trim() || null,
 
+      // Trabajo
       direccion_trabajo:
         formData.direccion_trabajo.trim(),
 
@@ -374,8 +352,7 @@ function ModalTarea({
         formData.descripcion_trabajo.trim(),
 
       observaciones:
-        formData.observaciones.trim() ||
-        null,
+        formData.observaciones.trim() || null,
     };
 
     // =====================================================
@@ -385,20 +362,16 @@ function ModalTarea({
     try {
       setGuardando(true);
 
-      const response =
-        await axios.post(
-          `${API_URL}/api/tareas`,
-          datosTarea,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-
-              "Content-Type":
-                "application/json",
-            },
-          }
-        );
+      const response = await axios.post(
+        `${API_URL}/api/tareas`,
+        datosTarea,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       // ===================================================
       // ÉXITO
@@ -455,26 +428,12 @@ function ModalTarea({
       if (onSuccess) {
         await onSuccess();
       }
-
     } catch (error) {
       // ===================================================
-      // NO MOSTRAR INFORMACIÓN TÉCNICA EN PRODUCCIÓN
-      // ===================================================
-      //
-      // NO hacemos:
-      //
-      // console.error(error)
-      // console.log(error.config)
-      // console.log(error.response)
-      // console.log(datosTarea)
-      // console.log(token)
-      //
-      // El usuario solamente recibe el mensaje necesario.
-      //
+      // MANEJO DE ERRORES
       // ===================================================
 
-      const status =
-        error.response?.status;
+      const status = error.response?.status;
 
       let mensaje =
         "No fue posible crear la tarea.";
@@ -485,32 +444,26 @@ function ModalTarea({
           error.response?.data?.message ||
           error.response?.data?.error ||
           "Los datos enviados no son válidos.";
-      }
-
-      else if (status === 401) {
+      } else if (status === 401) {
         mensaje =
           "Tu sesión ha expirado. Inicia sesión nuevamente.";
-      }
-
-      else if (status === 403) {
+      } else if (status === 403) {
         mensaje =
           "No tienes permisos para crear tareas.";
-      }
-
-      else if (status === 409) {
+      } else if (status === 404) {
+        mensaje =
+          error.response?.data?.mensaje ||
+          "No se encontró el recurso solicitado.";
+      } else if (status === 409) {
         mensaje =
           error.response?.data?.mensaje ||
           error.response?.data?.message ||
           error.response?.data?.error ||
           "La tarea ya existe.";
-      }
-
-      else if (status >= 500) {
+      } else if (status >= 500) {
         mensaje =
           "Ocurrió un error interno del servidor. Inténtalo nuevamente.";
-      }
-
-      else if (error.request) {
+      } else if (error.request) {
         mensaje =
           "No se pudo conectar con el servidor. Verifica tu conexión.";
       }
@@ -528,7 +481,6 @@ function ModalTarea({
       } else {
         alert(mensaje);
       }
-
     } finally {
       setGuardando(false);
     }
@@ -546,29 +498,23 @@ function ModalTarea({
   // SUPERVISORES
   // =========================================================
 
-  const supervisores =
-    empleados.filter((empleado) => {
-      const cargo =
-        empleado.cargo
-          ?.toLowerCase()
-          .trim() || "";
+  const supervisores = empleados.filter((empleado) => {
+    const cargo =
+      empleado.cargo?.toLowerCase().trim() || "";
 
-      return cargo.includes("supervisor");
-    });
+    return cargo.includes("supervisor");
+  });
 
   // =========================================================
   // TÉCNICOS
   // =========================================================
 
-  const tecnicos =
-    empleados.filter((empleado) => {
-      const cargo =
-        empleado.cargo
-          ?.toLowerCase()
-          .trim() || "";
+  const tecnicos = empleados.filter((empleado) => {
+    const cargo =
+      empleado.cargo?.toLowerCase().trim() || "";
 
-      return !cargo.includes("supervisor");
-    });
+    return !cargo.includes("supervisor");
+  });
 
   // =========================================================
   // RENDER
@@ -607,7 +553,6 @@ function ModalTarea({
               vt-modal-content
             "
           >
-
             {/* =================================================
                 HEADER
             ================================================= */}
@@ -619,7 +564,6 @@ function ModalTarea({
               "
             >
               <div>
-
                 <div
                   className="
                     vt-eyebrow-small
@@ -636,7 +580,6 @@ function ModalTarea({
                 >
                   Crear tarea
                 </h5>
-
               </div>
 
               <button
@@ -653,14 +596,12 @@ function ModalTarea({
             ================================================= */}
 
             <form onSubmit={guardarTarea}>
-
               <div
                 className="
                   modal-body
                   vt-modal-body
                 "
               >
-
                 {/* =================================================
                     INFORMACIÓN GENERAL
                 ================================================= */}
@@ -670,7 +611,6 @@ function ModalTarea({
                     vt-form-section
                   "
                 >
-
                   <div
                     className="
                       vt-form-section-title
@@ -680,7 +620,6 @@ function ModalTarea({
                   </div>
 
                   <div className="row">
-
                     {/* CLIENTE */}
 
                     <div
@@ -689,7 +628,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -701,37 +639,24 @@ function ModalTarea({
                       <select
                         className="form-select"
                         name="cliente_id"
-                        value={
-                          formData.cliente_id
-                        }
+                        value={formData.cliente_id}
                         onChange={handleChange}
                         required
                         disabled={guardando}
                       >
-
                         <option value="">
                           Seleccione un cliente
                         </option>
 
-                        {clientes.map(
-                          (cliente) => (
-                            <option
-                              key={
-                                cliente.id_cliente
-                              }
-                              value={
-                                cliente.id_cliente
-                              }
-                            >
-                              {
-                                cliente.razon_social
-                              }
-                            </option>
-                          )
-                        )}
-
+                        {clientes.map((cliente) => (
+                          <option
+                            key={cliente.id_cliente}
+                            value={cliente.id_cliente}
+                          >
+                            {cliente.razon_social}
+                          </option>
+                        ))}
                       </select>
-
                     </div>
 
                     {/* TÍTULO */}
@@ -742,7 +667,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -755,16 +679,13 @@ function ModalTarea({
                         type="text"
                         className="form-control"
                         name="titulo"
-                        value={
-                          formData.titulo
-                        }
+                        value={formData.titulo}
                         onChange={handleChange}
                         required
                         disabled={guardando}
                         maxLength="150"
                         placeholder="Ej: Mantención de tablero eléctrico"
                       />
-
                     </div>
 
                     {/* ACTIVIDAD RUTINA */}
@@ -775,7 +696,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -796,7 +716,6 @@ function ModalTarea({
                         required
                         disabled={guardando}
                       >
-
                         <option value="false">
                           No
                         </option>
@@ -804,7 +723,6 @@ function ModalTarea({
                         <option value="true">
                           Sí
                         </option>
-
                       </select>
 
                       <small
@@ -817,7 +735,6 @@ function ModalTarea({
                         rutinaria o programada
                         periódicamente.
                       </small>
-
                     </div>
 
                     {/* DIRECCIÓN */}
@@ -828,7 +745,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -850,11 +766,8 @@ function ModalTarea({
                         maxLength="255"
                         placeholder="Dirección donde se realizará el trabajo"
                       />
-
                     </div>
-
                   </div>
-
                 </div>
 
                 {/* =================================================
@@ -866,7 +779,6 @@ function ModalTarea({
                     vt-form-section
                   "
                 >
-
                   <div
                     className="
                       vt-form-section-title
@@ -876,7 +788,6 @@ function ModalTarea({
                   </div>
 
                   <div className="row">
-
                     {/* NOMBRE */}
 
                     <div
@@ -885,7 +796,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -906,7 +816,6 @@ function ModalTarea({
                         maxLength="100"
                         placeholder="Nombre del contacto"
                       />
-
                     </div>
 
                     {/* TELÉFONO */}
@@ -917,7 +826,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -938,11 +846,8 @@ function ModalTarea({
                         maxLength="20"
                         placeholder="+56 9 XXXX XXXX"
                       />
-
                     </div>
-
                   </div>
-
                 </div>
 
                 {/* =================================================
@@ -954,7 +859,6 @@ function ModalTarea({
                     vt-form-section
                   "
                 >
-
                   <div
                     className="
                       vt-form-section-title
@@ -964,7 +868,6 @@ function ModalTarea({
                   </div>
 
                   <div className="row">
-
                     {/* FECHA INICIO */}
 
                     <div
@@ -973,7 +876,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -1001,7 +903,6 @@ function ModalTarea({
                       >
                         Inicio programado de la orden.
                       </small>
-
                     </div>
 
                     {/* FECHA TÉRMINO */}
@@ -1012,7 +913,6 @@ function ModalTarea({
                         mb-3
                       "
                     >
-
                       <label
                         className="
                           vt-form-label
@@ -1040,11 +940,8 @@ function ModalTarea({
                       >
                         Término programado de la orden.
                       </small>
-
                     </div>
-
                   </div>
-
                 </div>
 
                 {/* =================================================
@@ -1056,7 +953,6 @@ function ModalTarea({
                     vt-form-section
                   "
                 >
-
                   <div
                     className="
                       vt-form-section-title
@@ -1068,7 +964,6 @@ function ModalTarea({
                   {/* SUPERVISOR */}
 
                   <div className="mb-3">
-
                     <label
                       className="
                         vt-form-label
@@ -1087,7 +982,6 @@ function ModalTarea({
                       required
                       disabled={guardando}
                     >
-
                       <option value="">
                         Seleccione supervisor
                       </option>
@@ -1099,14 +993,16 @@ function ModalTarea({
                             value={empleado.id}
                           >
                             {empleado.nombres}{" "}
-                            {empleado.apellido_paterno || ""}{" "}
-                            {empleado.apellido_materno || ""}
+                            {empleado.apellido_paterno ||
+                              ""}{" "}
+                            {empleado.apellido_materno ||
+                              ""}
                             {" — "}
-                            {empleado.cargo || "Supervisor"}
+                            {empleado.cargo ||
+                              "Supervisor"}
                           </option>
                         )
                       )}
-
                     </select>
 
                     <small
@@ -1117,13 +1013,11 @@ function ModalTarea({
                       Responsable de supervisar la
                       ejecución de la orden de trabajo.
                     </small>
-
                   </div>
 
                   {/* TÉCNICO */}
 
                   <div className="mb-3">
-
                     <label
                       className="
                         vt-form-label
@@ -1142,7 +1036,6 @@ function ModalTarea({
                       required
                       disabled={guardando}
                     >
-
                       <option value="">
                         Seleccione técnico de terreno
                       </option>
@@ -1154,14 +1047,16 @@ function ModalTarea({
                             value={empleado.id}
                           >
                             {empleado.nombres}{" "}
-                            {empleado.apellido_paterno || ""}{" "}
-                            {empleado.apellido_materno || ""}
+                            {empleado.apellido_paterno ||
+                              ""}{" "}
+                            {empleado.apellido_materno ||
+                              ""}
                             {" — "}
-                            {empleado.cargo || "Técnico"}
+                            {empleado.cargo ||
+                              "Técnico"}
                           </option>
                         )
                       )}
-
                     </select>
 
                     <small
@@ -1172,9 +1067,7 @@ function ModalTarea({
                       Técnico responsable de ejecutar
                       la tarea en terreno.
                     </small>
-
                   </div>
-
                 </div>
 
                 {/* =================================================
@@ -1186,7 +1079,6 @@ function ModalTarea({
                     vt-form-section
                   "
                 >
-
                   <div
                     className="
                       vt-form-section-title
@@ -1198,7 +1090,6 @@ function ModalTarea({
                   {/* DESCRIPCIÓN */}
 
                   <div className="mb-3">
-
                     <label
                       className="
                         vt-form-label
@@ -1219,13 +1110,11 @@ function ModalTarea({
                       disabled={guardando}
                       placeholder="Describa detalladamente el trabajo que debe realizarse..."
                     />
-
                   </div>
 
                   {/* OBSERVACIONES */}
 
                   <div className="mb-3">
-
                     <label
                       className="
                         vt-form-label
@@ -1245,11 +1134,8 @@ function ModalTarea({
                       disabled={guardando}
                       placeholder="Información adicional, restricciones o indicaciones..."
                     />
-
                   </div>
-
                 </div>
-
               </div>
 
               {/* =================================================
@@ -1262,7 +1148,6 @@ function ModalTarea({
                   vt-modal-footer
                 "
               >
-
                 <button
                   type="button"
                   className="vt-btn-ghost"
@@ -1281,11 +1166,8 @@ function ModalTarea({
                     ? "Guardando..."
                     : "Guardar tarea"}
                 </button>
-
               </div>
-
             </form>
-
           </div>
         </div>
       </div>
